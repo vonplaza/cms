@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { dashboard } from './dashboard/dashboard.component';
+import { DashBoardComponent} from './dashboard/dashboard.component';
 import { ChartModule} from 'angular-highcharts';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -23,18 +23,43 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ViewCurriculumComponent } from './view-curriculum/view-curriculum.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 @NgModule({
   declarations: [
-    AppComponent,  LoginComponent, ViewCurriculumComponent
-    ,topNavigation, dashboard, CurriculumManagementComponent, ViewCurriculumComponent
+    AppComponent,  
+    LoginComponent, 
+    ViewCurriculumComponent
+    ,topNavigation, 
+    CurriculumManagementComponent, 
+    ViewCurriculumComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,MatButtonToggleModule,MatCardModule,MatInputModule,MatPaginatorModule,
-    BrowserAnimationsModule,MatListModule,ChartModule, MatTableModule,FormsModule,MatCardModule,ReactiveFormsModule,
-    MatToolbarModule,MatIconModule,MatButtonModule, MatSidenavModule,MatGridListModule, MatExpansionModule, MatProgressBarModule
+    HttpClientModule,
+    AppRoutingModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatInputModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatListModule,
+    ChartModule, 
+    MatTableModule,
+    FormsModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule, 
+    MatSidenavModule,
+    MatGridListModule, 
+    MatExpansionModule, 
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import {Chart} from 'angular-highcharts';
     styleUrls:['./dashboard.component.css']
 })
 
-export class dashboard{
+export class DashBoardComponent{
 
     currentVersion = '3.2.1';
     inRevision = '3.2.2';
