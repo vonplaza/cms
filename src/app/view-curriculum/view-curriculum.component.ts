@@ -79,17 +79,29 @@ export class ViewCurriculumComponent {
       'coReq':'IT 308'},
   ]
 
-  
+  selectedSubject: any;
 
-  isEditing(index:number): void{
-    
+  isEditing(subjects:any): void{
+    this.selectedSubject = Object.assign({}, subjects);
   }
+
+  updateSubject(){
+    const index = this.firstSem.findIndex(subject => subject.courseCode === this.selectedSubject.courseCode);
+    this.firstSem[index] = Object.assign({}, this.selectedSubject);
+    this.selectedSubject = null;
+  }
+
+  cancel() {
+    this.selectedSubject = null;
+  }
+
   deleteSubject(index: number){
     this.firstSem.splice(index, 1);
   }
   OnSubmit(): void{
     
   }
+
   addSubject(form: NgForm): void{
     const newItem = {
       courseCode: form.value.courseCode,
@@ -110,5 +122,17 @@ export class ViewCurriculumComponent {
     this.firstSemesterForm.reset();
   }
 
+  addComment(form: NgForm): void{
+    const newComment = {
+      username: form.value.username,
+      header: form.value.header,
+      feedback: form.value.feedback,
+    };
+    if(newComment.username && newComment.header && newComment.feedback){
+        this.comment.push(newComment);
+        form.reset();
+       }
+  }
+  
 
 }
