@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-  // { path: 'dashboard', component:  }
+  { path: 'curriculums', loadChildren: () => import('./curriculum/curriculum.module').then(m => m.CurriculumModule) }
 ];
 
 @NgModule({

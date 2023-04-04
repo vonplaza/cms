@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from './material';
 
+import { CurriculumRoutingModule } from './curriculum-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MaterialModule
-  ],
-  exports:[
-    MaterialModule
+    CurriculumRoutingModule
   ]
 })
-export class SharedModule { }
+export class CurriculumModule { }

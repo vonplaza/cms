@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ChartModule } from 'angular-highcharts';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ChartModule } from 'angular-highcharts';
     CommonModule,
     MatGridListModule,
     ChartModule,
+    SharedModule,
     RouterModule.forChild([
       { path: '', component: DashBoardComponent }
     ])
