@@ -1,0 +1,168 @@
+<div class="container">
+
+    <div class="inside">
+    <div class="this-element"><span class="title">CICT Curriculum ver. 3.2.1 (CICT)</span>
+        <div class="status bg-success" style="margin-left: 30px; margin-right:20px;">For Revision</div>
+        <div class="status bg-warning">For Revision</div>
+    </div>
+    <button mat-raised-button  color="primary" style="float:right; right:230px;">Print <mat-icon>printer</mat-icon> </button>
+    <h3>Kervin Robby Pagtalunan</h3>
+    <h3>10-20-25</h3>
+    {{firstSemesterForm.value | json}}
+    {{commentForm.value| json}}
+
+    </div>
+    <div class="bottom">
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header style="background-color: #C0C0C0;">
+            <mat-panel-title class="panel-text">
+              First Year
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table class="table">
+
+
+            <thead class="thead-dark">
+                <th class="thead-dark">First Semester</th>
+              <tr>
+                <th scope="col">Course Code</th>
+                <th scope="col">Descriptive Title</th>
+                <th scope="col">Lec Units</th>
+                <th scope="col">Lab Units</th>
+                <th scope="col">Total Units</th>
+                <th scope="col">Hours Per Week</th>
+                <th scope="col">Pre-Req</th>
+                <th scope="col">Co-Req</th>
+                <th scope="col">Actions</th>
+              </tr>
+              <th class="thead-dark">Add Subject</th>
+              <tr>
+
+                <th colspan="9">
+
+                    <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
+                        <mat-form-field class="subject-input" style="width: 60px; margin-right:65px;"><input name='courseCode' matInput type="text" placeholder="Course Code" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input"  style="width: 140px; margin-right:15px;"><input name=descriptiveTitle matInput type="text" placeholder="Descriptive Title" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 30px;  margin-right:60px;"><input name='lecUnits' matInput type="text" placeholder="Lec Units" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 30px;  margin-right:60px;"><input name='labUnits' matInput type="text" placeholder="Lab Units" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 30px;  margin-right:60px;"><input name='totalUnits' matInput type="text" placeholder="Total Units" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 30px;  margin-right:110px;"><input name='hoursPerWeek' matInput type="text" placeholder="Hours Per Week" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 60px;  margin-right:20px;"><input name='preReq' matInput type="text" placeholder="Pre-Requisites" ngModel required/></mat-form-field>
+                    
+                        <mat-form-field class="subject-input" style="width: 60px;  margin-right:20px;"><input name='coReq' matInput type="text" placeholder="Co-Requisites" ngModel required/></mat-form-field>
+                    
+                        <button  mat-icon-button color="primary" [title]="uploadSyllabus" type="button"><mat-icon>attachment</mat-icon></button>
+                        <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit"><mat-icon>check</mat-icon></button>
+                        <button mat-icon-button color="primary" (click)="clearValues()" [title]="cancelAddSubject" type="button"><mat-icon>close</mat-icon></button>
+                </form>
+
+
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let subjects of firstSem; let i = index" [attr.data-index]="i">
+                <th scope="row">{{subjects.courseCode}}</th>
+                <td>{{subjects.descriptiveTitle}} </td>
+                <td>{{subjects.lecUnits}}</td>
+                <td>{{subjects.labUnits}}</td>
+                <td>{{subjects.totalUnits}}</td>
+                <td>{{subjects.hoursPerWeek}}</td>
+                <td>{{subjects.preReq}}</td>
+                <td>{{subjects.coReq}}</td>
+                <td>
+                    <button mat-icon-button color="primary" [title]="view"><mat-icon>remove_red_eye</mat-icon></button>
+                    <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(i)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)"><mat-icon>delete_forever</mat-icon></button>
+                </td>
+                
+
+
+              </tr>
+              
+              
+            </tbody>
+            <!-- <thead class="thead-dark">
+                <th class="thead-dark">Second Semester</th>
+              <tr>
+                <th scope="col">Course Code</th>
+                <th scope="col">Descriptive Title</th>
+                <th scope="col">Lec Units</th>
+                <th scope="col">Lab Units</th>
+                <th scope="col">Total Units</th>
+                <th scope="col">Hours Per Week</th>
+                <th scope="col">Pre-Req</th>
+                <th scope="col">Co-Req</th>
+                <th scope="col">Acions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">IT 309</th>
+                <td scope="row">Web Systems Chuchu ekek</td>
+                <td scope="row">3.0</td>
+                <td scope="row">0</td>
+                <td scope="row">3.0</td>
+                <td scope="row">3</td>
+                <td scope="row">IT 308</td>
+                <td scope="row">IT 307</td>
+                <td scope="row">
+                    <button mat-icon-button color="primary" [title]="view"><mat-icon>remove_red_eye</mat-icon></button>
+                    <button mat-icon-button color="primary" [title]="edit"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button color="primary" [title]="del"><mat-icon>delete_forever</mat-icon></button>
+                </td>
+              </tr>
+            </tbody> -->
+
+          </table>
+          
+        </mat-expansion-panel>
+
+      </mat-accordion>
+
+      <div class="chat-container p-3">
+        <h2 class="comments">Comments</h2>
+        
+        <div class="chat-c">
+        <mat-card class="comment-card" *ngFor="let comments of comment">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div><!--Dito yung dp-->
+              <mat-card-subtitle>{{comments.username}}</mat-card-subtitle>
+              <mat-card-title>{{comments.header}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{comments.feedback}}</p>
+              <!-- <mat-divider></mat-divider> -->
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button mat-button>LIKE</button>
+            </mat-card-actions> -->
+          </mat-card>
+
+
+        </div>
+        
+        <form class="example-form" #commentForm="ngForm">
+            <mat-form-field class="example-full-width">
+              <mat-label>Subject</mat-label>
+              <input matInput placeholder="" value="Header" ngModel/>
+            </mat-form-field>
+          
+            <mat-form-field class="example-full-width">
+              <mat-label>Leave a comment</mat-label>
+              <textarea style="resize: none; height:80px;" matInput placeholder="Ex. It makes me feel..." ngModel></textarea>
+              <button mat-raised-button color="primary" style="float:right; width:1px;"><mat-icon>send</mat-icon></button>
+            </mat-form-field>
+          </form>
+
+      </div>
+    </div>
+</div>

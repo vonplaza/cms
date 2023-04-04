@@ -1,0 +1,26 @@
+<div class="bg">
+    <div class="container">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div>
+                <img src="assets/bulsu.png" class="logos"> <img src="assets/logo-cict.png" class="logos">
+                <h3>CICT<span> Curriculum<br> Management System</span></h3>
+
+                    <!--Form for Credentials-->
+                    <form class="pt-2">
+                        <input class="inputs" placeholder="Email">
+                        <input class="inputs mt-3" placeholder="Password">
+                    </form>
+
+                    <!--Invalid Credentials String-->
+                    <div [hidden]='validCreds' class="mt-2 text-danger">Invalid Credentials</div>
+
+                    <!--Login Btn-->
+                    <button class="button mt-4" (click)="checkCredentials()">Login</button>
+                    
+                    <!--Forgot Password-->
+                    <a href="" class="text-danger float-right" style="margin-left: 120px;">Forgot Password?</a>
+
+            </div>
+        </div> 
+    </div>
+</div>

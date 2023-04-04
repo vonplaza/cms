@@ -25,8 +25,12 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
-            ],
+            ],"allowedCommonJsDependencies": [
+              "highcharts"
+           ]
+,      
             "scripts": []
           },
           "configurations": {
