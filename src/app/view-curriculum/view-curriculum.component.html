@@ -19,8 +19,9 @@
         <mat-expansion-panel-header style="background-color: #c0c0c0">
           <mat-panel-title class="panel-text"> First Year </mat-panel-title>
         </mat-expansion-panel-header>
-
-
+        <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
+          Add Subject<mat-icon>add</mat-icon>
+        </button>
         <!-- Dito yung 1st sem table -->
         <table class="table">
           <thead class="thead-dark">
@@ -36,8 +37,8 @@
               <th scope="col">Co-Req</th>
               <th scope="col">Actions</th>
             </tr>
-            <th class="thead-dark">Add Subject</th>
-            <tr>
+            <th *ngIf="addForm" class="thead-dark">Add Subject</th>
+            <tr *ngIf="addForm">
               <th colspan="9">
                 <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
                   <mat-form-field class="subject-input" style="width: 60px; margin-right: 65px"><input name="courseCode"
@@ -69,7 +70,7 @@
                   <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit">
                     <mat-icon>check</mat-icon>
                   </button>
-                  <button mat-icon-button color="primary" (click)="clearValues()" [title]="cancelAddSubject"
+                  <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()" [title]="cancelAddSubject"
                     type="button">
                     <mat-icon>close</mat-icon>
                   </button>
@@ -77,7 +78,7 @@
               </th>
             </tr>
 
-            <th class="thead-dark">Edit Subject</th>
+            <th  *ngIf="selectedSubject" class="thead-dark">Edit Subject</th>
             <tr *ngIf="selectedSubject">
               <th colspan="9">
                 <form #firstSemesterForm="ngForm" (ngSubmit)="updateSubject()">

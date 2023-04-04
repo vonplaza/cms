@@ -80,9 +80,15 @@ export class ViewCurriculumComponent {
   ]
 
   selectedSubject: any;
+  addForm= false;
+
 
   isEditing(subjects:any): void{
     this.selectedSubject = Object.assign({}, subjects);
+  }
+  
+  add(){
+    this.addForm = true;
   }
 
   updateSubject(){
@@ -93,6 +99,10 @@ export class ViewCurriculumComponent {
 
   cancel() {
     this.selectedSubject = null;
+    
+  }
+  canceladd(){
+    this.addForm=false;
   }
 
   deleteSubject(index: number){
