@@ -23,14 +23,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ViewCurriculumComponent } from './view-curriculum/view-curriculum.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
+import { secondSemFilter } from './view-curriculum/filter-semester-pipe.pipe';
 @NgModule({
   declarations: [
-    AppComponent,  LoginComponent, ViewCurriculumComponent
+    AppComponent,  LoginComponent, ViewCurriculumComponent, secondSemFilter
     ,topNavigation, dashboard, CurriculumManagementComponent, ViewCurriculumComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,MatButtonToggleModule,MatCardModule,MatInputModule,MatPaginatorModule,
+    AppRoutingModule,MatButtonToggleModule,MatCardModule,MatInputModule,MatPaginatorModule,CommonModule,
     BrowserAnimationsModule,MatListModule,ChartModule, MatTableModule,FormsModule,MatCardModule,ReactiveFormsModule,
     MatToolbarModule,MatIconModule,MatButtonModule, MatSidenavModule,MatGridListModule, MatExpansionModule, MatProgressBarModule
   ],

@@ -1,6 +1,7 @@
 import { Component,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+
 export interface firstSemContent {
       courseCode:string;
       descriptiveTitle:string;
@@ -10,6 +11,8 @@ export interface firstSemContent {
       hoursPerWeek:string;
       preReq:string;
       coReq:string;
+      semester:string;
+      year:string;
 }
 
 export interface comments{
@@ -25,6 +28,7 @@ export interface comments{
 })
 
 export class ViewCurriculumComponent {
+
 
   @ViewChild("firstSemesterForm", {static: false})"firstSemesterForm": NgForm;
 
@@ -53,6 +57,16 @@ export class ViewCurriculumComponent {
   ]
 
   firstSem: firstSemContent[] = [
+      {'courseCode':'IT-310',
+      'descriptiveTitle':'Subject Name',
+      'lecUnits':'1.0',
+      'labUnits':'1.0',
+      'totalUnits':'2.0',
+      'hoursPerWeek':'2',
+      'preReq':'IT 309',
+      'coReq':'IT 308',
+    'semester':'2nd',
+  'year':'1st'},
       {'courseCode':'IT-309',
       'descriptiveTitle':'Subject Name',
       'lecUnits':'1.0',
@@ -60,7 +74,9 @@ export class ViewCurriculumComponent {
       'totalUnits':'2.0',
       'hoursPerWeek':'2',
       'preReq':'IT 309',
-      'coReq':'IT 308'},
+      'coReq':'IT 308',
+      'semester':'2nd',
+    'year':'1st'},
       {'courseCode':'IT-309',
       'descriptiveTitle':'Subject Name',
       'lecUnits':'1.0',
@@ -68,15 +84,9 @@ export class ViewCurriculumComponent {
       'totalUnits':'2.0',
       'hoursPerWeek':'2',
       'preReq':'IT 309',
-      'coReq':'IT 308'},
-      {'courseCode':'IT-309',
-      'descriptiveTitle':'Subject Name',
-      'lecUnits':'1.0',
-      'labUnits':'1.0',
-      'totalUnits':'2.0',
-      'hoursPerWeek':'2',
-      'preReq':'IT 309',
-      'coReq':'IT 308'},
+      'coReq':'IT 308',
+      'semester':'1st',
+    'year':'1st'},
   ]
 
   selectedSubject: any;
@@ -122,6 +132,8 @@ export class ViewCurriculumComponent {
       hoursPerWeek: form.value.hoursPerWeek,
       preReq: form.value.preReq,
       coReq: form.value.coReq,
+      semester:form.value.semester,
+      year:form.value.year
     };
     if(newItem.coReq && newItem.courseCode && newItem.descriptiveTitle && newItem.hoursPerWeek && newItem.labUnits && newItem.lecUnits && newItem.preReq && newItem.totalUnits){
     this.firstSem.push(newItem);

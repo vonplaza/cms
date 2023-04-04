@@ -127,7 +127,7 @@
 
           <!-- For loop ng 1st sem container -->
           <tbody>
-            <tr *ngFor="let subjects of firstSem; let i = index" [attr.data-index]="i">
+            <tr *ngFor="let subjects of firstSem | semesterFilter : '1st'; let i = index" [attr.data-index]="i">
               <th scope="row">{{ subjects.courseCode }}</th>
               <td>{{ subjects.descriptiveTitle }}</td>
               <td>{{ subjects.lecUnits }}</td>
@@ -150,6 +150,136 @@
             </tr>
           </tbody>
           <!-- hanggang dito For loop ng 1st sem container -->
+          <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
+            Add Subject<mat-icon>add</mat-icon>
+          </button>
+          <thead class="thead-dark">
+            <th class="thead-dark">Second Semester</th>
+            <tr>
+              <th scope="col">Course Code</th>
+              <th scope="col">Descriptive Title</th>
+              <th scope="col">Lec Units</th>
+              <th scope="col">Lab Units</th>
+              <th scope="col">Total Units</th>
+              <th scope="col">Hours Per Week</th>
+              <th scope="col">Pre-Req</th>
+              <th scope="col">Co-Req</th>
+              <th scope="col">Actions</th>
+            </tr>
+            <th *ngIf="addForm" class="thead-dark">Add Subject</th>
+            <tr *ngIf="addForm">
+              <th colspan="9">
+                <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 65px"><input name="courseCode"
+                      matInput type="text" placeholder="Course Code" ngModel required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 140px; margin-right: 15px"><input
+                      name="descriptiveTitle" matInput type="text" placeholder="Descriptive Title" ngModel
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="lecUnits"
+                      matInput type="text" placeholder="Lec Units" ngModel required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="labUnits"
+                      matInput type="text" placeholder="Lab Units" ngModel required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="totalUnits"
+                      matInput type="text" placeholder="Total Units" ngModel required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 110px"><input
+                      name="hoursPerWeek" matInput type="text" placeholder="Hours Per Week" ngModel
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 20px"><input name="preReq"
+                      matInput type="text" placeholder="Pre-Requisites" ngModel required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 20px"><input name="coReq"
+                      matInput type="text" placeholder="Co-Requisites" ngModel required /></mat-form-field>
+
+                  <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()" [title]="cancelAddSubject"
+                    type="button">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </form>
+              </th>
+            </tr>
+
+            <th  *ngIf="selectedSubject" class="thead-dark">Edit Subject</th>
+            <tr *ngIf="selectedSubject">
+              <th colspan="9">
+                <form #firstSemesterForm="ngForm" (ngSubmit)="updateSubject()">
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 65px"><input name="courseCode"
+                      matInput type="text" placeholder="Course Code" [(ngModel)]="selectedSubject.courseCode"
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 140px; margin-right: 15px"><input
+                      name="descriptiveTitle" matInput type="text" placeholder="Descriptive Title"
+                      [(ngModel)]="selectedSubject.descriptiveTitle" required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="lecUnits"
+                      matInput type="text" placeholder="Lec Units" [(ngModel)]="selectedSubject.lecUnits"
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="labUnits"
+                      matInput type="text" placeholder="Lab Units" [(ngModel)]="selectedSubject.labUnits"
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 60px"><input name="totalUnits"
+                      matInput type="text" placeholder="Total Units" [(ngModel)]="selectedSubject.totalUnits"
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 30px; margin-right: 110px"><input
+                      name="hoursPerWeek" matInput type="text" placeholder="Hours Per Week"
+                      [(ngModel)]="selectedSubject.hoursPerWeek" required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 20px"><input name="preReq"
+                      matInput type="text" placeholder="Pre-Requisites" [(ngModel)]="selectedSubject.preReq"
+                      required /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px; margin-right: 20px"><input name="coReq"
+                      matInput type="text" placeholder="Co-Requisites" [(ngModel)]="selectedSubject.coReq"
+                      required /></mat-form-field>
+
+                  <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </form>
+              </th>
+            </tr>
+          </thead>
+
+          <!-- For loop ng 1st sem container -->
+          <tbody>
+            <tr *ngFor="let subjects of firstSem| semesterFilter : '2nd'; let i = index" [attr.data-index]="i">
+              <th scope="row">{{ subjects.courseCode }}</th>
+              <td>{{ subjects.descriptiveTitle }}</td>
+              <td>{{ subjects.lecUnits }}</td>
+              <td>{{ subjects.labUnits }}</td>
+              <td>{{ subjects.totalUnits }}</td>
+              <td>{{ subjects.hoursPerWeek }}</td>
+              <td>{{ subjects.preReq }}</td>
+              <td>{{ subjects.coReq }}</td>
+              <td>
+                <button mat-icon-button color="primary" [title]="view">
+                  <mat-icon>remove_red_eye</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+
+
         </table>
         <!-- Hanggang dito yung table -->
 
@@ -163,7 +293,7 @@
       <div class="chat-c">
         <mat-card class="comment-card" *ngFor="let comments of comment">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"><!--Dito yung dp--></div>
+            <div mat-card-avatar class="example-header-image"></div>
             
             <mat-card-subtitle>{{ comments.username }}</mat-card-subtitle>
             <mat-card-title>{{ comments.header }}</mat-card-title>
