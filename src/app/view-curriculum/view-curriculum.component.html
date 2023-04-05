@@ -35,7 +35,6 @@
           <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
             <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode" matInput type="text"
                 placeholder="Course Code" ngModel required /></mat-form-field>
-            <br> {{firstSemesterForm.value|json}}
             <mat-form-field class="subject-input" style="width: 140px;"><input name="descriptiveTitle" matInput
                 type="text" placeholder="Descriptive Title" ngModel required /></mat-form-field>
 
