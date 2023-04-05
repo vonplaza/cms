@@ -58,7 +58,12 @@
           <mat-panel-title class="panel-text">Year</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="firstSem">
-          <button class="mb-2 mt-2" mat-raised-button color="primary">
+          <button
+            class="mb-2 mt-2"
+            mat-raised-button
+            color="primary"
+            (click)="clickAddSubject(x, 'firstSem')"
+          >
             Add Subject<mat-icon>add</mat-icon>
           </button>
           <!-- Table para sa lahat -->
@@ -78,7 +83,7 @@
               </tr>
             </thead>
             <tbody>
-              <td colspan="9">
+              <td colspan="9" *ngIf="isAddFormShow[x][0]">
                 <form
                   #firstSemesterForm="ngForm"
                   (ngSubmit)="addSubject(firstSemesterForm, x, 'firstSem')"
@@ -175,117 +180,117 @@
                     color="primary"
                     [title]="cancelAddSubject"
                     type="button"
+                    (click)="removeAddForm(x, 'firstSem')"
                   >
                     <mat-icon>close</mat-icon>
                   </button>
                 </form>
               </td>
-              <tr>
-                <td colspan="9">
-                  <form
-                    #editForm="ngForm"
-                    (ngSubmit)="editCourse()"
-                    *ngIf="isEditFormShow[x]['firstSem']"
+              <td colspan="9">
+                <form
+                  #editForm="ngForm"
+                  (ngSubmit)="editCourse(editForm, x, 'firstSem')"
+                  *ngIf="isEditFormShow[x]['firstSem']"
+                >
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="courseCode"
+                      matInput
+                      type="text"
+                      placeholder="Course Code"
+                      [(ngModel)]="isForms[x]['firstSem'].courseCode"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 140px"
+                    ><input
+                      name="descriptiveTitle"
+                      matInput
+                      type="text"
+                      placeholder="Descriptive Title"
+                      [(ngModel)]="isForms[x]['firstSem'].descriptiveTitle"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="lecUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lec Units"
+                      [(ngModel)]="isForms[x]['firstSem'].lecUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="labUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lab Units"
+                      [(ngModel)]="isForms[x]['firstSem'].labUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="totalUnits"
+                      matInput
+                      type="text"
+                      placeholder="Total Units"
+                      [(ngModel)]="isForms[x]['firstSem'].totalUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 90px"
+                    ><input
+                      name="hoursPerWeek"
+                      matInput
+                      type="text"
+                      placeholder="Hours Per Week"
+                      [(ngModel)]="isForms[x]['firstSem'].hoursPerWeek"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="preReq"
+                      matInput
+                      type="text"
+                      placeholder="Pre-Requisites"
+                      [(ngModel)]="isForms[x]['firstSem'].preReq"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="coReq"
+                      matInput
+                      type="text"
+                      placeholder="Co-Requisites"
+                      [(ngModel)]="isForms[x]['firstSem'].coReq"
+                      required
+                  /></mat-form-field>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="includeSubjectText"
+                    type="submit"
                   >
-                    <mat-form-field class="subject-input" style="width: 80px"
-                      ><input
-                        name="courseCode"
-                        matInput
-                        type="text"
-                        placeholder="Course Code"
-                        [(ngModel)]="isForms[x]['firstSem'].courseCode"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 140px"
-                      ><input
-                        name="descriptiveTitle"
-                        matInput
-                        type="text"
-                        placeholder="Descriptive Title"
-                        [(ngModel)]="isForms[x]['firstSem'].descriptiveTitle"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 60px"
-                      ><input
-                        name="lecUnits"
-                        matInput
-                        type="text"
-                        placeholder="Lec Units"
-                        [(ngModel)]="isForms[x]['firstSem'].lecUnits"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 60px"
-                      ><input
-                        name="labUnits"
-                        matInput
-                        type="text"
-                        placeholder="Lab Units"
-                        [(ngModel)]="isForms[x]['firstSem'].labUnits"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 60px"
-                      ><input
-                        name="totalUnits"
-                        matInput
-                        type="text"
-                        placeholder="Total Units"
-                        [(ngModel)]="isForms[x]['firstSem'].totalUnits"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 90px"
-                      ><input
-                        name="hoursPerWeek"
-                        matInput
-                        type="text"
-                        placeholder="Hours Per Week"
-                        [(ngModel)]="isForms[x]['firstSem'].hoursPerWeek"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 80px"
-                      ><input
-                        name="preReq"
-                        matInput
-                        type="text"
-                        placeholder="Pre-Requisites"
-                        [(ngModel)]="isForms[x]['firstSem'].preReq"
-                        required
-                    /></mat-form-field>
-
-                    <mat-form-field class="subject-input" style="width: 80px"
-                      ><input
-                        name="coReq"
-                        matInput
-                        type="text"
-                        placeholder="Co-Requisites"
-                        [(ngModel)]="isForms[x]['firstSem'].coReq"
-                        required
-                    /></mat-form-field>
-
-                    <button
-                      mat-icon-button
-                      color="primary"
-                      [title]="includeSubjectText"
-                      type="submit"
-                    >
-                      <mat-icon>check</mat-icon>
-                    </button>
-                    <button
-                      mat-icon-button
-                      color="primary"
-                      [title]="cancelAddSubject"
-                      type="button"
-                    >
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  </form>
-                </td>
-              </tr>
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="cancelAddSubject"
+                    type="button"
+                    (click)="cancelEditSub(x, 'firstSem')"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </form>
+              </td>
               <tr *ngFor="let subjects of subject"></tr>
               <tr *ngFor="let course of subjects.firstSem; let i = index">
                 <td scope="row">{{ course.courseCode }}</td>
@@ -304,7 +309,7 @@
                     mat-icon-button
                     color="primary"
                     [title]="edit"
-                    (click)="selectCourse(course, x, 'firstSem')"
+                    (click)="selectCourse(course, x, i, 'firstSem')"
                   >
                     <mat-icon>edit</mat-icon>
                   </button>
@@ -322,6 +327,275 @@
           </table>
         </div>
 
+        <div class="secondSem">
+          <button
+            class="mb-2 mt-2"
+            mat-raised-button
+            color="primary"
+            (click)="clickAddSubject(x, 'secondSem')"
+          >
+            Add Subject<mat-icon>add</mat-icon>
+          </button>
+          <!-- Table para sa lahat -->
+          <strong>First Semester</strong>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Course Code</th>
+                <th scope="col">Descriptive Title</th>
+                <th scope="col">Lec Units</th>
+                <th scope="col">Lab Units</th>
+                <th scope="col">Total Units</th>
+                <th scope="col">Hours Per Week</th>
+                <th scope="col">Pre-Req</th>
+                <th scope="col">Co-Req</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td colspan="9" *ngIf="isAddFormShow[x][1]">
+                <form
+                  #secondSemesterForm="ngForm"
+                  (ngSubmit)="addSubject(secondSemesterForm, x, 'secondSem')"
+                >
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="courseCode"
+                      matInput
+                      type="text"
+                      placeholder="Course Code"
+                      ngModel
+                      required
+                  /></mat-form-field>
+                  <mat-form-field class="subject-input" style="width: 140px"
+                    ><input
+                      name="descriptiveTitle"
+                      matInput
+                      type="text"
+                      placeholder="Descriptive Title"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="lecUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lec Units"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="labUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lab Units"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="totalUnits"
+                      matInput
+                      type="text"
+                      placeholder="Total Units"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 90px"
+                    ><input
+                      name="hoursPerWeek"
+                      matInput
+                      type="text"
+                      placeholder="Hours Per Week"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="preReq"
+                      matInput
+                      type="text"
+                      placeholder="Pre-Requisites"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="coReq"
+                      matInput
+                      type="text"
+                      placeholder="Co-Requisites"
+                      ngModel
+                      required
+                  /></mat-form-field>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="includeSubjectText"
+                    type="submit"
+                  >
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="cancelAddSubject"
+                    type="button"
+                    (click)="removeAddForm(x, 'secondSem')"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </form>
+              </td>
+              <td colspan="9">
+                <form
+                  #editForm="ngForm"
+                  (ngSubmit)="editCourse(editForm, x, 'secondSem')"
+                  *ngIf="isEditFormShow[x]['secondSem']"
+                >
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="courseCode"
+                      matInput
+                      type="text"
+                      placeholder="Course Code"
+                      [(ngModel)]="isForms[x]['secondSem'].courseCode"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 140px"
+                    ><input
+                      name="descriptiveTitle"
+                      matInput
+                      type="text"
+                      placeholder="Descriptive Title"
+                      [(ngModel)]="isForms[x]['secondSem'].descriptiveTitle"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="lecUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lec Units"
+                      [(ngModel)]="isForms[x]['secondSem'].lecUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="labUnits"
+                      matInput
+                      type="text"
+                      placeholder="Lab Units"
+                      [(ngModel)]="isForms[x]['secondSem'].labUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 60px"
+                    ><input
+                      name="totalUnits"
+                      matInput
+                      type="text"
+                      placeholder="Total Units"
+                      [(ngModel)]="isForms[x]['secondSem'].totalUnits"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 90px"
+                    ><input
+                      name="hoursPerWeek"
+                      matInput
+                      type="text"
+                      placeholder="Hours Per Week"
+                      [(ngModel)]="isForms[x]['secondSem'].hoursPerWeek"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="preReq"
+                      matInput
+                      type="text"
+                      placeholder="Pre-Requisites"
+                      [(ngModel)]="isForms[x]['secondSem'].preReq"
+                      required
+                  /></mat-form-field>
+
+                  <mat-form-field class="subject-input" style="width: 80px"
+                    ><input
+                      name="coReq"
+                      matInput
+                      type="text"
+                      placeholder="Co-Requisites"
+                      [(ngModel)]="isForms[x]['secondSem'].coReq"
+                      required
+                  /></mat-form-field>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="includeSubjectText"
+                    type="submit"
+                  >
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="cancelAddSubject"
+                    type="button"
+                    (click)="cancelEditSub(x, 'secondSem')"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </form>
+              </td>
+              <tr *ngFor="let subjects of subject"></tr>
+              <tr *ngFor="let course of subjects.secondSem; let i = index">
+                <td scope="row">{{ course.courseCode }}</td>
+                <td>{{ course.descriptiveTitle }}</td>
+                <td>{{ course.lecUnits }}</td>
+                <td>{{ course.labUnits }}</td>
+                <td>{{ course.totalUnits }}</td>
+                <td>{{ course.hoursPerWeek }}</td>
+                <td>{{ course.preReq }}</td>
+                <td>{{ course.coReq }}</td>
+                <td>
+                  <button mat-icon-button color="primary" [title]="view">
+                    <mat-icon>remove_red_eye</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="edit"
+                    (click)="selectCourse(course, x, i, 'secondSem')"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    [title]="del"
+                    (click)="deleteCourse(x, i, 'secondSem')"
+                  >
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <!-- Hanggang dito yung table -->
       </mat-expansion-panel>
       <!-- End of first Year Year -->

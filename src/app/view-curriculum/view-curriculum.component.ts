@@ -70,14 +70,22 @@ export class ViewCurriculumComponent implements OnInit{
   },
 
   ]
-  isFormShow:any = []
+  isAddFormShow:any = []
   isForms:any = []
   isEditFormShow:any = []
   one = 0
+  clickAddSubject(yearLevel: number, sem: string){
+    this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = true
+  }
+
+  removeAddForm(yearLevel: number, sem: string){
+    this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = false
+  }
+
   ngOnInit(): void {
     this.subject.forEach(i => {
       this.isEditFormShow.push({firstSem: false, sencondSem:false})
-      this.isFormShow.push([false, false])
+      this.isAddFormShow.push([false, false])
       this.isForms.push({
         firstSem: {  
           courseCode: '',
@@ -101,7 +109,7 @@ export class ViewCurriculumComponent implements OnInit{
         }
       })
     })
-    console.log(this.isFormShow);
+    console.log(this.isAddFormShow);
     
     
   }
@@ -304,12 +312,17 @@ selectedCourse:any = {
   coReq: '',
 }
 
+cancelEditSub(yearLevel:number, sem:string){
+  this.isEditFormShow[yearLevel][sem] = false
+}
+
 forUpdate: any;
-selectCourse(course: any, yearLevel:number, sem:string) {
+selectCourse(course: any, yearLevel:number, index: number, sem:string) {
   // this.selectedCourse = course;
-  this.isForms[yearLevel][sem] = course
+  this.selectedSubjIndex = index
+  this.isForms[yearLevel][sem] = {...course}
   console.log(this.isForms);
-  
+  this.isEditFormShow[yearLevel][sem] = true
 }
 
 
@@ -321,14 +334,23 @@ addSubject(form: NgForm, yearLevel:number, sem:string){
 }
 
 
-editCourse() {
-  this.forUpdate = this.subject.map;
-  const index = this.forUpdate.secondSem.findIndex((course: { courseCode: any; }) => course.courseCode === this.selectedCourse.courseCode);
+// editCourse() {
+//   this.forUpdate = this.subject.map;
+//   const index = this.forUpdate.secondSem.findIndex((course: { courseCode: any; }) => course.courseCode === this.selectedCourse.courseCode);
 
-  this.forUpdate.secondSem[index] = this.selectedCourse;
+//   this.forUpdate.secondSem[index] = this.selectedCourse;
 
-  this.selectedCourse = null;
-  this.editForm.reset();
+//   this.selectedCourse = null;
+//   this.editForm.reset();
+// }
+
+// selectedCourse
+
+selectedSubjIndex = 0;
+editCourse(form: NgForm, yearLevel:number, sem:string){
+  this.subject[yearLevel][sem === 'firstSem' ? 'firstSem' : 'secondSem'][this.selectedSubjIndex] = 
+  {...this.subject[yearLevel][sem === 'firstSem' ? 'firstSem' : 'secondSem'][this.selectedSubjIndex], ...form.value}
+  this.isEditFormShow[yearLevel][sem] = false
 }
 
 
@@ -349,6 +371,8 @@ deleteCourse(yearLevel:number, index:number, sem:string){
   else
     this.subject[yearLevel]['secondSem'].splice(index, 1)
 }
+
+
 
   //add comment
   addComment(form: NgForm): void{
