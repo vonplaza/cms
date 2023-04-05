@@ -1,7 +1,6 @@
 import { Component,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-
 export interface firstSemContent {
       courseCode:string;
       descriptiveTitle:string;
@@ -14,6 +13,7 @@ export interface firstSemContent {
       semester:string;
       year:string;
 }
+
 
 export interface comments{
       username:string;
@@ -58,14 +58,14 @@ export class ViewCurriculumComponent {
 
   firstSem: firstSemContent[] = [
       {'courseCode':'IT-310',
-      'descriptiveTitle':'Subject Name',
+      'descriptiveTitle':'2nd 2nd',
       'lecUnits':'1.0',
       'labUnits':'1.0',
       'totalUnits':'2.0',
       'hoursPerWeek':'2',
       'preReq':'IT 309',
       'coReq':'IT 308',
-    'semester':'2nd',
+    'semester':'1st',
   'year':'1st'},
       {'courseCode':'IT-309',
       'descriptiveTitle':'Subject Name',
@@ -86,9 +86,20 @@ export class ViewCurriculumComponent {
       'preReq':'IT 309',
       'coReq':'IT 308',
       'semester':'1st',
-    'year':'1st'},
+    'year':'3rd'},
+    {'courseCode':'IT-311',
+      'descriptiveTitle':'Subject Name',
+      'lecUnits':'1.0',
+      'labUnits':'1.0',
+      'totalUnits':'2.0',
+      'hoursPerWeek':'2',
+      'preReq':'IT 309',
+      'coReq':'IT 308',
+      'semester':'2nd',
+    'year':'3rd'},
   ]
 
+  
   selectedSubject: any;
   addForm= false;
 
@@ -104,6 +115,7 @@ export class ViewCurriculumComponent {
   updateSubject(){
     const index = this.firstSem.findIndex(subject => subject.courseCode === this.selectedSubject.courseCode);
     this.firstSem[index] = Object.assign({}, this.selectedSubject);
+    console.log(this.firstSem);
     this.selectedSubject = null;
   }
 
@@ -133,10 +145,13 @@ export class ViewCurriculumComponent {
       preReq: form.value.preReq,
       coReq: form.value.coReq,
       semester:form.value.semester,
-      year:form.value.year
+      year:form.value.year,
     };
-    if(newItem.coReq && newItem.courseCode && newItem.descriptiveTitle && newItem.hoursPerWeek && newItem.labUnits && newItem.lecUnits && newItem.preReq && newItem.totalUnits){
+    if(newItem.coReq && newItem.courseCode && newItem.descriptiveTitle && newItem.hoursPerWeek && newItem.labUnits && newItem.lecUnits && newItem.preReq && newItem.totalUnits 
+     && newItem.semester && newItem.year
+      ){
     this.firstSem.push(newItem);
+    console.log(this.firstSem);
     form.reset();
     }
   }
@@ -154,6 +169,16 @@ export class ViewCurriculumComponent {
         this.comment.push(newComment);
         form.reset();
        }
+  }
+
+  showTable = true;
+
+  refreshTable() {
+    // update data source for the table, then toggle the showTable variable
+    this.showTable = false;
+    setTimeout(() => {
+      this.showTable = true;
+    });
   }
   
 

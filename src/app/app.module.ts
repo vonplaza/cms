@@ -24,10 +24,10 @@ import { ViewCurriculumComponent } from './view-curriculum/view-curriculum.compo
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
-import { secondSemFilter } from './view-curriculum/filter-semester-pipe.pipe';
+import { SemYearFilterPipe } from './view-curriculum/filter-sem-year-pipe.pipe';
 @NgModule({
   declarations: [
-    AppComponent,  LoginComponent, ViewCurriculumComponent, secondSemFilter
+    AppComponent,  LoginComponent, ViewCurriculumComponent, SemYearFilterPipe 
     ,topNavigation, dashboard, CurriculumManagementComponent, ViewCurriculumComponent
   ],
   imports: [
