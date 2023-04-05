@@ -56,7 +56,7 @@ export class ViewCurriculumComponent {
 
   ]
 
-  firstSem: firstSemContent[] = [
+  firstSem: firstSemContent[] = [ //actually dapat subject nalang yung name nung object array na to hahahaha
       {'courseCode':'IT-310',
       'descriptiveTitle':'2nd 2nd',
       'lecUnits':'1.0',
@@ -100,11 +100,11 @@ export class ViewCurriculumComponent {
   ]
 
   
-  selectedSubject: any;
+  selectedSubject: any; //para sa referencing ng pagaupdate nung subject
   addForm= false;
 
 
-  isEditing(subjects:any): void{
+  isEditing(subjects:any): void{ //para sa referencing ng pagaupdate nung subject
     this.selectedSubject = Object.assign({}, subjects);
   }
   
@@ -112,29 +112,30 @@ export class ViewCurriculumComponent {
     this.addForm = true;
   }
 
-  updateSubject(){
+  updateSubject(){ //pagaupdate ng subject
     const index = this.firstSem.findIndex(subject => subject.courseCode === this.selectedSubject.courseCode);
     this.firstSem[index] = Object.assign({}, this.selectedSubject);
     console.log(this.firstSem);
     this.selectedSubject = null;
   }
 
-  cancel() {
+  cancel() { //cancel button lang
     this.selectedSubject = null;
     
   }
-  canceladd(){
+  canceladd(){ //cancel din
     this.addForm=false;
   }
 
-  deleteSubject(index: number){
+  deleteSubject(index: number){ //subject deletion
     this.firstSem.splice(index, 1);
   }
-  OnSubmit(): void{
+  
+  OnSubmit(): void{ 
     
   }
 
-  addSubject(form: NgForm): void{
+  addSubject(form: NgForm): void{ //pag-aadd ng subject
     const newItem = {
       courseCode: form.value.courseCode,
       descriptiveTitle: form.value.descriptiveTitle,
@@ -155,10 +156,12 @@ export class ViewCurriculumComponent {
     form.reset();
     }
   }
-  clearValues(): void{
+
+  clearValues(): void{ //form reset
     this.firstSemesterForm.reset();
   }
 
+  //add comment
   addComment(form: NgForm): void{
     const newComment = {
       username: form.value.username,
@@ -171,10 +174,10 @@ export class ViewCurriculumComponent {
        }
   }
 
-  showTable = true;
+  showTable = true; //para lang sa pag refresh ng filter pipe at table
 
   refreshTable() {
-    // update data source for the table, then toggle the showTable variable
+    // para lang sa pag refresh ng filter pipe at table
     this.showTable = false;
     setTimeout(() => {
       this.showTable = true;

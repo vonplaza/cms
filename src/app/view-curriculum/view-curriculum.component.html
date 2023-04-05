@@ -12,7 +12,7 @@
     </button>
     <h3>Kervin Robby Pagtalunan</h3>
     <h3>10-20-25</h3>
-    
+
   </div>
   <!-- Input table para sa edit at add -->
   <table class="table">
@@ -33,38 +33,37 @@
       <tr *ngIf="addForm">
         <th colspan="8">
           <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode"
-                matInput type="text" placeholder="Course Code" ngModel required /></mat-form-field>
-               <br> {{firstSemesterForm.value|json}}
-            <mat-form-field class="subject-input" style="width: 140px;"><input
-                name="descriptiveTitle" matInput type="text" placeholder="Descriptive Title" ngModel
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode" matInput type="text"
+                placeholder="Course Code" ngModel required /></mat-form-field>
+            <br> {{firstSemesterForm.value|json}}
+            <mat-form-field class="subject-input" style="width: 140px;"><input name="descriptiveTitle" matInput
+                type="text" placeholder="Descriptive Title" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="lecUnits"
-                matInput type="text" placeholder="Lec Units" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="lecUnits" matInput type="text"
+                placeholder="Lec Units" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="labUnits"
-                matInput type="text" placeholder="Lab Units" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="labUnits" matInput type="text"
+                placeholder="Lab Units" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="totalUnits"
-                matInput type="text" placeholder="Total Units" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="totalUnits" matInput type="text"
+                placeholder="Total Units" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 90px;"><input name="hoursPerWeek"
-                matInput type="text" placeholder="Hours Per Week" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 90px;"><input name="hoursPerWeek" matInput type="text"
+                placeholder="Hours Per Week" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="preReq" matInput
-                type="text" placeholder="Pre-Requisites" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="preReq" matInput type="text"
+                placeholder="Pre-Requisites" ngModel required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="coReq" matInput
-                type="text" placeholder="Co-Requisites" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="coReq" matInput type="text"
+                placeholder="Co-Requisites" ngModel required /></mat-form-field>
 
-                <mat-form-field class="subject-input" style="width: 60px;"><input name="semester" matInput
-                  type="text" placeholder="Semester" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="semester" matInput type="text"
+                placeholder="Semester" ngModel required /></mat-form-field>
 
-                  <mat-form-field class="subject-input" style="width: 60px;"><input name="year" matInput
-                    type="text" placeholder="Year" ngModel required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="year" matInput type="text"
+                placeholder="Year" ngModel required /></mat-form-field>
 
-                
+
 
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
@@ -82,42 +81,36 @@
       <tr *ngIf="selectedSubject">
         <th colspan="9">
           <form #editForm="ngForm" (ngSubmit)="updateSubject()">
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode"
-                matInput type="text" placeholder="Course Code" [(ngModel)]="selectedSubject.courseCode"
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode" matInput type="text"
+                placeholder="Course Code" [(ngModel)]="selectedSubject.courseCode" required /></mat-form-field>
+
+            <mat-form-field class="subject-input" style="width: 140px;"><input name="descriptiveTitle" matInput
+                type="text" placeholder="Descriptive Title" [(ngModel)]="selectedSubject.descriptiveTitle"
                 required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 140px;"><input
-                name="descriptiveTitle" matInput type="text" placeholder="Descriptive Title"
-                [(ngModel)]="selectedSubject.descriptiveTitle" required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="lecUnits" matInput type="text"
+                placeholder="Lec Units" [(ngModel)]="selectedSubject.lecUnits" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="lecUnits"
-                matInput type="text" placeholder="Lec Units" [(ngModel)]="selectedSubject.lecUnits"
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="labUnits" matInput type="text"
+                placeholder="Lab Units" [(ngModel)]="selectedSubject.labUnits" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="labUnits"
-                matInput type="text" placeholder="Lab Units" [(ngModel)]="selectedSubject.labUnits"
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="totalUnits" matInput type="text"
+                placeholder="Total Units" [(ngModel)]="selectedSubject.totalUnits" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 60px;"><input name="totalUnits"
-                matInput type="text" placeholder="Total Units" [(ngModel)]="selectedSubject.totalUnits"
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 90px;"><input name="hoursPerWeek" matInput type="text"
+                placeholder="Hours Per Week" [(ngModel)]="selectedSubject.hoursPerWeek" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 90px;"><input name="hoursPerWeek"
-                matInput type="text" placeholder="Hours Per Week" [(ngModel)]="selectedSubject.hoursPerWeek"
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="preReq" matInput type="text"
+                placeholder="Pre-Requisites" [(ngModel)]="selectedSubject.preReq" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="preReq" matInput
-                type="text" placeholder="Pre-Requisites" [(ngModel)]="selectedSubject.preReq"
-                required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px;"><input name="coReq" matInput type="text"
+                placeholder="Co-Requisites" [(ngModel)]="selectedSubject.coReq" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="coReq" matInput
-                type="text" placeholder="Co-Requisites" [(ngModel)]="selectedSubject.coReq" required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="semester" matInput type="text"
+                placeholder="Semester" [(ngModel)]="selectedSubject.semester" required /></mat-form-field>
 
-                <mat-form-field class="subject-input" style="width: 60px;"><input name="semester" matInput
-                  type="text" placeholder="Semester" [(ngModel)]="selectedSubject.semester" required /></mat-form-field>
-
-                  <mat-form-field class="subject-input" style="width: 60px;"><input name="year" matInput
-                    type="text" placeholder="Year" [(ngModel)]="selectedSubject.year" required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 60px;"><input name="year" matInput type="text"
+                placeholder="Year" [(ngModel)]="selectedSubject.year" required /></mat-form-field>
 
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
