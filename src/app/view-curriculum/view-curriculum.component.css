@@ -1,6 +1,12 @@
 *{
     font-family: 'century gothic';
 }
+td{
+    font-size: small;
+}
+th{
+    font-size: small;
+}
 .container{
     width: 100%;
     height: 100vh;

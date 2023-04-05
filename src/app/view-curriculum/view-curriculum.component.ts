@@ -1,7 +1,12 @@
 import { Component,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-export interface firstSemContent {
+
+export interface subjects{
+  firstSem :subject[];
+  secondSem: subject[];
+}
+export interface subject {
       courseCode:string;
       descriptiveTitle:string;
       lecUnits:string;
@@ -11,8 +16,9 @@ export interface firstSemContent {
       preReq:string;
       coReq:string;
       semester:string;
-      year:string;
+      yearLevel:string;
 }
+
 
 
 export interface comments{
@@ -31,7 +37,7 @@ export class ViewCurriculumComponent {
 
 
   @ViewChild("firstSemesterForm", {static: false})"firstSemesterForm": NgForm;
-
+  expansionTitle='';
   panelOpenState = false;
   del = 'Delete';
   view = 'View Syllabus';
@@ -39,7 +45,17 @@ export class ViewCurriculumComponent {
   includeSubjectText='Add Subject';
   cancelAddSubject='Cancel';
   uploadSyllabus='Upload Syllabus';
+  editForm: any;
 
+  changeYearlvl(index: number){
+
+    if(index==0){
+      this.expansionTitle='First Year';
+    }
+    if(index==1){
+      this.expansionTitle='Second Year';
+    }
+  }
   comment: comments[]=[
     {'username':'Mang ben', 
     'header':'IT 309',
@@ -56,110 +72,263 @@ export class ViewCurriculumComponent {
 
   ]
 
-  firstSem: firstSemContent[] = [ //actually dapat subject nalang yung name nung object array na to hahahaha
-      {'courseCode':'IT-310',
-      'descriptiveTitle':'2nd 2nd',
-      'lecUnits':'1.0',
-      'labUnits':'1.0',
-      'totalUnits':'2.0',
-      'hoursPerWeek':'2',
-      'preReq':'IT 309',
-      'coReq':'IT 308',
-    'semester':'1st',
-  'year':'1st'},
-      {'courseCode':'IT-309',
-      'descriptiveTitle':'Subject Name',
-      'lecUnits':'1.0',
-      'labUnits':'1.0',
-      'totalUnits':'2.0',
-      'hoursPerWeek':'2',
-      'preReq':'IT 309',
-      'coReq':'IT 308',
-      'semester':'2nd',
-    'year':'1st'},
-      {'courseCode':'IT-309',
-      'descriptiveTitle':'Subject Name',
-      'lecUnits':'1.0',
-      'labUnits':'1.0',
-      'totalUnits':'2.0',
-      'hoursPerWeek':'2',
-      'preReq':'IT 309',
-      'coReq':'IT 308',
-      'semester':'1st',
-    'year':'3rd'},
-    {'courseCode':'IT-311',
-      'descriptiveTitle':'Subject Name',
-      'lecUnits':'1.0',
-      'labUnits':'1.0',
-      'totalUnits':'2.0',
-      'hoursPerWeek':'2',
-      'preReq':'IT 309',
-      'coReq':'IT 308',
-      'semester':'2nd',
-    'year':'3rd'},
-  ]
+    subject :subjects[] = [
+    {
+    firstSem:[
+      {
+        courseCode: 'CSC101 1st year 1st Sem',
+        descriptiveTitle: 'Introduction to Computer Science',
+        lecUnits: '3',
+        labUnits: '1',
+        totalUnits: '4',
+        hoursPerWeek: '4',
+        preReq: '',
+        coReq: '',
+        semester: '1',
+        yearLevel: '1'
+    },
+    {
+      courseCode: 'ENG101 1st year 1st Sem',
+        descriptiveTitle: 'English Composition',
+        lecUnits: '3',
+        labUnits: '0',
+        totalUnits: '3',
+        hoursPerWeek: '3',
+        preReq: '',
+        coReq: '',
+        semester: '1',
+        yearLevel: '1'
+    },
+  ],
+    secondSem:[
+      {
+        courseCode: 'CSC102 1st Year 2nd Sem',
+        descriptiveTitle: 'Data Structures and Algorithms',
+        lecUnits: '3',
+        labUnits: '1',
+        totalUnits: '4',
+        hoursPerWeek: '4',
+        preReq: 'CSC101',
+        coReq: '',
+        semester: '2',
+        yearLevel: '1'
+      },
+      {
+        courseCode: 'ENG102 1st year 2nd Sem',
+        descriptiveTitle: 'English Literature',
+        lecUnits: '3',
+        labUnits: '0',
+        totalUnits: '3',
+        hoursPerWeek: '3',
+        preReq: '',
+        coReq: '',
+        semester: '2',
+        yearLevel: '1'
+      }
+    ],
+    },
 
-  
-  selectedSubject: any; //para sa referencing ng pagaupdate nung subject
-  addForm= false;
+
+    {
+      firstSem:[
+        {
+          courseCode: 'MAT102 1st Year 2nd Sem',
+          descriptiveTitle: 'Plane Trigonometry',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'MAT101',
+          coReq: '',
+          semester: '1',
+          yearLevel: '2'
+        },
+      ],
+      secondSem:[
+        {
+          courseCode: 'MAT101',
+        descriptiveTitle: 'College Algebra 2nd Year',
+        lecUnits: '3',
+        labUnits: '0',
+        totalUnits: '3',
+        hoursPerWeek: '3',
+        preReq: '',
+        coReq: '',
+        semester: '2',
+        yearLevel: '2'
+        },
+      ]
+    },
+
+    {
+      firstSem: [
+        {
+          courseCode: 'MATH101 3rd year 1st Sem',
+          descriptiveTitle: 'Calculus 1',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: '',
+          coReq: '',
+          semester: '1',
+          yearLevel: '3'
+        },
+        {
+          courseCode: 'PHY101 3rd year 1st Sem',
+          descriptiveTitle: 'Introduction to Physics',
+          lecUnits: '3',
+          labUnits: '2',
+          totalUnits: '5',
+          hoursPerWeek: '5',
+          preReq: '',
+          coReq: '',
+          semester: '1',
+          yearLevel: '3'
+        },
+        {
+          courseCode: 'CS101 3rd year 1st Sem',
+          descriptiveTitle: 'Programming Fundamentals',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: '',
+          coReq: '',
+          semester: '1',
+          yearLevel: '3'
+        }
+      ],
+      secondSem: [
+        {
+          courseCode: 'MATH102 3rd Year 2nd Sem',
+          descriptiveTitle: 'Calculus 2',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'MATH101',
+          coReq: '',
+          semester: '2',
+          yearLevel: '3'
+        },
+        {
+          courseCode: 'PHY102 3rd year 2nd Sem',
+          descriptiveTitle: 'Electricity and Magnetism',
+          lecUnits: '3',
+          labUnits: '2',
+          totalUnits: '5',
+          hoursPerWeek: '5',
+          preReq: 'PHY101',
+          coReq: '',
+          semester: '2',
+          yearLevel: '3'
+        },
+        {
+          courseCode: 'CS102 3rd year 2nd Sem',
+          descriptiveTitle: 'Object Oriented Programming',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: 'CS101',
+          coReq: '',
+          semester: '2',
+          yearLevel: '3'
+        }
+      ],
+    },
 
 
-  isEditing(subjects:any): void{ //para sa referencing ng pagaupdate nung subject
-    this.selectedSubject = Object.assign({}, subjects);
-  }
-  
-  add(){
-    this.addForm = true;
-  }
+    {
+      firstSem:[
+        {
+          courseCode: 'PHY101 4th year 1st Sem',
+          descriptiveTitle: 'Introduction to Physics',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: '',
+          coReq: '',
+          semester: '1',
+          yearLevel: '4'
+        },
+        {
+          courseCode: 'BIO101 4th year 1st Sem',
+          descriptiveTitle: 'Introduction to Biology',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: '',
+          coReq: '',
+          semester: '1',
+          yearLevel: '4'
+        }
+      ],
+      secondSem:[
+        {
+          courseCode: 'CHEM102 4th Year 2nd Sem',
+          descriptiveTitle: 'Organic Chemistry',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: 'CHEM101',
+          coReq: '',
+          semester: '2',
+          yearLevel: '4'
+        },
+        {
+          courseCode: 'MATH102 4th year 2nd Sem',
+          descriptiveTitle: 'Calculus I',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'MATH101',
+          coReq: '',
+          semester: '2',
+          yearLevel: '4'
+        }
+      ],
+    },
 
-  updateSubject(){ //pagaupdate ng subject
-    const index = this.firstSem.findIndex(subject => subject.courseCode === this.selectedSubject.courseCode);
-    this.firstSem[index] = Object.assign({}, this.selectedSubject);
-    console.log(this.firstSem);
-    this.selectedSubject = null;
-  }
 
-  cancel() { //cancel button lang
-    this.selectedSubject = null;
-    
-  }
-  canceladd(){ //cancel din
-    this.addForm=false;
-  }
 
-  deleteSubject(index: number){ //subject deletion
-    this.firstSem.splice(index, 1);
-  }
-  
-  OnSubmit(): void{ 
-    
-  }
+];
 
-  addSubject(form: NgForm): void{ //pag-aadd ng subject
-    const newItem = {
-      courseCode: form.value.courseCode,
-      descriptiveTitle: form.value.descriptiveTitle,
-      lecUnits: form.value.lecUnits,
-      labUnits: form.value.labUnits,
-      totalUnits: form.value.totalUnits,
-      hoursPerWeek: form.value.hoursPerWeek,
-      preReq: form.value.preReq,
-      coReq: form.value.coReq,
-      semester:form.value.semester,
-      year:form.value.year,
+
+selectedCourse: any;
+forUpdate: any;
+selectCourse(course: any) {
+  this.selectedCourse = course;
+}
+
+editCourse() {
+
+  this.forUpdate = this.subject.map;
+  const index = this.forUpdate.secondSem.findIndex((course: { courseCode: any; }) => course.courseCode === this.selectedCourse.courseCode);
+
+  this.forUpdate.secondSem[index] = this.selectedCourse;
+
+  this.selectedCourse = null;
+  this.editForm.reset();
+}
+
+
+
+deleteCourse(event: MouseEvent,courseCode: string){
+  event.stopPropagation();
+  this.subject = this.subject.map(subject => {
+    return {
+      firstSem: subject.firstSem.filter(course => course.courseCode !== courseCode),
+      secondSem: subject.secondSem.filter(course => course.courseCode !== courseCode)
     };
-    if(newItem.coReq && newItem.courseCode && newItem.descriptiveTitle && newItem.hoursPerWeek && newItem.labUnits && newItem.lecUnits && newItem.preReq && newItem.totalUnits 
-     && newItem.semester && newItem.year
-      ){
-    this.firstSem.push(newItem);
-    console.log(this.firstSem);
-    form.reset();
-    }
-  }
+  });
+}
 
-  clearValues(): void{ //form reset
-    this.firstSemesterForm.reset();
-  }
 
   //add comment
   addComment(form: NgForm): void{
@@ -173,16 +342,7 @@ export class ViewCurriculumComponent {
         form.reset();
        }
   }
-
-  showTable = true; //para lang sa pag refresh ng filter pipe at table
-
-  refreshTable() {
-    // para lang sa pag refresh ng filter pipe at table
-    this.showTable = false;
-    setTimeout(() => {
-      this.showTable = true;
-    });
-  }
   
+
 
 }

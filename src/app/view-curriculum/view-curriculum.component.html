@@ -29,10 +29,10 @@
         <th></th>
         <th></th>
       </tr>
-      <th *ngIf="addForm" class="thead-dark">Add Subject</th>
-      <tr *ngIf="addForm">
+      <th  class="thead-dark">Add Subject</th>
+      <tr>
         <th colspan="8">
-          <form #firstSemesterForm="ngForm" (ngSubmit)="addSubject(firstSemesterForm)">
+          <form #firstSemesterForm="ngForm">
             <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode" matInput type="text"
                 placeholder="Course Code" ngModel required /></mat-form-field>
             <mat-form-field class="subject-input" style="width: 140px;"><input name="descriptiveTitle" matInput
@@ -64,10 +64,10 @@
 
 
 
-            <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
+            <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()"
+            <button mat-icon-button color="primary"
               [title]="cancelAddSubject" type="button">
               <mat-icon>close</mat-icon>
             </button>
@@ -76,45 +76,45 @@
 
 
       </tr>
-      <th *ngIf="selectedSubject" class="thead-dark">Edit Subject</th>
-      <tr *ngIf="selectedSubject">
+      <th class="thead-dark">Edit Subject</th>
+      <tr>
         <th colspan="9">
-          <form #editForm="ngForm" (ngSubmit)="updateSubject()">
+          <form #editForm="ngForm" (ngSubmit)="editCourse()">
             <mat-form-field class="subject-input" style="width: 80px;"><input name="courseCode" matInput type="text"
-                placeholder="Course Code" [(ngModel)]="selectedSubject.courseCode" required /></mat-form-field>
+                placeholder="Course Code" [(ngModel)]="selectedCourse.courseCode" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 140px;"><input name="descriptiveTitle" matInput
-                type="text" placeholder="Descriptive Title" [(ngModel)]="selectedSubject.descriptiveTitle"
+                type="text" placeholder="Descriptive Title" [(ngModel)]="selectedCourse.descriptiveTitle"
                 required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 60px;"><input name="lecUnits" matInput type="text"
-                placeholder="Lec Units" [(ngModel)]="selectedSubject.lecUnits" required /></mat-form-field>
+                placeholder="Lec Units" [(ngModel)]="selectedCourse.lecUnits" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 60px;"><input name="labUnits" matInput type="text"
-                placeholder="Lab Units" [(ngModel)]="selectedSubject.labUnits" required /></mat-form-field>
+                placeholder="Lab Units" [(ngModel)]="selectedCourse.labUnits" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 60px;"><input name="totalUnits" matInput type="text"
-                placeholder="Total Units" [(ngModel)]="selectedSubject.totalUnits" required /></mat-form-field>
+                placeholder="Total Units" [(ngModel)]="selectedCourse.totalUnits" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 90px;"><input name="hoursPerWeek" matInput type="text"
-                placeholder="Hours Per Week" [(ngModel)]="selectedSubject.hoursPerWeek" required /></mat-form-field>
+                placeholder="Hours Per Week" [(ngModel)]="selectedCourse.hoursPerWeek" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 80px;"><input name="preReq" matInput type="text"
-                placeholder="Pre-Requisites" [(ngModel)]="selectedSubject.preReq" required /></mat-form-field>
+                placeholder="Pre-Requisites" [(ngModel)]="selectedCourse.perReq" required /></mat-form-field>
 
-            <mat-form-field class="subject-input" style="width: 80px;"><input name="coReq" matInput type="text"
-                placeholder="Co-Requisites" [(ngModel)]="selectedSubject.coReq" required /></mat-form-field>
+            <mat-form-field class="subject-input" style="width: 80px; "><input name="coReq" matInput type="text"
+                placeholder="Co-Requisites" [(ngModel)]="selectedCourse.coReq" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 60px;"><input name="semester" matInput type="text"
-                placeholder="Semester" [(ngModel)]="selectedSubject.semester" required /></mat-form-field>
+                placeholder="Semester" [(ngModel)]="selectedCourse.semester" required /></mat-form-field>
 
             <mat-form-field class="subject-input" style="width: 60px;"><input name="year" matInput type="text"
-                placeholder="Year" [(ngModel)]="selectedSubject.year" required /></mat-form-field>
+                placeholder="Year" [(ngModel)]="selectedCourse.year" required /></mat-form-field>
 
-            <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
+            <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button">
+            <button mat-icon-button color="primary" [title]="cancelAddSubject" type="button">
               <mat-icon>close</mat-icon>
             </button>
           </form>
@@ -126,19 +126,17 @@
 
   <div class="bottom">
     <mat-accordion>
-      <!-- First Year -->
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header style="background-color: #c0c0c0">
-          <mat-panel-title class="panel-text"> First Year </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
-          Add Subject<mat-icon>add</mat-icon>
-        </button>
 
-        <!-- Dito yung 1st year 1st sem sem table -->
+      
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let subjects of subject let x;">
+        <mat-expansion-panel-header style="background-color: #c0c0c0">
+          <mat-panel-title class="panel-text" >Year</mat-panel-title>
+        </mat-expansion-panel-header>
+        <button class="mb-2 mt-2" mat-raised-button color="primary"> Add Subject<mat-icon>add</mat-icon></button>
+        <!-- Table para sa lahat -->
+
         <table class="table">
           <thead class="thead-dark">
-            <th class="thead-dark">First Semester</th>
             <tr>
               <th scope="col">Course Code</th>
               <th scope="col">Descriptive Title</th>
@@ -152,380 +150,66 @@
             </tr>
           </thead>
 
-          <!-- For loop ng 1st year 1st sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem| semyearFilter: '1st' : '1st'; let i = index;" [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
+          <tbody>
+            <td colspan="9"><strong>First Semester</strong></td>
+            <tr *ngFor="let subjects of subject">
+              
+            </tr>
+            <tr *ngFor="let course of subjects.firstSem">
+              <td scope="row">{{ course.courseCode }}</td>
+              <td>{{ course.descriptiveTitle }}</td>
+              <td>{{ course.lecUnits }}</td>
+              <td>{{ course.labUnits }}</td>
+              <td>{{ course.totalUnits }}</td>
+              <td>{{ course.hoursPerWeek }}</td>
+              <td>{{ course.preReq }}</td>
+              <td>{{ course.coReq }}</td>
               <td>
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
+                <button mat-icon-button color="primary" [title]="edit" (click)="selectCourse(course)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteCourse($event,course.courseCode)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
             </tr>
-          </tbody>
-          <!-- hanggang dito For loop ng 1st 1st sem container -->
-          <thead class="thead-dark">
-            <th class="thead-dark">Second Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
+            <td colspan="9"><strong>Second Semester</strong></td>
+            <tr *ngFor="let subjects of subject">
+              
             </tr>
-          </thead>
-
-          <!-- For loop ng 1st year 2nd sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'1st':'2nd';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
+            <tr *ngFor="let course of subjects.secondSem">
+              <td scope="row">{{ course.courseCode }}</td>
+              <td>{{ course.descriptiveTitle }}</td>
+              <td>{{ course.lecUnits }}</td>
+              <td>{{ course.labUnits }}</td>
+              <td>{{ course.totalUnits }}</td>
+              <td>{{ course.hoursPerWeek }}</td>
+              <td>{{ course.preReq }}</td>
+              <td>{{ course.coReq }}</td>
               <td>
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
+                <button mat-icon-button color="primary" [title]="edit">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()"> 
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteCourse($event,course.courseCode)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
+
+
         <!-- Hanggang dito yung table -->
       </mat-expansion-panel>
       <!-- End of first Year Year -->
 
-      <!-- 2nd Year -->
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header style="background-color: #c0c0c0">
-          <mat-panel-title class="panel-text"> Second Year </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
-          Add Subject<mat-icon>add</mat-icon>
-        </button>
-
-        <!-- Dito yung 2nd year 1st sem table -->
-        <table class="table">
-          <thead class="thead-dark">
-            <th class="thead-dark">First Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 2nd year 1st sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'2nd':'1st';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <!-- hanggang dito For loop ng 2nd year 2nd sem container -->
-          <thead class="thead-dark">
-            <th class="thead-dark">Second Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 2nd year 2nd sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'2nd':'2nd';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- Hanggang dito yung table -->
-      </mat-expansion-panel>
-      <!-- 2nd Year ends here -->
-      <!-- 3rd Year -->
-
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header style="background-color: #c0c0c0">
-          <mat-panel-title class="panel-text"> Third Year </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
-          Add Subject<mat-icon>add</mat-icon>
-        </button>
-
-        <!-- Dito yung 3rd year 1st sem table -->
-        <table class="table">
-          <thead class="thead-dark">
-            <th class="thead-dark">First Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 3rd year 1st sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'3rd':'1st';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <!-- hanggang dito For loop ng 3rd year 2nd sem container -->
-          <thead class="thead-dark">
-            <th class="thead-dark">Second Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 3rd year 2nd sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'3rd':'2nd';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- Hanggang dito yung table -->
-      </mat-expansion-panel>
-      <!-- 3rd Year ends here -->
-      <!-- 4th Year starts here -->
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header style="background-color: #c0c0c0">
-          <mat-panel-title class="panel-text"> Fourth Year </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button class="mb-2 mt-2" mat-raised-button color="primary" (click)="add()">
-          Add Subject<mat-icon>add</mat-icon>
-        </button>
-
-        <!-- Dito yung 4th year 1st sem table -->
-        <table class="table">
-          <thead class="thead-dark">
-            <th class="thead-dark">First Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 4th year 1st sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'4th':'1st';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <!-- hanggang dito For loop ng 4th year 2nd sem container -->
-          <thead class="thead-dark">
-            <th class="thead-dark">Second Semester</th>
-            <tr>
-              <th scope="col">Course Code</th>
-              <th scope="col">Descriptive Title</th>
-              <th scope="col">Lec Units</th>
-              <th scope="col">Lab Units</th>
-              <th scope="col">Total Units</th>
-              <th scope="col">Hours Per Week</th>
-              <th scope="col">Pre-Req</th>
-              <th scope="col">Co-Req</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-
-          <!-- For loop ng 4th year 2nd sem container -->
-          <tbody *ngIf="showTable">
-            <tr *ngFor="
-                let subjects of firstSem | semyearFilter:'4th':'2nd';
-                let i = index
-              " [attr.data-index]="i">
-              <th scope="row">{{ subjects.courseCode }}</th>
-              <td>{{ subjects.descriptiveTitle }}</td>
-              <td>{{ subjects.lecUnits }}</td>
-              <td>{{ subjects.labUnits }}</td>
-              <td>{{ subjects.totalUnits }}</td>
-              <td>{{ subjects.hoursPerWeek }}</td>
-              <td>{{ subjects.preReq }}</td>
-              <td>{{ subjects.coReq }}</td>
-              <td>
-                <button mat-icon-button color="primary" [title]="view">
-                  <mat-icon>remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- Hanggang dito yung table -->
-      </mat-expansion-panel>
-      <!-- 4th year ends here -->
+      
     </mat-accordion>
 
     <!-- Dito Yung chat container -->
