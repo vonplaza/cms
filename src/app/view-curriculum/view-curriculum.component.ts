@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 export interface subjects{
@@ -31,7 +31,8 @@ export interface comments{
   styleUrls: ['./view-curriculum.component.css']
 })
 
-export class ViewCurriculumComponent {
+export class ViewCurriculumComponent implements OnInit{
+
 
 
   @ViewChild("firstSemesterForm", {static: false})"firstSemesterForm": NgForm;
@@ -69,7 +70,41 @@ export class ViewCurriculumComponent {
   },
 
   ]
-
+  isFormShow:any = []
+  isForms:any = []
+  isEditFormShow:any = []
+  one = 0
+  ngOnInit(): void {
+    this.subject.forEach(i => {
+      this.isEditFormShow.push({firstSem: false, sencondSem:false})
+      this.isFormShow.push([false, false])
+      this.isForms.push({
+        firstSem: {  
+          courseCode: '',
+          descriptiveTitle: '',
+          lecUnits: '',
+          labUnits: '',
+          totalUnits: '',
+          hoursPerWeek: '',
+          preReq: '',
+          coReq: '',
+        }
+        ,sencondSem:{
+          courseCode: '',
+          descriptiveTitle: '',
+          lecUnits: '',
+          labUnits: '',
+          totalUnits: '',
+          hoursPerWeek: '',
+          preReq: '',
+          coReq: '',
+        }
+      })
+    })
+    console.log(this.isFormShow);
+    
+    
+  }
     subject :subjects[] = [
     {
     firstSem:[
@@ -270,8 +305,11 @@ selectedCourse:any = {
 }
 
 forUpdate: any;
-selectCourse(course: any) {
-  this.selectedCourse = course;
+selectCourse(course: any, yearLevel:number, sem:string) {
+  // this.selectedCourse = course;
+  this.isForms[yearLevel][sem] = course
+  console.log(this.isForms);
+  
 }
 
 
@@ -295,16 +333,22 @@ editCourse() {
 
 
 
-deleteCourse(event: MouseEvent,courseCode: string){
-  event.stopPropagation();
-  this.subject = this.subject.map(subject => {
-    return {
-      firstSem: subject.firstSem.filter(course => course.courseCode !== courseCode),
-      secondSem: subject.secondSem.filter(course => course.courseCode !== courseCode)
-    };
-  });
-}
+// deleteCourse(event: MouseEvent,courseCode: string){
+//   event.stopPropagation();
+//   this.subject = this.subject.map(subject => {
+//     return {
+//       firstSem: subject.firstSem.filter(course => course.courseCode !== courseCode),
+//       secondSem: subject.secondSem.filter(course => course.courseCode !== courseCode)
+//     };
+//   });
+// }
 
+deleteCourse(yearLevel:number, index:number, sem:string){
+  if(sem === 'firstSem')
+    this.subject[yearLevel]['firstSem'].splice(index, 1)
+  else
+    this.subject[yearLevel]['secondSem'].splice(index, 1)
+}
 
   //add comment
   addComment(form: NgForm): void{
