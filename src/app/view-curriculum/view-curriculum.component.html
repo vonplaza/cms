@@ -67,7 +67,7 @@
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()" (click)="refreshTable()"
+            <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()"
               [title]="cancelAddSubject" type="button">
               <mat-icon>close</mat-icon>
             </button>
@@ -114,7 +114,7 @@
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button" (click)="refreshTable()">
+            <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button">
               <mat-icon>close</mat-icon>
             </button>
           </form>
@@ -136,7 +136,7 @@
         </button>
 
         <!-- Dito yung 1st year 1st sem sem table -->
-        <table class="table" *ngIf="showTable">
+        <table class="table">
           <thead class="thead-dark">
             <th class="thead-dark">First Semester</th>
             <tr>
@@ -153,7 +153,7 @@
           </thead>
 
           <!-- For loop ng 1st year 1st sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem| semyearFilter: '1st' : '1st'; let i = index;" [attr.data-index]="i">
               <th scope="row">{{ subjects.courseCode }}</th>
@@ -168,10 +168,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -194,7 +194,7 @@
           </thead>
 
           <!-- For loop ng 1st year 2nd sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'1st':'2nd';
                 let i = index
@@ -211,10 +211,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()"> 
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -235,7 +235,7 @@
         </button>
 
         <!-- Dito yung 2nd year 1st sem table -->
-        <table class="table" *ngIf="showTable">
+        <table class="table">
           <thead class="thead-dark">
             <th class="thead-dark">First Semester</th>
             <tr>
@@ -252,7 +252,7 @@
           </thead>
 
           <!-- For loop ng 2nd year 1st sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'2nd':'1st';
                 let i = index
@@ -269,10 +269,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -295,7 +295,7 @@
           </thead>
 
           <!-- For loop ng 2nd year 2nd sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'2nd':'2nd';
                 let i = index
@@ -312,10 +312,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -336,7 +336,7 @@
         </button>
 
         <!-- Dito yung 3rd year 1st sem table -->
-        <table class="table" *ngIf="showTable">
+        <table class="table">
           <thead class="thead-dark">
             <th class="thead-dark">First Semester</th>
             <tr>
@@ -353,7 +353,7 @@
           </thead>
 
           <!-- For loop ng 3rd year 1st sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'3rd':'1st';
                 let i = index
@@ -370,10 +370,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -396,7 +396,7 @@
           </thead>
 
           <!-- For loop ng 3rd year 2nd sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'3rd':'2nd';
                 let i = index
@@ -413,10 +413,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -436,7 +436,7 @@
         </button>
 
         <!-- Dito yung 4th year 1st sem table -->
-        <table class="table" *ngIf="showTable">
+        <table class="table">
           <thead class="thead-dark">
             <th class="thead-dark">First Semester</th>
             <tr>
@@ -453,7 +453,7 @@
           </thead>
 
           <!-- For loop ng 4th year 1st sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'4th':'1st';
                 let i = index
@@ -470,10 +470,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
@@ -496,7 +496,7 @@
           </thead>
 
           <!-- For loop ng 4th year 2nd sem container -->
-          <tbody>
+          <tbody *ngIf="showTable">
             <tr *ngFor="
                 let subjects of firstSem | semyearFilter:'4th':'2nd';
                 let i = index
@@ -513,10 +513,10 @@
                 <button mat-icon-button color="primary" [title]="view">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)">
+                <button mat-icon-button color="primary" [title]="edit" (click)="isEditing(subjects)" (click)="refreshTable()">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)">
+                <button mat-icon-button color="primary" [title]="del" (click)="deleteSubject(i)" (click)="refreshTable()">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
               </td>
