@@ -67,7 +67,7 @@
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()"
+            <button mat-icon-button color="primary" (click)="clearValues()" (click)="canceladd()" (click)="refreshTable()"
               [title]="cancelAddSubject" type="button">
               <mat-icon>close</mat-icon>
             </button>
@@ -114,7 +114,7 @@
             <button mat-icon-button color="primary" [title]="includeSubjectText" type="submit" (click)="refreshTable()">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button">
+            <button mat-icon-button color="primary" (click)="cancel()" [title]="cancelAddSubject" type="button" (click)="refreshTable()">
               <mat-icon>close</mat-icon>
             </button>
           </form>
