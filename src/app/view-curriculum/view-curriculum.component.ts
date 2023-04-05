@@ -1,7 +1,6 @@
 import { Component,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-
 export interface subjects{
   firstSem :subject[];
   secondSem: subject[];
@@ -15,10 +14,9 @@ export interface subject {
       hoursPerWeek:string;
       preReq:string;
       coReq:string;
-      semester:string;
-      yearLevel:string;
+      // semester:string;
+      // yearLevel:string;
 }
-
 
 
 export interface comments{
@@ -83,23 +81,17 @@ export class ViewCurriculumComponent {
         totalUnits: '4',
         hoursPerWeek: '4',
         preReq: '',
-        coReq: '',
-        semester: '1',
-        yearLevel: '1'
-    },
-    {
-      courseCode: 'ENG101 1st year 1st Sem',
+        coReq: '',     },
+      {
+        courseCode: 'ENG101 1st year 1st Sem',
         descriptiveTitle: 'English Composition',
         lecUnits: '3',
         labUnits: '0',
         totalUnits: '3',
         hoursPerWeek: '3',
         preReq: '',
-        coReq: '',
-        semester: '1',
-        yearLevel: '1'
-    },
-  ],
+        coReq: '',     },
+    ],
     secondSem:[
       {
         courseCode: 'CSC102 1st Year 2nd Sem',
@@ -109,10 +101,7 @@ export class ViewCurriculumComponent {
         totalUnits: '4',
         hoursPerWeek: '4',
         preReq: 'CSC101',
-        coReq: '',
-        semester: '2',
-        yearLevel: '1'
-      },
+        coReq: '',     },
       {
         courseCode: 'ENG102 1st year 2nd Sem',
         descriptiveTitle: 'English Literature',
@@ -121,14 +110,9 @@ export class ViewCurriculumComponent {
         totalUnits: '3',
         hoursPerWeek: '3',
         preReq: '',
-        coReq: '',
-        semester: '2',
-        yearLevel: '1'
-      }
+        coReq: '',     }
     ],
     },
-
-
     {
       firstSem:[
         {
@@ -140,8 +124,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '3',
           preReq: 'MAT101',
           coReq: '',
-          semester: '1',
-          yearLevel: '2'
         },
       ],
       secondSem:[
@@ -153,10 +135,7 @@ export class ViewCurriculumComponent {
         totalUnits: '3',
         hoursPerWeek: '3',
         preReq: '',
-        coReq: '',
-        semester: '2',
-        yearLevel: '2'
-        },
+        coReq: '',       },
       ]
     },
 
@@ -171,8 +150,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '3',
           preReq: '',
           coReq: '',
-          semester: '1',
-          yearLevel: '3'
         },
         {
           courseCode: 'PHY101 3rd year 1st Sem',
@@ -183,8 +160,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '5',
           preReq: '',
           coReq: '',
-          semester: '1',
-          yearLevel: '3'
         },
         {
           courseCode: 'CS101 3rd year 1st Sem',
@@ -195,8 +170,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '4',
           preReq: '',
           coReq: '',
-          semester: '1',
-          yearLevel: '3'
         }
       ],
       secondSem: [
@@ -209,8 +182,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '3',
           preReq: 'MATH101',
           coReq: '',
-          semester: '2',
-          yearLevel: '3'
         },
         {
           courseCode: 'PHY102 3rd year 2nd Sem',
@@ -221,8 +192,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '5',
           preReq: 'PHY101',
           coReq: '',
-          semester: '2',
-          yearLevel: '3'
         },
         {
           courseCode: 'CS102 3rd year 2nd Sem',
@@ -233,8 +202,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '4',
           preReq: 'CS101',
           coReq: '',
-          semester: '2',
-          yearLevel: '3'
         }
       ],
     },
@@ -251,8 +218,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '4',
           preReq: '',
           coReq: '',
-          semester: '1',
-          yearLevel: '4'
         },
         {
           courseCode: 'BIO101 4th year 1st Sem',
@@ -263,8 +228,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '4',
           preReq: '',
           coReq: '',
-          semester: '1',
-          yearLevel: '4'
         }
       ],
       secondSem:[
@@ -277,8 +240,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '4',
           preReq: 'CHEM101',
           coReq: '',
-          semester: '2',
-          yearLevel: '4'
         },
         {
           courseCode: 'MATH102 4th year 2nd Sem',
@@ -289,8 +250,6 @@ export class ViewCurriculumComponent {
           hoursPerWeek: '3',
           preReq: 'MATH101',
           coReq: '',
-          semester: '2',
-          yearLevel: '4'
         }
       ],
     },
@@ -299,15 +258,32 @@ export class ViewCurriculumComponent {
 
 ];
 
+selectedCourse:any = {
+  courseCode: '',
+  descriptiveTitle: '',
+  lecUnits: '',
+  labUnits: '',
+  totalUnits: '',
+  hoursPerWeek: '',
+  preReq: '',
+  coReq: '',
+}
 
-selectedCourse: any;
 forUpdate: any;
 selectCourse(course: any) {
   this.selectedCourse = course;
 }
 
-editCourse() {
 
+addSubject(form: NgForm, yearLevel:number, sem:string){
+  if(sem === 'firstSem')
+    this.subject[yearLevel]['firstSem'].push(form.value)
+  else
+    this.subject[yearLevel]['secondSem'].push(form.value)
+}
+
+
+editCourse() {
   this.forUpdate = this.subject.map;
   const index = this.forUpdate.secondSem.findIndex((course: { courseCode: any; }) => course.courseCode === this.selectedCourse.courseCode);
 
