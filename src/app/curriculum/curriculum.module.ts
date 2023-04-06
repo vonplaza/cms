@@ -14,7 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     CurriculumContainerComponent,
     CurriculumListComponent,
-    CurriculumViewComponent
+    CurriculumViewComponent, 
   ],
   imports: [
     CommonModule,

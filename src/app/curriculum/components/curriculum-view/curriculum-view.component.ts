@@ -32,7 +32,7 @@ export interface comments{
   styleUrls: ['./curriculum-view.component.css']
 })
 
-export class ViewCurriculumComponent implements OnInit{
+export class CurriculumViewComponent implements OnInit{
   expansionTitle='';
   panelOpenState = false;
   del = 'Delete';
@@ -61,6 +61,7 @@ export class ViewCurriculumComponent implements OnInit{
 
     return this.yearLevel;
   }
+
   changeYearlvl(index: number){
 
     if(index==0){

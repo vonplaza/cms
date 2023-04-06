@@ -4,6 +4,7 @@ import { CurriculumContainerComponent } from './components/curriculum-container/
 import { CurriculumListComponent } from './components/curriculum-list/curriculum-list.component';
 import { CurriculumViewComponent } from './components/curriculum-view/curriculum-view.component';
 
+
 const routes: Routes = [
   { path: '', component: CurriculumContainerComponent,
     children: [
