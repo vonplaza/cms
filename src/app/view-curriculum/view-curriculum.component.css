@@ -61,6 +61,7 @@ th{
   }
   .bottom{
     display: flex;
+    margin-bottom: 100px;
   }
   .comments{
     font-family: 'century gothic';

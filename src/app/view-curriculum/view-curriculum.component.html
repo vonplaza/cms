@@ -21,30 +21,6 @@
     <h3>10-20-25</h3>
   </div>
   <!-- Input table para sa edit at add -->
-  <table class="table">
-    <thead>
-      <th></th>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      <th class="thead-dark">Add Subject</th>
-      <tr>
-        <th colspan="8"></th>
-      </tr>
-      <th class="thead-dark">Edit Subject</th>
-      <tr>
-        <th colspan="9"></th>
-      </tr>
-    </thead>
-  </table>
   <!-- Input table para sa edit at add ends here-->
 
   <div class="bottom">
@@ -55,7 +31,7 @@
         *ngFor="let subjects of subject; let x = index"
       >
         <mat-expansion-panel-header style="background-color: #c0c0c0">
-          <mat-panel-title class="panel-text">Year</mat-panel-title>
+          <mat-panel-title class="panel-text">{{assignYearX(x)}} Year</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="firstSem">
           <button
@@ -186,7 +162,7 @@
                   </button>
                 </form>
               </td>
-              <td colspan="9">
+              <td colspan="9" style="margin-right:50px;">
                 <form
                   #editForm="ngForm"
                   (ngSubmit)="editCourse(editForm, x, 'firstSem')"
@@ -600,35 +576,6 @@
       </mat-expansion-panel>
       <!-- End of first Year Year -->
     </mat-accordion>
-
-    <!-- <td colspan="9"><strong>Second Semester</strong></td>
-      <tr *ngFor="let subjects of subject"></tr>
-    <tr *ngFor="let course of subjects.secondSem">
-      <td scope="row">{{ course.courseCode }}</td>
-    <td>{{ course.descriptiveTitle }}</td>
-    <td>{{ course.lecUnits }}</td>
-    <td>{{ course.labUnits }}</td>
-    <td>{{ course.totalUnits }}</td>
-    <td>{{ course.hoursPerWeek }}</td>
-    <td>{{ course.preReq }}</td>
-    <td>{{ course.coReq }}</td>
-    <td>
-      <button mat-icon-button color="primary" [title]="view">
-        <mat-icon>remove_red_eye</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" [title]="edit">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="primary"
-        [title]="del"
-        (click)="deleteCourse($event, course.courseCode)"
-      >
-        <mat-icon>delete_forever</mat-icon>
-      </button>
-    </td>
-  </tr> -->
 
     <!-- Dito Yung chat container -->
     <div class="chat-container p-3">

@@ -33,9 +33,6 @@ export interface comments{
 
 export class ViewCurriculumComponent implements OnInit{
 
-
-
-  @ViewChild("firstSemesterForm", {static: false})"firstSemesterForm": NgForm;
   expansionTitle='';
   panelOpenState = false;
   del = 'Delete';
@@ -44,8 +41,26 @@ export class ViewCurriculumComponent implements OnInit{
   includeSubjectText='Add Subject';
   cancelAddSubject='Cancel';
   uploadSyllabus='Upload Syllabus';
+  yearLevel='';
   editForm: any;
 
+
+  assignYearX(x:number){
+    if(x==0){
+      this.yearLevel='First';
+    }
+    else if(x==1){
+      this.yearLevel='Second';
+    }
+    else if(x==2){
+      this.yearLevel='Third';
+    }
+    else if(x==3){
+      this.yearLevel='Fourth';
+    }
+
+    return this.yearLevel;
+  }
   changeYearlvl(index: number){
 
     if(index==0){
@@ -315,10 +330,7 @@ selectedCourse:any = {
 cancelEditSub(yearLevel:number, sem:string){
   this.isEditFormShow[yearLevel][sem] = false
 }
-
-forUpdate: any;
 selectCourse(course: any, yearLevel:number, index: number, sem:string) {
-  // this.selectedCourse = course;
   this.selectedSubjIndex = index
   this.isForms[yearLevel][sem] = {...course}
   console.log(this.isForms);
@@ -327,24 +339,22 @@ selectCourse(course: any, yearLevel:number, index: number, sem:string) {
 
 
 addSubject(form: NgForm, yearLevel:number, sem:string){
-  if(sem === 'firstSem')
+  if(!NgForm || form.value.preReq || form.value.coReq){
+  if(sem === 'firstSem'){
     this.subject[yearLevel]['firstSem'].push(form.value)
-  else
+    form.reset();
+    this.removeAddForm(yearLevel, sem);
+  }
+  else{
     this.subject[yearLevel]['secondSem'].push(form.value)
+    form.reset();
+    this.removeAddForm(yearLevel, sem);
+  }
+  }
+  
 }
 
 
-// editCourse() {
-//   this.forUpdate = this.subject.map;
-//   const index = this.forUpdate.secondSem.findIndex((course: { courseCode: any; }) => course.courseCode === this.selectedCourse.courseCode);
-
-//   this.forUpdate.secondSem[index] = this.selectedCourse;
-
-//   this.selectedCourse = null;
-//   this.editForm.reset();
-// }
-
-// selectedCourse
 
 selectedSubjIndex = 0;
 editCourse(form: NgForm, yearLevel:number, sem:string){
@@ -353,17 +363,6 @@ editCourse(form: NgForm, yearLevel:number, sem:string){
   this.isEditFormShow[yearLevel][sem] = false
 }
 
-
-
-// deleteCourse(event: MouseEvent,courseCode: string){
-//   event.stopPropagation();
-//   this.subject = this.subject.map(subject => {
-//     return {
-//       firstSem: subject.firstSem.filter(course => course.courseCode !== courseCode),
-//       secondSem: subject.secondSem.filter(course => course.courseCode !== courseCode)
-//     };
-//   });
-// }
 
 deleteCourse(yearLevel:number, index:number, sem:string){
   if(sem === 'firstSem')
