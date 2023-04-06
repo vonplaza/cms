@@ -1,0 +1,55 @@
+<mat-sidenav-container autosize="true">
+  <app-toolbar (toggleSideNav)="drawer.toggle()"></app-toolbar>
+  <ng-content></ng-content>
+  <mat-sidenav #drawer class="example-sidenav" mode="side">
+    <mat-list role="list">
+      <mat-list-item role="listitem" class="mb-5 mt-3"
+        ><img src="assets/logo-cict.png" class="pic" />
+        <div class="m-2">Keno Piad</div>
+      </mat-list-item>
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="dashboard"></mat-icon> Dashboard
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="account_circle"></mat-icon> User
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="supervisor_account"></mat-icon> Accounts
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="format_align_center"></mat-icon> Curriculum
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="book"></mat-icon> Subjects
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="account_balance"></mat-icon> Department
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="wb_sunny"></mat-icon> Content Management
+        </button></mat-list-item
+      >
+      <mat-list-item role="listitem"
+        ><button mat-button>
+          <mat-icon fontIcon="logout"></mat-icon> Logout
+        </button></mat-list-item
+      >
+    </mat-list>
+  </mat-sidenav>
+
+  <!-- <app-curriculum-management></app-curriculum-management> -->
+  <!-- <app-view-curriculum></app-view-curriculum> -->
+</mat-sidenav-container>

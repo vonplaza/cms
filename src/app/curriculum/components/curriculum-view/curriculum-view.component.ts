@@ -1,10 +1,11 @@
-import { Component,OnInit,ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 export interface subjects{
   firstSem :subject[];
   secondSem: subject[];
 }
+
 export interface subject {
       courseCode:string;
       descriptiveTitle:string;
@@ -26,16 +27,11 @@ export interface comments{
 }
 
 @Component({
-  selector: 'app-view-curriculum',
-  templateUrl: './view-curriculum.component.html',
-  styleUrls: ['./view-curriculum.component.css']
+  selector: 'app-curriculum-view',
+  templateUrl: './curriculum-view.component.html',
+  styleUrls: ['./curriculum-view.component.css']
 })
-
-export class ViewCurriculumComponent implements OnInit{
-
-
-
-  @ViewChild("firstSemesterForm", {static: false})"firstSemesterForm": NgForm;
+export class CurriculumViewComponent {
   expansionTitle='';
   panelOpenState = false;
   del = 'Delete';
