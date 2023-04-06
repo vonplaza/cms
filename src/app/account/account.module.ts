@@ -5,6 +5,7 @@ import { AccountContainerComponent } from './components/account-container/accoun
 import { AccountsRoutingModule } from './account-routing.module';
 import { MaterialModule } from '../shared/material';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -14,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     AccountContainerComponent
   ],
   imports: [
-    CommonModule,AccountsRoutingModule,MaterialModule,SharedModule
+    CommonModule,AccountsRoutingModule,MaterialModule,SharedModule,FormsModule
   ]
 })
 export class AccountModule { }
