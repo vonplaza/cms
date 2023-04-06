@@ -3,15 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { topNavigation } from './topnav/topnav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { dashboard } from './dashboard/dashboard.component';
 import { ChartModule } from 'angular-highcharts';
-import { CurriculumManagementComponent } from './curriculum-management/curriculum-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ViewCurriculumComponent } from './view-curriculum/view-curriculum.component';
 import { CommonModule } from '@angular/common';
-import { SemYearFilterPipe } from './view-curriculum/filter-sem-year-pipe.pipe';
 import { MaterialModule } from './shared/material';
 
 // angular material
@@ -35,12 +31,7 @@ import { MaterialModule } from './shared/material';
   declarations: [
     AppComponent, 
     LoginComponent, 
-    ViewCurriculumComponent, 
-    SemYearFilterPipe,
-    topNavigation, 
     dashboard, 
-    CurriculumManagementComponent, 
-    ViewCurriculumComponent
   ],
   imports: [
     BrowserModule,

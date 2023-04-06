@@ -6,6 +6,7 @@ import { CurriculumRoutingModule } from './curriculum-routing.module';
 import { CurriculumListComponent } from './components/curriculum-list/curriculum-list.component';
 import { CurriculumViewComponent } from './components/curriculum-view/curriculum-view.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     CurriculumRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class CurriculumModule { }
