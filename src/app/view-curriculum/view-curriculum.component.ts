@@ -5,6 +5,7 @@ export interface subjects{
   firstSem :subject[];
   secondSem: subject[];
 }
+
 export interface subject {
       courseCode:string;
       descriptiveTitle:string;
