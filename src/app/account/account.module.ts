@@ -6,13 +6,13 @@ import { AccountsRoutingModule } from './account-routing.module';
 import { MaterialModule } from '../shared/material';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-
-
+import { AccountRegistrationComponent } from './components/account-registration/account-registration.component';
 
 @NgModule({
   declarations: [
     AccountListComponent,
-    AccountContainerComponent
+    AccountContainerComponent,
+    AccountRegistrationComponent,
   ],
   imports: [
     CommonModule,AccountsRoutingModule,MaterialModule,SharedModule,FormsModule

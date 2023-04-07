@@ -1,0 +1,16 @@
+.all{
+    background-color: white;
+}
+.container {
+    padding-top: 100px;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  }
+  .form{
+    display: flex;
+    margin:0 auto;
+    margin-bottom: 10px;
+  }
+  /* Put all the child divs in one line */

@@ -1,0 +1,38 @@
+*{
+    font-family: "century gothic";
+  }
+  table {
+    width: 100%;
+    margin-bottom: 70px;
+  }
+  .status{
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 1rem;
+    font-weight: 100;
+    color: white;
+    font-size: 15px;
+  }
+  .title{
+    margin-right: 20px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .floater{
+    float: right;
+  }
+  .container{
+    width: 90%;
+    background-color: white;
+  }
+  .tit{
+    margin-right: 100px;
+    font-size: 25px;
+  }
+  .department{
+    font-weight: 100;
+  }
+  .email{
+    font-weight: 100;
+  }

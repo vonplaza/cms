@@ -41,24 +41,11 @@
             (click)="clickAddSubject(x, 'firstSem')"
           >
             Add Subject<mat-icon>add</mat-icon>
-          </button>
+          </button><br>
           <!-- Table para sa lahat -->
           <strong>First Semester</strong>
           <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Course Code</th>
-                <th scope="col">Descriptive Title</th>
-                <th scope="col">Lec Units</th>
-                <th scope="col">Lab Units</th>
-                <th scope="col">Total Units</th>
-                <th scope="col">Hours Per Week</th>
-                <th scope="col">Pre-Req</th>
-                <th scope="col">Co-Req</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+            <thead>  <tr>
               <td colspan="9" *ngIf="isAddFormShow[x][0]">
                 <form
                   #firstSemesterForm="ngForm"
@@ -123,25 +110,27 @@
                       required
                   /></mat-form-field>
 
-                  <mat-form-field class="subject-input" style="width: 80px"
-                    ><input
-                      name="preReq"
-                      matInput
-                      type="text"
-                      placeholder="Pre-Requisites"
-                      ngModel
-                      required
-                  /></mat-form-field>
+                  <mat-form-field class="subject-input" style="width: 80px" >
+                    <mat-label>Pre-Requisite</mat-label><mat-select
+                    name="preReq"
+                    color="primary"
+                    style="margin-right: 20px"
+                    ngModel
+                  ><div *ngFor="let subjects of subject "></div>
+                    <mat-option *ngFor="let course of subjects.firstSem; let i = index" [value]="course.courseCode"> {{ course.courseCode }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
                   <mat-form-field class="subject-input" style="width: 80px"
-                    ><input
-                      name="coReq"
-                      matInput
-                      type="text"
-                      placeholder="Co-Requisites"
-                      ngModel
-                      required
-                  /></mat-form-field>
+                    ><mat-label>Co-Requisite</mat-label><mat-select
+                    name="coReq"
+                    color="primary"
+                    style="margin-right: 20px"
+                    ngModel
+                  ><div *ngFor="let subjects of subject"></div>
+                    <mat-option *ngFor="let course of subjects.firstSem; let i = index" [value]="course.courseCode">{{ course.courseCode }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
                   <button
                     mat-icon-button
@@ -162,6 +151,22 @@
                   </button>
                 </form>
               </td>
+            </tr></thead>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Course Code</th>
+                <th scope="col">Descriptive Title</th>
+                <th scope="col">Lec Units</th>
+                <th scope="col">Lab Units</th>
+                <th scope="col">Total Units</th>
+                <th scope="col">Hours Per Week</th>
+                <th scope="col">Pre-Req</th>
+                <th scope="col">Co-Req</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
               <td colspan="9" style="margin-right:50px;">
                 <form
                   #editForm="ngForm"
@@ -239,14 +244,15 @@
                   /></mat-form-field>
 
                   <mat-form-field class="subject-input" style="width: 80px"
-                    ><input
-                      name="coReq"
-                      matInput
-                      type="text"
-                      placeholder="Co-Requisites"
-                      [(ngModel)]="isForms[x]['firstSem'].coReq"
-                      required
-                  /></mat-form-field>
+                    ><mat-label>Co-Requisite</mat-label><mat-select
+                    name="dep"
+                    color="primary"
+                    style="margin-right: 20px"
+                    ngModel
+                  ><div *ngFor="let subjects of subject"></div>
+                    <mat-option *ngFor="let course of subjects.firstSem; let i = index" [value]="course.courseCode">{{ course.courseCode }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
                   <button
                     mat-icon-button
@@ -267,6 +273,7 @@
                   </button>
                 </form>
               </td>
+            </tr>
               <tr *ngFor="let subjects of subject"></tr>
               <tr *ngFor="let course of subjects.firstSem; let i = index">
                 <td scope="row">{{ course.courseCode }}</td>
@@ -311,9 +318,9 @@
             (click)="clickAddSubject(x, 'secondSem')"
           >
             Add Subject<mat-icon>add</mat-icon>
-          </button>
+          </button><br>
           <!-- Table para sa lahat -->
-          <strong>First Semester</strong>
+          <strong>Second Semester</strong>
           <table class="table">
             <thead class="thead-dark">
               <tr>
