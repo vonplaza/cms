@@ -10,6 +10,9 @@ span{
   font-weight: 100;
   color: white;
 }
+.active {
+  background-color: #eee;
+}
 b{
   font-weight: bold;
 }
@@ -39,9 +42,10 @@ b{
   /* background-color: black; */
    /* background-image: url('assets/logo-cict.png');  */
 }
+
 #toolbar{
     position: sticky !important; 
-    position: -webkit-sticky; /* For macOS/iOS Safari */
-    top: 0; /* Sets the sticky toolbar to be on top */
-    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+    position: -webkit-sticky;
+    top: 0; 
+    z-index: 1000; 
 }

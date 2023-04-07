@@ -1,17 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 .inputs{
     outline: 0;
     border-width: 0 0 2px;
-    font-family: 'century gothic';
+    /* font-family: 'century gothic' !important; */
 }
 .button:hover{
     filter: contrast(1.1);
 }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 .material-icons{
     font-family: 'Material Icons' !important;
 }
+
+

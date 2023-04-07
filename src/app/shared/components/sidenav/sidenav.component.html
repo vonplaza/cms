@@ -1,15 +1,22 @@
 <mat-sidenav-container autosize="true">
   <app-toolbar (toggleSideNav)="drawer.toggle()"></app-toolbar>
   <ng-content></ng-content>
-  <mat-sidenav #drawer class="example-sidenav" mode="side">
-    <mat-list role="list">
-      <mat-list-item role="listitem" class="mb-5 mt-3"
-        ><img src="assets/logo-cict.png" class="pic" />
+  <mat-sidenav #drawer class="example-sidenav" mode="side" opened>
+    <mat-nav-list role="list">
+      <mat-list-item
+        role="listitem"
+        class="mb-5 mt-3 d-flex align-items-center"
+      >
+        <img src="assets/logo-cict.png" class="pic" />
         <div class="m-2">Keno Piad</div>
       </mat-list-item>
       <mat-list-item role="listitem"
-        ><button mat-button>
-          <mat-icon fontIcon="dashboard"></mat-icon> Dashboard
+        ><button
+          mat-button
+          [routerLink]="['/dashboard']"
+          routerLinkActive="active"
+        >
+          <mat-icon fontIcon="dashboard" class="me-2"></mat-icon> Dashboard
         </button></mat-list-item
       >
       <mat-list-item role="listitem"
@@ -17,13 +24,27 @@
           <mat-icon fontIcon="account_circle"></mat-icon> User
         </button></mat-list-item
       >
-      <mat-list-item role="listitem"
-        ><button mat-button>
-          <mat-icon fontIcon="supervisor_account"></mat-icon> Accounts
-        </button></mat-list-item
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/accounts']"
+        routerLinkActive="active"
+        [queryParams]="{ showSidenav: true }"
       >
-      <mat-list-item role="listitem"
-        ><button mat-button>
+        <!-- <a mat-list-item [routerLink]="['/accounts']" routerLinkActive="active"
+          >Accounts</a
+        > -->
+        <button mat-button>
+          <mat-icon fontIcon="supervisor_account"></mat-icon> Accounts
+        </button>
+      </mat-list-item>
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/curriculums']"
+        [queryParams]="{ showSidenav: true }"
+        routerLinkActive="active"
+      >
+        <!-- queryParamsHandling="preserve" -->
+        <button mat-button>
           <mat-icon fontIcon="format_align_center"></mat-icon> Curriculum
         </button></mat-list-item
       >
@@ -47,7 +68,7 @@
           <mat-icon fontIcon="logout"></mat-icon> Logout
         </button></mat-list-item
       >
-    </mat-list>
+    </mat-nav-list>
   </mat-sidenav>
 
   <!-- <app-curriculum-management></app-curriculum-management> -->
