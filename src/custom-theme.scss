@@ -9,28 +9,28 @@
 @include mat.core();
 
 $ccs-custom-theme:(
-  50: #f8ebe9,
- 100: #fbd0c4,
- 200: #f9b39e,
- 300: #f89677,
- 400:#f8805a,
- 500:#f86c40,
- 600:#ed663c,
- 700:#df5f37,
- 800: #d05834,
- 900: #b54e2e,
+  50: #f8e7e8,
+ 100: #edc4c3,
+ 200: #d08d84,
+ 300: #b96457,
+ 400:#ba4831,
+ 500:#b63a13,
+ 600:#a93214,
+ 700:#992a10,
+ 800: #8d240a,
+ 900: #7d1d00,
  // ... continues to 900
  contrast: (
-   50: white,
-   100: white,
-   200: white,
-   300: white,
-   400: white,
-   500: white,
-   600: white,
-   700: white,
-   800: white,
-   900: white,
+  50: #3c3c3c,
+  100: #606060,
+  200: #818181,
+  300: #979797,
+  400: white,
+  500: white,
+  600: white, 
+  700: white,
+  800: white,
+  900: white,
    // ... continues to 900
  )
 );
