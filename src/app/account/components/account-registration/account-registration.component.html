@@ -61,7 +61,7 @@
 
           <mat-form-field color="primary" style="">
             <input
-              name="passwordConfirm"
+              name="password_confirmation"
               matInput
               placeholder="confirm password"
               ngModel
@@ -136,5 +136,9 @@
         <button mat-raised-button color="primary">Register</button>
       </div>
     </form>
+
+    <p class="text-danger" *ngIf="errorMessage$ | async as errorMessage">
+      {{ errorMessage }}
+    </p>
   </div>
 </div>

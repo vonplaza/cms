@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { User } from 'src/app/core/models/User';
+import { AppError } from 'src/app/core/models/app-error';
+import { AccountService } from 'src/app/core/services/account.service';
 
 export interface registerForm{
-  firstName: string,
-  middleName: string,
-  lastName:string,
+  // firstName: string,
+  // middleName: string,
+  // lastName:string,
+  password: string,
   email: string,
-  contactNo:string,
-  birthDate:string,
-  address:string,
+  // contactNo:string,
+  // birthDate:string,
+  // address:string,
 }
 
 @Component({
@@ -19,11 +23,13 @@ export interface registerForm{
 })
 
 export class AccountRegistrationComponent {
+  constructor(private accountService: AccountService){}
   srcResult: any;
   showDep=false;
   role='';
-
   user!:User
+
+  errorMessage$ = new Subject<string>();
 
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
@@ -39,6 +45,8 @@ export class AccountRegistrationComponent {
     }
     return inputNode;
   }
+
+
   isShowDep(){
     if(this.role=='chair'){
       this.showDep=true;
@@ -52,7 +60,15 @@ export class AccountRegistrationComponent {
   }
 
   submitForm(form: NgForm){
-    console.log(form.value);
-    
+    // console.log(form.value);
+    this.accountService.register(form.value).subscribe({
+      next: data => {
+        this.errorMessage$.next('')
+        
+      },
+      error: (err: AppError) => {
+        this.errorMessage$.next(err.message)
+      }
+    })
   }
 }

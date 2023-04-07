@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/User';
+import { catchError, tap, throwError } from 'rxjs';
+import { AppError } from '../models/app-error';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +14,34 @@ export class AccountService {
 
   users$ = this.http.get<User[]>(`${this.baseUrl}/users`);
 
-  
+  register(credentials:any){
+    return this.http.post(`${this.baseUrl}/register`, credentials)
+      .pipe(
+        tap((res:any) => {
+          console.log(res)
+          // sessionStorage.setItem('token', res.token)
+        }),
+        catchError(this.handleError)
+      )
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.log(error);
+    
+    const appError: AppError = {
+      status: error.status,
+      message: error.error.message
+    }
+    // if (error.status === 0) {
+    //   // A client-side or network error occurred. Handle it accordingly.
+    //   console.error('An error occurred:', error.error);
+    // } else {
+    //   // The backend returned an unsuccessful response code.
+    //   // The response body may contain clues as to what went wrong.
+    //   console.error(
+    //     `Backend returned code ${error.status}, body was: `, error.error);
+    // }
+    // Return an observable with a user-facing error message.
+    return throwError(() => appError);
+  }
 }
