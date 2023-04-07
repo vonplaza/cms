@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { User } from 'src/app/core/models/User';
 
 export interface registerForm{
   firstName: string,
@@ -6,11 +8,10 @@ export interface registerForm{
   lastName:string,
   email: string,
   contactNo:string,
-  bday:string,
-  fullAddress:string,
-
-
+  birthDate:string,
+  address:string,
 }
+
 @Component({
   selector: 'app-account-registration',
   templateUrl: './account-registration.component.html',
@@ -21,6 +22,8 @@ export class AccountRegistrationComponent {
   srcResult: any;
   showDep=false;
   role='';
+
+  user!:User
 
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
@@ -37,10 +40,10 @@ export class AccountRegistrationComponent {
     return inputNode;
   }
   isShowDep(){
-    if(this.role=='Committee Chair'){
+    if(this.role=='chair'){
       this.showDep=true;
     }
-    else if(this.role=='Committee Members'){
+    else if(this.role=='faculty'){
       this.showDep=true;
     }
     else{
@@ -48,7 +51,8 @@ export class AccountRegistrationComponent {
     }
   }
 
-  submitForm(){
+  submitForm(form: NgForm){
+    console.log(form.value);
     
   }
 }

@@ -9,7 +9,7 @@ import { AccountRegistrationComponent } from './components/account-registration/
 const routes: Routes = [
   { path: '', component: AccountContainerComponent,
     children: [
-      { path: 'list', component: AccountListComponent },
+      { path: '', component: AccountListComponent },
       { path: 'register', component: AccountRegistrationComponent },
     ]  
   }

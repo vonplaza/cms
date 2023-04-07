@@ -15,7 +15,11 @@ import { AccountRegistrationComponent } from './components/account-registration/
     AccountRegistrationComponent,
   ],
   imports: [
-    CommonModule,AccountsRoutingModule,MaterialModule,SharedModule,FormsModule
+    CommonModule,
+    AccountsRoutingModule,
+    MaterialModule,
+    SharedModule,
+    FormsModule
   ]
 })
 export class AccountModule { }
