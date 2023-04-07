@@ -6,7 +6,7 @@ import { AccountsRoutingModule } from './account-routing.module';
 import { MaterialModule } from '../shared/material';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { AccountRegistrationComponent } from './components/account-registration/account-registration.component';
+import { AccountRegistrationComponent } from './components/account-registratio/account-registration.component';
 
 @NgModule({
   declarations: [
