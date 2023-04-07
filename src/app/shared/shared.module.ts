@@ -4,6 +4,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MaterialModule } from './material';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,11 +16,12 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   exports: [
     SidenavComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ]
 })
 export class SharedModule { }
