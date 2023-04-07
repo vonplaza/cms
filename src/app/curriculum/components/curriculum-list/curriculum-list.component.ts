@@ -1,13 +1,30 @@
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Curriculum } from 'src/app/core/models/curriculum';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-curriculum-list',
   templateUrl: './curriculum-list.component.html',
   styleUrls: ['./curriculum-list.component.css']
 })
+
+
+
+
 export class CurriculumListComponent {
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+
     //pang filter
     private _listFilter: string = '';
     get listFilter(): string{ 
@@ -105,8 +122,6 @@ export class CurriculumListComponent {
     displayedItems: any[] = []; // The items to display on the current page
     //paginator
   
-    constructor() { }
-  
     //pang filter
     ngOnInit(): void {
       this.listFilter = '';
@@ -147,3 +162,9 @@ export class CurriculumListComponent {
     }
   //paginator
 }
+
+@Component({
+  selector: 'curriculum-list-modal-dialog',
+  templateUrl: './curriculum-list.modal.html',
+})
+export class DialogContentExampleDialog {}
