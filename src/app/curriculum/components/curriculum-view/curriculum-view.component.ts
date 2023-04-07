@@ -21,7 +21,7 @@ export interface subject {
 
 
 export interface comments{
-      username:string;
+      username?:string;
       header:string;
       feedback:string;
 }
@@ -406,7 +406,7 @@ deleteCourse(yearLevel:number, index:number, sem:string){
       header: form.value.header,
       feedback: form.value.feedback,
     };
-    if(newComment.username && newComment.header && newComment.feedback){
+    if(newComment.username || newComment.header && newComment.feedback){
         this.comment.push(newComment);
         form.reset();
        }
