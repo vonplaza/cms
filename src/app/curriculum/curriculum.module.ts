@@ -7,21 +7,23 @@ import { CurriculumListComponent } from './components/curriculum-list/curriculum
 import { CurriculumViewComponent } from './components/curriculum-view/curriculum-view.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
 @NgModule({
   declarations: [
     CurriculumContainerComponent,
     CurriculumListComponent,
-    CurriculumViewComponent, 
+    CurriculumViewComponent, DialogContentExampleDialog
   ],
   imports: [
     CommonModule,
     MaterialModule,
     CurriculumRoutingModule,
     FormsModule,
-    SharedModule
+    SharedModule,MatDialogModule,MatFormFieldModule
   ]
 })
 export class CurriculumModule { }
