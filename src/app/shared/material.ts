@@ -18,6 +18,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [],
   imports: [
@@ -42,6 +43,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatNativeDateModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatProgressSpinnerModule
   ]
 })
 
