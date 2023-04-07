@@ -1,13 +1,12 @@
 <div class="all">
-
-
-<div class="container"><h1 style="display: flex;
-flex-direction: column;
-align-items: center;">Register Account</h1>
-  <!-- {{ form.value | json }}
+  <div class="container">
+    <h1 style="display: flex; flex-direction: column; align-items: center">
+      Register Account
+    </h1>
+    <!-- {{ form.value | json }}
   {{showDep | json}} -->
-  <form class="form" #form="ngForm" (ngSubmit)="submitForm()">
-    <div style="margin-top: 60px;">
+    <form class="form" #form="ngForm" (ngSubmit)="submitForm(form)">
+      <!-- <div style="margin-top: 60px;">
       <div style="height: 300px; width: 300px">
         <img src="https://randomuser.me/api/portraits/men/75.jpg" />
         <button
@@ -28,10 +27,10 @@ align-items: center;">Register Account</h1>
           ngModel
         />
       </div>
-    </div>
+    </div> -->
 
-    <div>
       <div>
+        <!-- <div>
         <mat-form-field color="primary" style="margin-right: 30px">
           <input matInput name="firstName" placeholder="First Name" ngModel />
         </mat-form-field>
@@ -43,75 +42,103 @@ align-items: center;">Register Account</h1>
         <mat-form-field color="primary" style="margin-right: 20px">
           <input matInput name="lastName" placeholder="Last Name" ngModel />
         </mat-form-field>
-      </div>
+      </div> -->
 
-      <div>
-        <mat-form-field color="primary" style="margin-right: 20px">
-          <input
-            matInput
-            name="email"
-            placeholder="Email"
-            type="email"
-            ngModel
-          />
-        </mat-form-field>
+        <div>
+          <mat-form-field color="primary" style="margin-right: 20px">
+            <input
+              matInput
+              name="email"
+              placeholder="Email"
+              type="email"
+              ngModel
+            />
+          </mat-form-field>
 
-        <mat-form-field color="primary" style="margin-right: 20px">
-          <input
-            matInput
-            name="contactNo"
-            placeholder="Contact Number"
-            ngModel
-          />
-        </mat-form-field>
+          <mat-form-field color="primary" style="margin-right: 20px">
+            <input name="password" matInput placeholder="password" ngModel />
+          </mat-form-field>
 
-        <mat-form-field color="primary">
-          <mat-label>Choose a date</mat-label>
-          <input name="bday" matInput [matDatepicker]="picker" ngModel />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field color="primary" style="width: 600px">
-          <input name="address" matInput placeholder="Full Address" ngModel />
-        </mat-form-field>
-      </div>
-      <div>
+          <mat-form-field color="primary" style="">
+            <input
+              name="password_confirmation"
+              matInput
+              placeholder="confirm password"
+              ngModel
+            />
+          </mat-form-field>
 
-        <mat-form-field color="primary" style="margin-right: 20px">
+          <!-- <mat-form-field color="primary" style="margin-right: 20px">
+            <input
+              matInput
+              name="contactNo"
+              placeholder="Contact Number"
+              ngModel
+            />
+          </mat-form-field> -->
+
+          <!-- <mat-form-field color="primary">
+            <mat-label>Choose a date</mat-label>
+            <input name="bday" matInput [matDatepicker]="picker" ngModel />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+        </div>
+        <!-- <div>
+          <mat-form-field color="primary" style="width: 600px">
+            <input name="address" matInput placeholder="Full Address" ngModel />
+          </mat-form-field>
+        </div> -->
+        <div>
+          <mat-form-field color="primary" style="margin-right: 20px">
             <mat-label>Role</mat-label>
-            <mat-select 
-            name="role"
+            <!-- [(ngModel)]="role" -->
+            <mat-select
+              name="role"
+              color="primary"
+              style="margin-right: 20px"
+              [(ngModel)]="role"
+              (selectionChange)="isShowDep()"
+            >
+              <mat-option value="chair"
+                >Committee Chair (Department Head)</mat-option
+              >
+              <mat-option value="faculty" default
+                >Committee Members (Program Chairs, Faculty)</mat-option
+              >
+              <mat-option value="reviewer"
+                >Stakeholders (Industry Partners, Review Committee)</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
             color="primary"
             style="margin-right: 20px"
-            [(ngModel)]="role"
-            (selectionChange)="isShowDep()">
-            <mat-option value="Committee Chair">Committee Chair (Department Head)</mat-option>
-            <mat-option value="Committee Members">Committee Members (Program Chairs, Faculty)</mat-option>
-            <mat-option value="Stakeholders">Stakeholders (Industry Partners, Review Committee)</mat-option>
-    </mat-select>
-        </mat-form-field>
-        
-        <mat-form-field color="primary" style="margin-right: 20px" *ngIf="showDep">
-          <mat-label>department</mat-label>
-          <mat-select
-            name="dep"
-            color="primary"
-            style="margin-right: 20px"
-            ngModel
+            *ngIf="showDep"
           >
-            <mat-option value="BSIT">BSIT</mat-option>
-            <mat-option value="BLIS">BLIS</mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-label>department</mat-label>
+            <mat-select
+              name="departmentId"
+              color="primary"
+              style="margin-right: 20px"
+              ngModel="1"
+            >
+              <mat-option value="1">BSIT</mat-option>
+              <mat-option value="2">BLIS</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary">Register</button>
       </div>
-      <button mat-raised-button color="primary">Register</button>
-    </div>
-  </form>
-</div>
+    </form>
+
+    <p class="text-danger" *ngIf="errorMessage$ | async as errorMessage">
+      {{ errorMessage }}
+    </p>
+  </div>
 </div>

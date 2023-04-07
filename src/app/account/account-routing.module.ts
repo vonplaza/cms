@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountListComponent } from './components/account-list/account-list.component';
+import { AccountListComponent2 } from './components/account-list/account-list.component';
 import {AccountContainerComponent} from './components/account-container/account-container.component'
 import { AccountRegistrationComponent } from './components/account-registration/account-registration.component';
 
@@ -9,7 +9,7 @@ import { AccountRegistrationComponent } from './components/account-registration/
 const routes: Routes = [
   { path: '', component: AccountContainerComponent,
     children: [
-      { path: 'list', component: AccountListComponent },
+      { path: '', component: AccountListComponent2 },
       { path: 'register', component: AccountRegistrationComponent },
     ]  
   }

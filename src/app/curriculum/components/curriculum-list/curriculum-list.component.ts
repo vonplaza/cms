@@ -14,10 +14,10 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 export class CurriculumListComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+    const dialogRef = this.dialog.open(curriculumDialog);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -167,4 +167,6 @@ export class CurriculumListComponent {
   selector: 'curriculum-list-modal-dialog',
   templateUrl: './curriculum-list.modal.html',
 })
-export class DialogContentExampleDialog {}
+export class curriculumDialog {
+
+}

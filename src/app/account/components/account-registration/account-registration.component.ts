@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { User } from 'src/app/core/models/user';
+import { AppError } from 'src/app/core/models/app-error';
+import { AccountService } from 'src/app/core/services/account.service';
 
 export interface registerForm{
-  firstName: string,
-  middleName: string,
-  lastName:string,
+  // firstName: string,
+  // middleName: string,
+  // lastName:string,
+  password: string,
   email: string,
-  contactNo:string,
-  bday:string,
-  fullAddress:string,
-
-
+  // contactNo:string,
+  // birthDate:string,
+  // address:string,
 }
+
 @Component({
   selector: 'app-account-registration',
   templateUrl: './account-registration.component.html',
@@ -18,9 +23,13 @@ export interface registerForm{
 })
 
 export class AccountRegistrationComponent {
+  constructor(private accountService: AccountService){}
   srcResult: any;
   showDep=false;
   role='';
+  user!:User
+
+  errorMessage$ = new Subject<string>();
 
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
@@ -36,11 +45,13 @@ export class AccountRegistrationComponent {
     }
     return inputNode;
   }
+
+
   isShowDep(){
-    if(this.role=='Committee Chair'){
+    if(this.role=='chair'){
       this.showDep=true;
     }
-    else if(this.role=='Committee Members'){
+    else if(this.role=='faculty'){
       this.showDep=true;
     }
     else{
@@ -48,7 +59,16 @@ export class AccountRegistrationComponent {
     }
   }
 
-  submitForm(){
-    
+  submitForm(form: NgForm){
+    // console.log(form.value);
+    this.accountService.register(form.value).subscribe({
+      next: data => {
+        this.errorMessage$.next('')
+        
+      },
+      error: (err: AppError) => {
+        this.errorMessage$.next(err.message)
+      }
+    })
   }
 }
