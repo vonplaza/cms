@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { catchError, tap, throwError } from 'rxjs';
 import { AppError } from '../models/app-error';
 

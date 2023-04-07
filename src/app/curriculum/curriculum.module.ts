@@ -9,21 +9,22 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
+// import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
 @NgModule({
   declarations: [
     CurriculumContainerComponent,
     CurriculumListComponent,
-    CurriculumViewComponent, DialogContentExampleDialog
+    CurriculumViewComponent, 
+    // DialogContentExampleDialog
   ],
   imports: [
     CommonModule,
     MaterialModule,
     CurriculumRoutingModule,
     FormsModule,
-    SharedModule,MatDialogModule,MatFormFieldModule
+    SharedModule,
   ]
 })
 export class CurriculumModule { }

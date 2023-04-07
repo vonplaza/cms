@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { User } from 'src/app/core/models/User';
+import { User } from 'src/app/core/models/user';
 import { AccountService } from 'src/app/core/services/account.service';
 
 
@@ -11,7 +11,7 @@ import { AccountService } from 'src/app/core/services/account.service';
 })
 
 
-export class AccountListComponent {
+export class AccountListComponent2 {
   
   constructor(private accountService: AccountService) { }
 

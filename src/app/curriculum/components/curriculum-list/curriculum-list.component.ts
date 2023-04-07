@@ -14,15 +14,15 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 export class CurriculumListComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor() {}
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog);
+  // openDialog() {
+  //   const dialogRef = this.dialog.open(DialogContentExampleDialog);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+  // }
 
 
     //pang filter
@@ -163,8 +163,8 @@ export class CurriculumListComponent {
   //paginator
 }
 
-@Component({
-  selector: 'curriculum-list-modal-dialog',
-  templateUrl: './curriculum-list.modal.html',
-})
-export class DialogContentExampleDialog {}
+// @Component({
+//   selector: 'curriculum-list-modal-dialog',
+//   templateUrl: './curriculum-list.modal.html',
+// })
+// export class DialogContentExampleDialog {}

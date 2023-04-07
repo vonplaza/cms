@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { User } from 'src/app/core/models/User';
+import { User } from 'src/app/core/models/user';
 import { AppError } from 'src/app/core/models/app-error';
 import { AccountService } from 'src/app/core/services/account.service';
 
