@@ -91,3 +91,15 @@ mat-accordion {
 .subject-input{
   margin-right: 20px;
 }
+.forms{
+  background-color: #e5e5e5;
+  padding-left: 10px;
+  animation-name: color;
+  animation-duration: 0.5s;
+  border-radius: 1rem;
+  padding: 5px;
+}
+@keyframes color {
+  0% {background-color: #EAC5BA;}
+  100% {background-color: #e5e5e5;}
+}
