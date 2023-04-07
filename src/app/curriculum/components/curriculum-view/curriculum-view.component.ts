@@ -62,6 +62,31 @@ export class CurriculumViewComponent implements OnInit{
     return this.yearLevel;
   }
 
+  preReqs(yearLevel: number, sem:string){
+    const subjects:any = []
+    // return []
+
+    if(yearLevel == 0 && sem === 'firstSem')
+      return []
+    
+    const pre = this.subject.slice(0, yearLevel)  
+    pre.forEach(year => {
+      year.firstSem.forEach(subj => {
+        subjects.push(subj)
+      })
+      year.secondSem.forEach(subj => {
+        subjects.push(subj)
+      })
+    })
+
+    if(sem === 'secondSem')
+    this.subject[yearLevel].firstSem.forEach(
+      subj => subjects.push(subj)
+    )
+    
+    return subjects
+  }
+
   changeYearlvl(index: number){
 
     if(index==0){
