@@ -19,11 +19,12 @@
           ><mat-icon>search</mat-icon>
           <!-- <button mat-raised-button color="primary"></button> -->
 
+          <!-- [routerLink]="['register']" -->
           <button
             mat-raised-button
             color="primary"
             style="float: right"
-            [routerLink]="['register']"
+            (click)="openDialog()"
           >
             Create New
           </button>

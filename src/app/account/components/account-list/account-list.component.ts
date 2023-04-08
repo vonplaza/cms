@@ -3,8 +3,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { User } from 'src/app/core/models/user';
 import { AccountService } from 'src/app/core/services/account.service';
-
-
+import {MatDialog} from '@angular/material/dialog';
+import {AccountRegistrationComponent} from 'src/app/account/components/account-registration/account-registration.component'
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
@@ -14,7 +14,7 @@ import { AccountService } from 'src/app/core/services/account.service';
 
 export class AccountListComponent2 {
   
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private dialog: MatDialog) { }
 
   isLoading$ = new BehaviorSubject<boolean>(true)
   users$ = this.accountService.users$.subscribe(
@@ -24,6 +24,13 @@ export class AccountListComponent2 {
     }
   )
 
+  openDialog() {
+    const dialogRef = this.dialog.open(AccountRegistrationComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   
   private _listFilter: string = '';
   get listFilter(): string{ 
@@ -300,3 +307,4 @@ loadPageWithFilter(pageIndex: number): void {
 //paginator
 
 }
+

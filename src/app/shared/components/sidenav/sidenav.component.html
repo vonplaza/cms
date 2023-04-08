@@ -1,7 +1,7 @@
 <mat-sidenav-container autosize="true">
   <app-toolbar (toggleSideNav)="drawer.toggle()"></app-toolbar>
   <ng-content></ng-content>
-  <mat-sidenav #drawer class="example-sidenav" mode="side" opened>
+  <mat-sidenav #drawer class="example-sidenav" mode="side" closed>
     <mat-nav-list role="list">
       <mat-list-item
         role="listitem"

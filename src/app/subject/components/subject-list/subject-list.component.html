@@ -2,12 +2,20 @@
   <div class="container mt-4">
     <header class="d-flex align-items-center justify-content-between">
       <p class="h5">Subjects</p>
+      <mat-form-field style="width: 200px" class="example-form-field">
+        <mat-label><mat-icon>search</mat-icon>Search</mat-label>
+        <input matInput type="text" [(ngModel)]="listFilter"/>
+        
+        <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                  <mat-icon>clear</mat-icon>
+              </button> -->
+      </mat-form-field>
       <button mat-flat-button color="primary" (click)="openDialog()">
         New Subject
       </button>
     </header>
 
-    <div *ngIf="subjects$ | async as subjects">
+    <!-- <div *ngIf="subjects$ | async as subjects">
       <table mat-table [dataSource]="subjects" class="mat-elevation-z8">
         <ng-container matColumnDef="subjectCode">
           <th mat-header-cell *matHeaderCellDef>Subject Code</th>
@@ -31,6 +39,66 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+    </div> -->
+
+    <!-- <table>
+        <ng-container matColumnDef="subjectCode">
+          <th mat-header-cell *matHeaderCellDef>Subject Code</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element?.subject_code }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let element">
+            {{ (element?.department?.department_code | uppercase) || "N/A" }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table> -->
+
+    <div class="mt-4">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" (click)="sort('subject_code')">Subject Code    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col" (click)="sort('description')">Description    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col" (click)="sort('status')">Status    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col" (click)="sort('description')">Department    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col" (click)="sort('syllabus')">Syllabus    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col" (click)="sort('action')">Action    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let subject of displayedItems | orderBy: currentSortColumn: currentSortDirection">
+          <tr>
+            <th scope="row">{{ subject.subject_code }}</th>
+            <td>{{ subject.description }}</td>
+            <td>{{ subject.status }}</td>
+            <td>{{ subject?.department?.description }}</td>
+            <td>
+              <button mat-icon-button color="primary"><mat-icon>remove_red_eye</mat-icon></button></td>
+            <td>
+              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="primary"><mat-icon>delete_forever</mat-icon></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
     </div>
   </div>
 </app-sidenav>

@@ -48,12 +48,10 @@ mat-accordion {
 }
 
 .chat-container{
-  width: 400px;
-  height: 700px;
-  top: 60px;
-  left: 1125px;
-  margin-right: 15px;
-  position:fixed;
+  position: fixed;
+  top: 55%;
+  right: 0;
+  transform: translateY(-50%);
   background-color: white;
   box-shadow: 10px 10px 5px 10px black;
 

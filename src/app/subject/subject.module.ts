@@ -7,12 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../shared/material';
 import { SubjectAddDialogComponent } from './components/subject-add-dialog/subject-add-dialog.component';
 import { FormsModule } from '@angular/forms';
-
+import {OrderByPipe} from 'src/app/subject/components/subject-list/subject-list-sort.pipe'
 
 @NgModule({
   declarations: [
     SubjectListComponent,
-    SubjectAddDialogComponent
+    SubjectAddDialogComponent,OrderByPipe
   ],
   imports: [
     CommonModule,
