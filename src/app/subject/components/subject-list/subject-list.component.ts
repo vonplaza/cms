@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { SubjectAddDialogComponent } from '../subject-add-dialog/subject-add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SubjectService } from 'src/app/core/services/subject.service';
@@ -425,4 +425,9 @@ sort(column: string) {
     this.displayedItems = this.filteredList.slice(startIndex, endIndex);
   }
 //paginator
+
+@ViewChild('dialogEditContent') EditSubjectDialogComponent!: TemplateRef<any>;
+// const dialogRef = this.dialog.open(this.EditSubjectDialogComponent, { pang bukas nung dialog
+//   data: subjects
+// });
 }

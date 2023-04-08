@@ -69,12 +69,12 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col" (click)="sort('subject_code')">Subject Code    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('description')">Description    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('status')">Status    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('description')">Department    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('syllabus')">Syllabus    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('action')">Action    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Subject Code    <button mat-icon-button (click)="sort('subject_code')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Description    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Status    <button mat-icon-button (click)="sort('status')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Department    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Syllabus</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody *ngFor="let subject of displayedItems | orderBy: currentSortColumn: currentSortDirection">
@@ -86,7 +86,7 @@
             <td>
               <button mat-icon-button color="primary"><mat-icon>remove_red_eye</mat-icon></button></td>
             <td>
-              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <!-- <button mat-icon-button color="primary" (click)="editSubject(subject)"><mat-icon>edit</mat-icon></button> -->
               <button mat-icon-button color="primary"><mat-icon>delete_forever</mat-icon></button>
             </td>
           </tr>
@@ -102,3 +102,26 @@
     </div>
   </div>
 </app-sidenav>
+
+
+<ng-template #dialogEditContent>
+  <!-- <form #editForm="ngForm" (ngSubmit)="">
+    <div class="form-group">
+      <label for="subject_code">Subject Code:</label>
+      <input type="text" class="form-control" id="subject_code" name="subject_code" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" id="description" name="description" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <input type="text" class="form-control" id="status" name="status" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="department">Department:</label>
+      <input type="text" class="form-control" id="department" name="department" [(ngModel)]="" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form> -->
+</ng-template>
