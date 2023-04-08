@@ -86,7 +86,7 @@
             <td>
               <button mat-icon-button color="primary"><mat-icon>remove_red_eye</mat-icon></button></td>
             <td>
-              <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+              <!-- <button mat-icon-button color="primary" (click)="editSubject(subject)"><mat-icon>edit</mat-icon></button> -->
               <button mat-icon-button color="primary"><mat-icon>delete_forever</mat-icon></button>
             </td>
           </tr>
@@ -102,3 +102,26 @@
     </div>
   </div>
 </app-sidenav>
+
+
+<ng-template #dialogEditContent>
+  <!-- <form #editForm="ngForm" (ngSubmit)="">
+    <div class="form-group">
+      <label for="subject_code">Subject Code:</label>
+      <input type="text" class="form-control" id="subject_code" name="subject_code" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" id="description" name="description" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <input type="text" class="form-control" id="status" name="status" [(ngModel)]="" required>
+    </div>
+    <div class="form-group">
+      <label for="department">Department:</label>
+      <input type="text" class="form-control" id="department" name="department" [(ngModel)]="" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form> -->
+</ng-template>
