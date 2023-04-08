@@ -1,0 +1,165 @@
+<app-sidenav>
+  <div class="container" *ngIf="profile$ | async as profile">
+    <div class="row align-items-stretch py-4 gy-2">
+      <div class="col-lg-4">
+        <div class="profile-container bg-white rounded p-3">
+          <div class="image-wrapper text-center">
+            <img
+              [src]="profile.profile.profile_pic"
+              style="width: 150px; height: 150px"
+              class="img-fluid rounded-circle"
+              alt="..."
+            />
+          </div>
+          <div class="name-wrapper text-center">
+            <h2>{{ profile.profile.name || "name hasn't been set" }}</h2>
+          </div>
+          <hr />
+          <div class="text-center">
+            <span
+              >Status:
+              <span class="text-success"
+                >Selected as a {{ profile.role | titlecase }}
+                <span *ngIf="profile.department_id"
+                  >({{ profile.department.description }})</span
+                >
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="profile-container bg-white rounded p-3">
+          <mat-tab-group>
+            <mat-tab label="Profile">
+              <form
+                class="mt-3"
+                [formGroup]="profileForm"
+                (submit)="submit()"
+                id="profileForms"
+              >
+                <mat-form-field class="example-full-width">
+                  <mat-label>Name</mat-label>
+                  <input matInput placeholder="Name" formControlName="name" />
+                </mat-form-field>
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Birth Date</mat-label>
+                    <input
+                      matInput
+                      placeholder="Birth Date"
+                      name="birthDate"
+                      formControlName="birthDate"
+                    />
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Address</mat-label>
+                    <input
+                      matInput
+                      placeholder="Address"
+                      name="name"
+                      formControlName="address"
+                    />
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Phone Number</mat-label>
+                    <input
+                      matInput
+                      placeholder="Phone Number"
+                      name="name"
+                      formControlName="phoneNo"
+                    />
+                  </mat-form-field>
+                </div>
+              </form>
+              <div class="buttons">
+                <button mat-flat-button color="primary" class="me-2">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="me-2"
+                  form="profileForms"
+                >
+                  <mat-icon>save</mat-icon>
+                  Save
+                </button>
+                <button mat-flat-button color="primary" class="me-2">
+                  <mat-icon>cancel</mat-icon>
+
+                  Cancel
+                </button>
+              </div>
+            </mat-tab>
+            <mat-tab label="Change Password">
+              <form
+                class="mt-3"
+                id="updatePassword"
+                #changePassForm="ngForm"
+                (submit)="changePass(changePassForm)"
+              >
+                <mat-form-field class="example-full-width">
+                  <mat-label>Current Password</mat-label>
+                  <input
+                    matInput
+                    placeholder="Current Password"
+                    name="currentPassword"
+                    ngModel
+                  />
+                </mat-form-field>
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>New Password</mat-label>
+                    <input
+                      matInput
+                      placeholder="New Password"
+                      name="password"
+                      ngModel
+                    />
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Confirm new Passowrd</mat-label>
+                    <input
+                      matInput
+                      placeholder="Confirm new Passowrd"
+                      name="password_confirmation"
+                      ngModel
+                    />
+                  </mat-form-field>
+                </div>
+              </form>
+              <div class="buttons">
+                <button mat-flat-button color="primary" class="me-2">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="me-2"
+                  form="updatePassword"
+                >
+                  <mat-icon>save</mat-icon>
+                  Save
+                </button>
+                <button mat-flat-button color="primary" class="me-2">
+                  <mat-icon>cancel</mat-icon>
+
+                  Cancel
+                </button>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-sidenav>

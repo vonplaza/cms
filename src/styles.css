@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap');
 .inputs{
     outline: 0;
     border-width: 0 0 2px;
@@ -12,8 +13,13 @@
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+body { 
+    margin: 0; 
+    /* font-family: Roboto, "Helvetica Neue", sans-serif;  */
+}
+* {
+    font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
 .material-icons{
     font-family: 'Material Icons' !important;
 }
