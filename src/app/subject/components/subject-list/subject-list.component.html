@@ -69,12 +69,12 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col" (click)="sort('subject_code')">Subject Code    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('description')">Description    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('status')">Status    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('description')">Department    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('syllabus')">Syllabus    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col" (click)="sort('action')">Action    <button mat-icon-button><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Subject Code    <button mat-icon-button (click)="sort('subject_code')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Description    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Status    <button mat-icon-button (click)="sort('status')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Department    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">Syllabus</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody *ngFor="let subject of displayedItems | orderBy: currentSortColumn: currentSortDirection">
