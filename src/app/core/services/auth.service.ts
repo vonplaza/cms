@@ -2,15 +2,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, of, tap, throwError } from 'rxjs';
 import { AppError } from '../models/app-error';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = `http://localhost:8000/api/`;
-  private currentUserSubject = new BehaviorSubject(null)
+  private currentUserSubject = new BehaviorSubject<User | null>(null)
   currentUser$ = this.currentUserSubject.asObservable()
-
+  currentUser!:User
   constructor(private http: HttpClient) { }
   
   login(credentials:any){
@@ -19,6 +20,7 @@ export class AuthService {
         tap((response:any) => {
           this.storeToken(response.token)
           this.currentUserSubject.next(response.user)
+          this.currentUser = response.user
           console.log(response.user);
           
         }),
@@ -43,16 +45,23 @@ export class AuthService {
   }
 
   getCurrentUser(){
-    return this.http.post(`${this.baseUrl}/getUser`, {})
+    return this.http.post(`${this.baseUrl}getUser`, {})
     .pipe(
       tap((user:any) => {
         this.currentUserSubject.next(user)
+        this.currentUser = user
       }),
       catchError(() => {
         this.removeToken()
         return of(null);
       })
     )
+  }
+
+  updateProfile(profile:any){
+    const updatedUser = {...this.currentUser, profile: profile}
+    this.currentUserSubject.next(updatedUser)
+    this.currentUser = updatedUser
   }
 
 
