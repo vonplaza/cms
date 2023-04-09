@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Curriculum } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -14,7 +15,15 @@ import {MatDialog} from '@angular/material/dialog';
 
 export class CurriculumListComponent {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog,
+              private curriculumService: CurriculumService) {}
+  
+  curriculums$ = this.curriculumService.curriculums$.subscribe(
+    data => console.log(data)
+  )
+  revisions$ = this.curriculumService.revisions$.subscribe(
+    data => console.log(data)
+  )
 
   openDialog() {
     const dialogRef = this.dialog.open(curriculumDialog);
