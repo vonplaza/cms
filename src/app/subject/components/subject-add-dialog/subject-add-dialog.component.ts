@@ -21,6 +21,7 @@ export class SubjectAddDialogComponent {
   error$ = new Subject<string>();
   createSubject(form:any){
     const fd = new FormData()
+    
     fd.append('subjectCode', form.value.subjectCode)
     fd.append('description', form.value.description)
     fd.append('departmentId', form.value.departmentId)

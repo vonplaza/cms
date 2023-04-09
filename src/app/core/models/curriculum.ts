@@ -1,3 +1,4 @@
+import { Department } from "./department";
 import { User } from "./user";
 
 export interface Curriculum {
@@ -16,5 +17,6 @@ export interface Curriculum2 {
   department_id: number
   version: string
   metadata: string
-  user?: User 
+  user?: User,
+  department: Department
 }

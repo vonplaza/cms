@@ -47,6 +47,8 @@ mat-accordion {
   float: left;
 }
 
+
+
 .chat-container{
   position: fixed;
   top: 55%;
@@ -61,8 +63,8 @@ mat-accordion {
 }
 .comments{
   font-family: 'century gothic';
-
 }
+
 .chat-c{
   padding: 10px;
   border-radius: 1rem;

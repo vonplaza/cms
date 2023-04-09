@@ -9,6 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { YearDropdownComponent } from './components/year-dropdown/year-dropdown.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { CurriculumCreateContainerComponent } from './components/curriculum-create-container/curriculum-create-container.component';
+import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
@@ -17,8 +21,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CurriculumContainerComponent,
     CurriculumListComponent,
     CurriculumViewComponent, 
-    curriculumDialog
-    // DialogContentExampleDialog
+    curriculumDialog, 
+    YearDropdownComponent, 
+    CommentsComponent, 
+    CurriculumCreateContainerComponent, CurriculumViewContainerComponent
   ],
   imports: [
     CommonModule,

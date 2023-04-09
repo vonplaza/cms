@@ -20,4 +20,19 @@ export class CurriculumService {
     catchError(handleError)
   )
 
+  createCurriculum(cur: any){
+    return this.http.post(`${this.baseUrl}curriculums`, cur).pipe(
+      catchError(handleError)
+    )
+  }
+  getCurriculum(id: number){
+    return this.http.get<Curriculum2>(`${this.baseUrl}curriculums/${id}`).pipe(
+      catchError(handleError)
+    )
+  }
+  updateCurriculum(id:number, data:any){
+    return this.http.patch<Curriculum2>(`${this.baseUrl}curriculums/${id}`, data).pipe(
+      catchError(handleError)
+    )
+  }
 }
