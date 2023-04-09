@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { User } from '../models/user';
-import { catchError } from 'rxjs';
+import { catchError, tap } from 'rxjs';
+import { handleError } from '../errorHandling/errorHandler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +21,30 @@ export class UserService {
     
     if(!currentUser.profile){
       const credentials = {...profile, userId: currentUser.id}
-      return this.http.post(`${this.baseUrl}/profiles`, credentials)
+      return this.http.post(`${this.baseUrl}/profiles`, credentials).pipe(
+        catchError(handleError)
+      )
     }
     const credentials = {...profile, userId: currentUser.profile.id}
-    return this.http.patch(`${this.baseUrl}/profiles/${currentUser.profile.id}`, credentials)
+    return this.http.patch(`${this.baseUrl}/profiles/${currentUser.profile.id}`, credentials).pipe(
+      catchError(handleError)
+    )
   }
 
   changePass(passwords: any){
-    return this.http.post(`${this.baseUrl}/users/changePass`, passwords)
+    return this.http.post(`${this.baseUrl}/users/changePass`, passwords).pipe(
+      catchError(handleError)
+    )
   }
 
   onUpload(fd: FormData) {
-    this.http.post(`${this.baseUrl}/profiles/upload`, fd).subscribe(response => {
-      console.log(response);
-    });
-    console.log(fd)
+    return this.http.post(`${this.baseUrl}/profiles/upload`, fd).pipe(
+      catchError(handleError)
+    )
+
+    // .subscribe(response => {
+    //   console.log(response);
+    // });
+    // console.log(fd)
   }
 }
