@@ -35,4 +35,17 @@ export class CurriculumService {
       catchError(handleError)
     )
   }
+
+  // revise
+  getRevisionCurriculum(id: number){
+    return this.http.get(`${this.baseUrl}curriculums/revisions/${id}`).pipe(
+      catchError(handleError)
+    )
+  }
+
+  createRevision(data:any){
+    return this.http.post(`${this.baseUrl}curriculums/submitRevision`, data).pipe(
+      catchError(handleError)
+    )
+  }
 }

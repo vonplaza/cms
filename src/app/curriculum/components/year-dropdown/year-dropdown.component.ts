@@ -35,12 +35,27 @@ export class YearDropdownComponent {
   @Input() subject: subjects[] = []
   @Input() type: string = ''
   @Input() departmentId: number = 1
-  @Input() status: string = 'p'
-  @Input() action: string = 'curr'
+  @Input() status: string = ''
+  @Input() action: string = ''
   @Input() curriculum!: Curriculum2 
-  
+  @Input() buttonTxt: string = ''
   @Input() title: string = 'Creating Curriculum'
+
   @Output() submitCur = new EventEmitter()
+  @Output() approveCur = new EventEmitter()
+  @Output() editCur = new EventEmitter()
+  @Output() reviseCur = new EventEmitter()
+  
+  approve(){
+    this.approveCur.emit()
+  }
+  update(){
+    this.editCur.emit()
+  }
+  revise(){
+    this.reviseCur.emit()
+  }
+
   version = 1
   department:number = 1
   
@@ -244,17 +259,21 @@ export class YearDropdownComponent {
   isEditFormShow:any = []
 
   clickAddSubject(yearLevel: number, sem: string){
-    this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = true
+    // this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = true
+    this.isAddFormShow[yearLevel][sem] = true
   }
 
   removeAddForm(yearLevel: number, sem: string){
-    this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = false
+    // this.isAddFormShow[yearLevel][sem === "firstSem" ? 0 : 1] = false
+    this.isAddFormShow[yearLevel][sem] = false
   }
 
   ngOnInit(): void {
     this.subject.forEach(i => {
       this.isEditFormShow.push({firstSem: false, sencondSem:false})
-      this.isAddFormShow.push([false, false])
+      this.isAddFormShow.push({firstSem: false, sencondSem:false})
+      // this.isAddFormShow.push({firstSem: false, sencondSem:false})
+      
       this.isForms.push({
         firstSem: {  
           courseCode: '',

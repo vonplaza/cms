@@ -5,22 +5,32 @@ import { CurriculumListComponent } from './components/curriculum-list/curriculum
 import { CurriculumViewComponent } from './components/curriculum-view/curriculum-view.component';
 import { CurriculumCreateContainerComponent } from './components/curriculum-create-container/curriculum-create-container.component';
 import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
+import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
+import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
 
 
 const routes: Routes = [
   { path: '', component: CurriculumContainerComponent,
     children: [
       { path: '', component: CurriculumListComponent },
-      { path: 'create', component: CurriculumViewComponent },
+      // { path: 'create', component: CurriculumViewComponent },
+      
 
-
-      { path: 'create2', component: CurriculumCreateContainerComponent },
-
+      // creating curriculum -done
+      { path: 'create', component: CurriculumCreateContainerComponent, data: {type: 'create', action: 'curr'} },
+      // view curriculum -done
       { path: ':id', component: CurriculumViewContainerComponent, data: {type: 'view', action: 'curr'} },
+      // editing the pending curriculum
       { path: 'edit/:id', component: CurriculumViewContainerComponent, data: {type: 'edit', action: 'curr'} },
 
-      { path: 'revisions/:id', component: CurriculumViewContainerComponent, data: {type: 'view', action: 'revise'} },
-      { path: 'revisions/edit/:id', component: CurriculumViewContainerComponent, data: {type: 'edit', action: 'revise'} },
+ 
+      // view revision -done
+      { path: 'revisions/:id', component: CurriculumViewRevisionContainerComponent, data: {type: 'view', action: 'revise'} },
+      // creating revision -done
+      { path: 'revise/create/:id', component: CurriculumCreateRevisionContainerComponent, data: {type: 'create', action: 'revise'} },
+      //editing the pending revision
+      { path: 'revision/edit/:id', component: CurriculumViewContainerComponent, data: {type: 'edit', action: 'revise'} },
+
 
 
 

@@ -21,35 +21,56 @@ export class CurriculumViewContainerComponent implements OnInit {
   action:string = ''
   
   curriculum!: Curriculum2
-  subjects:any
+  subjects:any[] = []
   title = ''
+  status = ''
+
+  approve(){
+    console.log('approve');
+  }
+  edit(){
+    console.log('edit');
+  }
+  revise(){
+    console.log('revise');
+    this.router.navigate(['/curriculums', 'revise', 'create', this.curriculum.id])
+  }
   
   submit(data: any){
-    // console.log(data);
-    this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
-      data => {
-        console.log(data)
-        this.router.navigate(['/curriculums', this.curriculum.id])
-      }   
-    )
+    if(this.action === 'curr'){
+      this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
+        data => {
+          console.log(data)
+          this.router.navigate(['/curriculums', this.curriculum.id])
+        }   
+      )
+    }
+    else{
+      // this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
+      //   data => {
+      //     console.log(data)
+      //     this.router.navigate(['/curriculums', this.curriculum.id])
+      //   }   
+      // )
+    }
   }
-  // currentUser = this.authService.s
 
   ngOnInit():void{
     this.route.data.subscribe((data:any) => {
-      console.log(data);
       this.type = data.type
       this.action = data.action
     })
 
     this.route.params.subscribe(({id}) => {
-      this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
-        tap(curriculum => {
-          this.curriculum = curriculum
-          this.subjects = JSON.parse(curriculum.metadata)
-          this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`                    
-        })
-      )
+      // for curriculum
+        this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
+          tap(curriculum => {
+            this.curriculum = curriculum
+            this.subjects = JSON.parse(curriculum.metadata)
+            this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
+            this.status = curriculum.status                    
+          })
+        )
     })
   }
 

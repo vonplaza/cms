@@ -17,6 +17,7 @@ export interface Curriculum2 {
   department_id: number
   version: string
   metadata: string
+  status: string
   user?: User,
   department: Department
 }

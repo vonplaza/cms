@@ -18,6 +18,7 @@ export class CurriculumCreateContainerComponent {
     firstSem: [],
     secondSem: []
   }]
+  buttonTxt = 'Create Curriculum'
   // subject :subjects[] = [
   //   {
   //   firstSem:[

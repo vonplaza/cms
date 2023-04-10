@@ -13,6 +13,8 @@ import { YearDropdownComponent } from './components/year-dropdown/year-dropdown.
 import { CommentsComponent } from './components/comments/comments.component';
 import { CurriculumCreateContainerComponent } from './components/curriculum-create-container/curriculum-create-container.component';
 import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
+import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
+import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
@@ -24,7 +26,7 @@ import { CurriculumViewContainerComponent } from './components/curriculum-view-c
     curriculumDialog, 
     YearDropdownComponent, 
     CommentsComponent, 
-    CurriculumCreateContainerComponent, CurriculumViewContainerComponent
+    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent
   ],
   imports: [
     CommonModule,
