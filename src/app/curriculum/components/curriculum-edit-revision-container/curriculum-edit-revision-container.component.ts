@@ -6,16 +6,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 
 @Component({
-  selector: 'app-curriculum-edit-container',
-  templateUrl: './curriculum-edit-container.component.html',
-  styleUrls: ['./curriculum-edit-container.component.css']
+  selector: 'app-curriculum-edit-revision-container',
+  templateUrl: './curriculum-edit-revision-container.component.html',
+  styleUrls: ['./curriculum-edit-revision-container.component.css']
 })
-export class CurriculumEditContainerComponent implements OnInit{
+export class CurriculumEditRevisionContainerComponent implements OnInit{
   constructor(private curriculumService: CurriculumService,
-    private route: ActivatedRoute,
-    private authService: AuthService,
-    private router: Router
-){}
+              private route: ActivatedRoute,
+              private authService: AuthService,
+              private router: Router
+          ){}
 
   submit(data: any){
     console.log(data);
@@ -37,13 +37,13 @@ export class CurriculumEditContainerComponent implements OnInit{
       this.action = data.action
     })
     this.route.params.subscribe(({id}) => {
-      this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
+      this.curriculum$ = this.curriculumService.getRevisionCurriculum(+id).pipe(
         tap((curriculum:any) => {
         this.curriculum = curriculum
         console.log(curriculum);
 
         this.subjects = JSON.parse(curriculum.metadata)
-        this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
+        this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
         this.status = curriculum.status                    
         })
       )

@@ -8,6 +8,7 @@ import { CurriculumViewContainerComponent } from './components/curriculum-view-c
 import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
 import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
 import { CurriculumEditContainerComponent } from './components/curriculum-edit-container/curriculum-edit-container.component';
+import { CurriculumEditRevisionContainerComponent } from './components/curriculum-edit-revision-container/curriculum-edit-revision-container.component';
 
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
       // creating revision -done
       { path: 'revise/create/:id', component: CurriculumCreateRevisionContainerComponent, data: {type: 'create', action: 'revise'} },
       //editing the pending revision
-      { path: 'revision/edit/:id', component: CurriculumViewContainerComponent, data: {type: 'edit', action: 'revise'} },
+      { path: 'revision/edit/:id', component: CurriculumEditRevisionContainerComponent, data: {type: 'edit', action: 'revise'} },
 
 
 
