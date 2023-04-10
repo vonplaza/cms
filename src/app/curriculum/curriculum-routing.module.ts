@@ -7,6 +7,7 @@ import { CurriculumCreateContainerComponent } from './components/curriculum-crea
 import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
 import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
 import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
+import { CurriculumEditContainerComponent } from './components/curriculum-edit-container/curriculum-edit-container.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
       // view curriculum -done
       { path: ':id', component: CurriculumViewContainerComponent, data: {type: 'view', action: 'curr'} },
       // editing the pending curriculum
-      { path: 'edit/:id', component: CurriculumViewContainerComponent, data: {type: 'edit', action: 'curr'} },
+      { path: 'edit/:id', component: CurriculumEditContainerComponent, data: {type: 'edit', action: 'curr'} },
 
  
       // view revision -done

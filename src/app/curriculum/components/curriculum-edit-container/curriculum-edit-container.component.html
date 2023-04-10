@@ -1,0 +1,19 @@
+<div class="container" *ngIf="curriculum$ | async">
+  <div class="row">
+    <div class="col-xl-9">
+      <app-year-dropdown
+        [buttonTxt]="buttonTxt"
+        [subject]="subjects"
+        [type]="type"
+        [title]="title"
+        [curriculum]="curriculum"
+        [action]="action"
+        [status]="status"
+        (submitCur)="submit($event)"
+      ></app-year-dropdown>
+    </div>
+    <div class="col-xl-3">
+      <app-comments></app-comments>
+    </div>
+  </div>
+</div>

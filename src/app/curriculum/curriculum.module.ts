@@ -15,6 +15,7 @@ import { CurriculumCreateContainerComponent } from './components/curriculum-crea
 import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
 import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
 import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
+import { CurriculumEditContainerComponent } from './components/curriculum-edit-container/curriculum-edit-container.component';
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
@@ -26,7 +27,7 @@ import { CurriculumViewRevisionContainerComponent } from './components/curriculu
     curriculumDialog, 
     YearDropdownComponent, 
     CommentsComponent, 
-    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent
+    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent, CurriculumEditContainerComponent
   ],
   imports: [
     CommonModule,
