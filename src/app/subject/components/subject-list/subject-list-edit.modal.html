@@ -1,0 +1,57 @@
+<div class="asd">
+    <p class="h5">Creating a Subject</p>
+    <div mat-dialog-content>
+      <form
+        enctype="multipart/form-data"
+        #createSubjectForm="ngForm"
+        (submit)="createSubject(createSubjectForm)"
+        id="form"
+      >
+        <mat-form-field class="example-full-width">
+          <mat-label>Subject Code</mat-label>
+          <input (click)="editRow(subject)" matInput placeholder="Subject Code" name="subjectCode" ngModel />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" name="description" ngMode>
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="Description" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Department</mat-label>
+          <mat-select name="departmentId" ngModel="1">
+            <!-- <mat-option *ngFor="let food of " [value]="food.value">
+              {{food.viewValue}}
+            </mat-option> -->
+            <mat-option value="1">BSIT</mat-option>
+            <mat-option value="2">BLIS</mat-option>
+            <mat-option value="" > None </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button
+            type="button"
+            mat-raised-button
+            (click)="fileInput.click()"
+            color="primary"
+          >
+            Choose File
+          </button>
+          <input
+            hidden
+            name="syllabus"
+            #fileInput
+            type="file"
+            id="file"
+            ngModel
+          />
+      </form>
+      <div class="text-danger" *ngIf="error$ | async as errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-flat-button type="submit" form="form">Submit</button>
+      <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+    </div>
+  </div>
+  
+  <!-- #createSubjectForm="ngForm" -->
+  

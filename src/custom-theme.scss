@@ -34,9 +34,39 @@ $ccs-custom-theme:(
    // ... continues to 900
  )
 );
+
+$ccs-dark-custom-theme:(
+  50: black,
+ 100: black,
+ 200: black,
+ 300: black,
+ 400:black,
+ 500:black,
+ 600:black,
+ 700:black,
+ 800: black,
+ 900: black,
+ // ... continues to 900
+ contrast: (
+  50: #3c3c3c,
+  100: #606060,
+  200: #818181,
+  300: #979797,
+  400: white,
+  500: white,
+  600: white, 
+  700: white,
+  800: white,
+  900: white,
+   // ... continues to 900
+ )
+);
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
+$cict-curriculum-system-dark-primary: mat.define-palette($ccs-dark-custom-theme);
+$cict-curriculum-system-dark-accent: mat.define-palette($ccs-dark-custom-theme);
+$cict-curriculum-system-dark-warn: mat.define-palette($ccs-dark-custom-theme);
 $cict-curriculum-system-primary: mat.define-palette($ccs-custom-theme);
 $cict-curriculum-system-accent: mat.define-palette(mat.$pink-palette);
 
@@ -53,9 +83,23 @@ $cict-curriculum-system-theme: mat.define-light-theme((
   )
 ));
 
+$cict-curriculum-system-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $cict-curriculum-system-dark-primary,
+    accent: $cict-curriculum-system-dark-accent,
+    warn: $cict-curriculum-system-dark-warn,
+  )
+));
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($cict-curriculum-system-theme);
+.theme-light{
+  @include mat.all-component-themes($cict-curriculum-system-theme);
+}
+.theme-dark{
+  @include mat.all-component-themes($cict-curriculum-system-dark-theme);
+}
+
 
 
