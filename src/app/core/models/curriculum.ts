@@ -1,4 +1,5 @@
 import { Department } from "./department";
+import { TimeStamp } from "./timestamp";
 import { User } from "./user";
 
 export interface Curriculum {
@@ -11,7 +12,7 @@ export interface Curriculum {
   isCurrent: string;
 }
 
-export interface Curriculum2 {
+export interface Curriculum2 extends TimeStamp{
   id: number
   user_id: number
   department_id: number

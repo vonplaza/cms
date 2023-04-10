@@ -1,3 +1,4 @@
+import { TimeStamp } from "./timestamp"
 import { User } from "./user"
 
 export interface Comment extends TimeStamp{
@@ -10,7 +11,3 @@ export interface Comment extends TimeStamp{
   user?: User
 }
 
-export interface TimeStamp{
-  created_at?: string
-  updated_at?: string
-}
