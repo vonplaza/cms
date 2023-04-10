@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { subjects } from '../curriculum-view/curriculum-view.component';
+import { CommentService } from 'src/app/core/services/comment.service';
+import { Comment } from 'src/app/core/models/comment';
 
 @Component({
   selector: 'app-curriculum-create-revision-container',
@@ -13,11 +15,13 @@ import { subjects } from '../curriculum-view/curriculum-view.component';
 export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
   constructor(private curriculumService: CurriculumService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private commentService: CommentService
     ){}
   
   errorMessage$ = new Subject<string>()
 
+  comments: Comment[] = []
   isLoading:boolean = true
   curriculum!: Curriculum2
   subjects:subjects[] = [
@@ -59,6 +63,12 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
           // console.log(JSON.parse(data.metadata))
           this.subjects = JSON.parse(data.metadata)
           this.title = `Creating a revision for `
+
+          this.commentService.getCurriculumComments(this.curriculum.id).pipe(
+            tap(comments => this.comments = comments)
+          ).subscribe(
+            data => console.log(data)
+          )
           
         },
         error: err => {

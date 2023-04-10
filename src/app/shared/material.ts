@@ -49,7 +49,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
     MatSlideToggleModule
   ]
 })

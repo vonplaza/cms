@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 
 @Component({
@@ -14,13 +16,15 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
   constructor(private curriculumService: CurriculumService,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private router: Router
+              private router: Router,
+              private commentService: CommentService
           ){}
 
   submit(data: any){
     console.log(data);
   }
 
+  comments:Comment[] = []
   type:string = 'asdasd'
   action:string = ''
 
@@ -44,7 +48,11 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
 
         this.subjects = JSON.parse(curriculum.metadata)
         this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
-        this.status = curriculum.status                    
+        this.status = curriculum.status 
+        
+        this.commentService.getRevisionComments(this.curriculum.id).pipe(
+          tap(comments => this.comments = comments)
+        ).subscribe()
         })
       )
     })

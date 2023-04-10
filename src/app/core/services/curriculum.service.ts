@@ -16,7 +16,7 @@ export class CurriculumService {
     catchError(handleError)
   )
 
-  revisions$ = this.http.get<Curriculum2[]>(`${this.baseUrl}curriculums/revisions`).pipe(
+  revisions$ = this.http.get(`${this.baseUrl}curriculums/revisions`).pipe(
     catchError(handleError)
   )
 

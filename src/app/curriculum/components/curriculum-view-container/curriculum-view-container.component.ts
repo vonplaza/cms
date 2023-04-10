@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 
 @Component({
@@ -12,14 +14,15 @@ import { CurriculumService } from 'src/app/core/services/curriculum.service';
 })
 export class CurriculumViewContainerComponent implements OnInit {
   constructor(private curriculumService: CurriculumService,
-              private route: ActivatedRoute,
               private authService: AuthService,
-              private router: Router
+              private commentService: CommentService,
+              private route: ActivatedRoute,
+              private router: Router,
     ){}
-
+  
+  comments:Comment[] = []
   type:string = ''
   action:string = ''
-  
   curriculum!: Curriculum2
   subjects:any[] = []
   title = ''
@@ -34,6 +37,20 @@ export class CurriculumViewContainerComponent implements OnInit {
   revise(){
     console.log('revise');
     this.router.navigate(['/curriculums', 'revise', 'create', this.curriculum.id])
+  }
+
+
+
+  addComment(data:any){
+    const comment = {...data, curriculumId: this.curriculum.id}
+    this.commentService.addComment(comment).subscribe({
+      next: data => {
+        this.comments.unshift(data)
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
   }
   
   submit(data: any){
@@ -68,10 +85,19 @@ export class CurriculumViewContainerComponent implements OnInit {
             this.curriculum = curriculum
             this.subjects = JSON.parse(curriculum.metadata)
             this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
-            this.status = curriculum.status                    
+            this.status = curriculum.status  
+            
+            this.commentService.getCurriculumComments(this.curriculum.id).pipe(
+              tap(comments => this.comments = comments)
+            ).subscribe(
+              data => console.log(data)
+            )
+
           })
         )
     })
+
+
   }
 
   
