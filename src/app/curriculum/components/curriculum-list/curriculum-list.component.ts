@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Curriculum } from 'src/app/core/models/curriculum';
+import { Curriculum, Curriculum2 } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -14,8 +16,32 @@ import {MatDialog} from '@angular/material/dialog';
 
 export class CurriculumListComponent {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog,
+              private curriculumService: CurriculumService) {}
+  
+  curriculums:Curriculum2[] = []
+  curriculums$ = this.curriculumService.curriculums$.pipe(
+    map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
+    tap(curriculums => this.curriculums = curriculums)
+  )
 
+  curriculumPendings:Curriculum2[] = []
+  curriculumsPending$ = this.curriculumService.curriculums$.pipe(
+    map(curriculums => curriculums.filter(curr => curr.status === 'p')),
+    tap(curriculums => {
+      this.curriculumPendings = curriculums
+    })
+  )
+  
+  revisions:any[] = []
+  revisions$ = this.curriculumService.revisions$.pipe(
+    tap((revisions:any) => {
+      this.revisions = revisions
+      // console.log(revisions);
+    })
+  )
+    
+  
   openDialog() {
     const dialogRef = this.dialog.open(curriculumDialog);
 

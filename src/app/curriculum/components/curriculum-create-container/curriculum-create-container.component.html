@@ -1,0 +1,12 @@
+<div class="container">
+  <!-- <header class="py-4">
+    <h1>Creating a Curriculum</h1>
+    <h2>CICT BSIT Curriculum Version 1.0</h2>
+  </header> -->
+  <app-year-dropdown
+    [subject]="subject"
+    [type]="type"
+    [buttonTxt]="buttonTxt"
+    (submitCur)="submit($event)"
+  ></app-year-dropdown>
+</div>

@@ -1,73 +1,233 @@
-<div class="container">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col" style="padding: 40px">
-          <span class="tit">Curriculum Management</span>
-        </th>
+<div class="container pt-2">
+  <!-- <header class="mt-3 d-flex p-3">
+    <h2>Curriculums</h2>
+    <button
+      mat-flat-button
+      color="primary"
+      style="float: right"
+      (click)="openDialog()"
+    >
+      Create New
+    </button>
+  </header> -->
+  <header class="d-flex justify-content-between align-items-center my-2">
+    <h1 class="fw-semib fs-3" style="font-weight: 500">Curriculums</h1>
+    <button mat-flat-button color="primary" [routerLink]="['create']">
+      <mat-icon>create</mat-icon>
+      Create Curriculum
+    </button>
+  </header>
+  <mat-tab-group>
+    <mat-tab label="Existing">
+      <table class="table" *ngIf="curriculums$ | async as curriculum">
+        <thead>
+          <tr *ngIf="false">
+            <th style="">
+              <mat-form-field style="width: 200px" class="example-form-field">
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="listFilter"
+                  placeholder="Search..."
+                />
 
-        <th style="padding: 20px">
-          <mat-form-field style="width: 200px" class="example-form-field">
-            <input
-              matInput
-              type="text"
-              [(ngModel)]="listFilter"
-              placeholder="Search..."
-            />
+                <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                          <mat-icon>clear</mat-icon>
+                      </button> --> </mat-form-field
+              ><mat-icon>search</mat-icon>
+              <!-- <button mat-raised-button color="primary"></button> -->
 
-            <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-                      <mat-icon>clear</mat-icon>
-                  </button> --> </mat-form-field
-          ><mat-icon>search</mat-icon>
-          <!-- <button mat-raised-button color="primary"></button> -->
-
-          <!--  -->
-          <button
-            mat-raised-button
-            color="primary"
-            style="float: right"
-            (click)="openDialog()"
-          >
-            Create New
-          </button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let datas of displayedItems">
-        <td scope="row">
-          <div class="float-left d-flex p-3 flex-column">
-            <div class="title d-inline-flex">
-              <span class="title">{{ datas.title }}{{ datas.version }}</span>
-              <div>
-                <div class="status mb-2 bg-success">{{ datas.status }}</div>
-                <div class="status bg-danger">{{ datas.status }}</div>
+              <!--  -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of curriculum">
+            <td scope="row">
+              <div class="float-left d-flex p-3 flex-column">
+                <div class="d-flex align-items-center">
+                  <span class="h5 m-0 p-0 me-2"
+                    >CICT {{ data.department.department_code }} Curriculum
+                    version {{ data.version }}</span
+                  >
+                  <div>
+                    <span
+                      class="badge rounded-pill text-bg-primary {{
+                        data.status == 'i' && 'text-bg-danger'
+                      }} fs-7"
+                      >{{ data.status == "a" ? "Active" : "Inactive" }}</span
+                    >
+                  </div>
+                </div>
+                <span class="author">{{ data.user?.profile?.name }}</span>
+                <span class="date">{{ data.created_at | date }}</span>
               </div>
-            </div>
-            <span class="date">{{ datas.date }}</span>
-            <span class="author">{{ datas.author }}</span>
-          </div>
-        </td>
-        <td>
-          <div class="floater">
-            <button
-              mat-raised-button
-              color="primary"
-              style="width: 100px; margin-right: 30px"
-            >
-              View
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            </td>
+            <td>
+              <div class="float-end">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="mt-4"
+                  [routerLink]="[data.id]"
+                >
+                  <mat-icon>remove_red_eye</mat-icon>
+                  View
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-  <mat-paginator
-    [length]="totalItems"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="onPageChange($event)"
-  >
-  </mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </mat-tab>
+    <mat-tab label="Revisions">
+      <table class="table" *ngIf="revisions$ | async as curriculumRevisions">
+        <thead>
+          <tr *ngIf="false">
+            <th style="">
+              <mat-form-field style="width: 200px" class="example-form-field">
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="listFilter"
+                  placeholder="Search..."
+                />
+
+                <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                          <mat-icon>clear</mat-icon>
+                      </button> --> </mat-form-field
+              ><mat-icon>search</mat-icon>
+              <!-- <button mat-raised-button color="primary"></button> -->
+
+              <!--  -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of curriculumRevisions">
+            <td scope="row">
+              <div class="float-left d-flex p-3 flex-column">
+                <div class="d-flex align-items-center">
+                  <span class="h5 m-0 p-0 me-2"
+                    >CICT
+                    {{ data.curriculum?.department?.department_code }}
+                    Curriculum version{{ data.curriculum?.version }}
+                  </span>
+                  <div>
+                    <span
+                      class="badge rounded-pill text-bg-danger {{
+                        data.status == 'a' && 'text-bg-primary'
+                      }} fs-7 me-2"
+                      >{{ data.status == "a" ? "Approve" : "Pending" }}</span
+                    >
+                    <span class="badge rounded-pill text-bg-primary fs-7"
+                      >revision</span
+                    >
+                  </div>
+                </div>
+                <span class="author">{{ data.user?.profile?.name }}</span>
+                <span class="date">{{ data.created_at | date }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="float-end">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="mt-4"
+                  [routerLink]="['revisions', data.id]"
+                >
+                  <mat-icon>remove_red_eye</mat-icon>
+                  View
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </mat-tab>
+    <mat-tab label="Pending">
+      <table class="table" *ngIf="curriculumsPending$ | async as curriculum">
+        <thead>
+          <tr *ngIf="false">
+            <th style="">
+              <mat-form-field style="width: 200px" class="example-form-field">
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="listFilter"
+                  placeholder="Search..."
+                />
+
+                <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                          <mat-icon>clear</mat-icon>
+                      </button> --> </mat-form-field
+              ><mat-icon>search</mat-icon>
+              <!-- <button mat-raised-button color="primary"></button> -->
+
+              <!--  -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of curriculum">
+            <td scope="row">
+              <div class="float-left d-flex p-3 flex-column">
+                <div class="d-flex align-items-center">
+                  <span class="h5 m-0 p-0 me-2"
+                    >CICT {{ data.department.department_code }} Curriculum
+                    version {{ data.version }}</span
+                  >
+                  <div>
+                    <span class="badge rounded-pill text-bg-primary fs-7"
+                      >pending</span
+                    >
+                  </div>
+                </div>
+                <span class="author">{{ data.user?.profile?.name }}</span>
+                <span class="date">{{ data.created_at | date }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="float-end">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="mt-4"
+                  [routerLink]="[data.id]"
+                >
+                  <mat-icon>remove_red_eye</mat-icon>
+                  View
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </mat-tab>
+  </mat-tab-group>
 </div>
