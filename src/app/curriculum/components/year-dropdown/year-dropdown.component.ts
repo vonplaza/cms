@@ -62,6 +62,34 @@ export class YearDropdownComponent {
 
   version = 1
   department:number = 1
+  unitsOnChange(yearLvl: number, sem:string, type:string){
+    // this.addForms[yearLvl][sem][type]
+    if(type == 'add'){
+      this.addForms[yearLvl][sem]['totalUnits'] = 
+        this.addForms[yearLvl][sem]['lecUnits'] 
+        + this.addForms[yearLvl][sem]['labUnits']
+    }else{
+      this.isForms[yearLvl][sem]['totalUnits'] = 
+      this.isForms[yearLvl][sem]['lecUnits'] 
+      + this.isForms[yearLvl][sem]['labUnits']
+    }
+    
+  }
+  getTotalUnits(yearLvl:number, sem:number){
+    const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => subj.totalUnits)
+    const totalUnits = units.reduce((accumulator:any, currentValue:any) => {
+      return accumulator + currentValue;
+    }, 0) 
+    return totalUnits
+  }
+
+  getTotalHrs(yearLvl:number, sem:number){
+    const hrs = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => subj.hoursPerWeek)
+    const totalHrs = hrs.reduce((accumulator:any, currentValue:any) => {
+      return accumulator + currentValue;
+    }, 0) 
+    return totalHrs
+  }
   
   isView = true
 
@@ -70,7 +98,6 @@ export class YearDropdownComponent {
     ((this.type == 'create' && this.action == 'curr') 
     || (this.type == 'edit' && this.action == 'curr'))
   }
-
 
   currentUser$ = this.authService.getCurrentUser()
     .pipe(
@@ -137,50 +164,14 @@ export class YearDropdownComponent {
 
     if(this.subject.length < 4){
       this.addForms.push({
-        firstSem: {  
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
-        ,secondSem:{
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
+        firstSem: this.getSubjectDs(),
+        secondSem:this.getSubjectDs()
       })
       this.isEditFormShow.push({firstSem: false, sencondSem:false})
-      this.isAddFormShow.push([false, false])
+      this.isAddFormShow.push({firstSem: false, sencondSem:false})
       this.isForms.push({
-        firstSem: {  
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
-        ,secondSem:{
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
+        firstSem: this.getSubjectDs(),
+        secondSem:this.getSubjectDs()
       })
       this.subject.push({
         firstSem: [],
@@ -284,49 +275,13 @@ export class YearDropdownComponent {
       // this.isAddFormShow.push({firstSem: false, sencondSem:false})
       
       this.isForms.push({
-        firstSem: {  
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
-        ,secondSem:{
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
+        firstSem: this.getSubjectDs()
+        ,secondSem: this.getSubjectDs()
       })
 
       this.addForms.push({
-        firstSem: {  
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
-        ,secondSem:{
-          courseCode: '',
-          descriptiveTitle: '',
-          lecUnits: '',
-          labUnits: '',
-          totalUnits: '',
-          hoursPerWeek: '',
-          preReq: '',
-          coReq: '',
-        }
+        firstSem: this.getSubjectDs(),
+        secondSem: this.getSubjectDs()
       })
     })
   }
@@ -360,19 +315,33 @@ export class YearDropdownComponent {
     this.isEditFormShow[yearLevel][sem] = false
   }
 
+  getSubjectDs(){
+    return {  
+      courseCode: '',
+      descriptiveTitle: '',
+      lecUnits: 0,
+      labUnits: 0,
+      totalUnits: 0,
+      hoursPerWeek: 0,
+      preReq: '',
+      coReq: '',
+    }
+  }
 
   // adding subject
   addSubject(form: NgForm, yearLevel:number, sem:string){
     // if(!NgForm || form.value.preReq || form.value.coReq){
     if(sem === 'firstSem'){
       this.subject[yearLevel]['firstSem'].push(form.value)
-      form.reset();
-      this.removeAddForm(yearLevel, sem);
+      this.addForms[yearLevel]['firstSem'] = this.getSubjectDs()
+      // form.reset();
+      // this.removeAddForm(yearLevel, sem);
     }
     else{
       this.subject[yearLevel]['secondSem'].push(form.value)
-      form.reset();
-      this.removeAddForm(yearLevel, sem);
+      this.addForms[yearLevel]['secondSem'] = this.getSubjectDs()
+      // form.reset();
+      // this.removeAddForm(yearLevel, sem);
     }
     // }
   }

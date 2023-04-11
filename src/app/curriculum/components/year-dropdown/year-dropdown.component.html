@@ -216,9 +216,10 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
                   [(ngModel)]="addForms[x]['firstSem'].lecUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'add')"
                   required
               /></mat-form-field>
 
@@ -226,9 +227,10 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
                   [(ngModel)]="addForms[x]['firstSem'].labUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'add')"
                   required
               /></mat-form-field>
 
@@ -236,7 +238,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="addForms[x]['firstSem'].totalUnits"
                   required
@@ -246,7 +248,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="addForms[x]['firstSem'].hoursPerWeek"
                   required
@@ -372,8 +374,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'firstSem', 'edit')"
                   [(ngModel)]="isForms[x]['firstSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -382,9 +385,10 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
                   [(ngModel)]="isForms[x]['firstSem'].labUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'edit')"
                   required
               /></mat-form-field>
 
@@ -392,7 +396,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="isForms[x]['firstSem'].totalUnits"
                   required
@@ -402,7 +406,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="isForms[x]['firstSem'].hoursPerWeek"
                   required
@@ -513,10 +517,18 @@
               </button>
             </td>
           </tr>
+          <tr>
+            <span class="fs-6 fw-semibold text-dark"
+              >Total Units: {{ getTotalUnits(x, 0) }}</span
+            >
+            <span class="fs-6 fw-semibold text-dark"
+              >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
+            >
+          </tr>
         </tbody>
       </table>
     </div>
-
+    <hr />
     <div class="secondSem">
       <button
         class="mb-2 mt-2"
@@ -598,8 +610,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'add')"
                   [(ngModel)]="addForms[x]['secondSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -608,8 +621,9 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'add')"
                   [(ngModel)]="addForms[x]['secondSem'].labUnits"
                   required
               /></mat-form-field>
@@ -618,7 +632,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="addForms[x]['secondSem'].totalUnits"
                   required
@@ -628,7 +642,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="addForms[x]['secondSem'].hoursPerWeek"
                   required
@@ -758,8 +772,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'edit')"
                   [(ngModel)]="isForms[x]['secondSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -768,8 +783,9 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'edit')"
                   [(ngModel)]="isForms[x]['secondSem'].labUnits"
                   required
               /></mat-form-field>
@@ -778,7 +794,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="isForms[x]['secondSem'].totalUnits"
                   required
@@ -788,7 +804,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="isForms[x]['secondSem'].hoursPerWeek"
                   required
@@ -901,6 +917,14 @@
                 <mat-icon>delete_forever</mat-icon>
               </button>
             </td>
+          </tr>
+          <tr>
+            <span class="fs-6 fw-semibold text-dark"
+              >Total Units: {{ getTotalUnits(x, 1) }}</span
+            >
+            <span class="fs-6 fw-semibold text-dark"
+              >Total Hrs/Week: {{ getTotalHrs(x, 1) }}</span
+            >
           </tr>
         </tbody>
       </table>
