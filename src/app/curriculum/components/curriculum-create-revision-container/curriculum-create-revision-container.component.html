@@ -8,12 +8,15 @@
         [curriculum]="curriculum"
         [status]="status"
         [action]="action"
+        [author]="author"
+        [descriptiveTitle]="descriptiveTitle"
+        [created_at]="created_at"
         [buttonTxt]="buttonTxt"
         (submitCur)="submit($event)"
       ></app-year-dropdown>
     </div>
     <div class="col-xl-3">
-      <app-comments></app-comments>
+      <app-comments [comments]="comments"></app-comments>
     </div>
   </div>
 </div>

@@ -1,20 +1,35 @@
-<div class="d-flex align-items-center my-0 py-0">
-  <span class="fw-semibold fs-4 mt-3 me-2">{{ title }}</span>
-  <span
-    class="badge rounded-pill text-bg-primary mt-3 me-2"
-    *ngIf="status == 'p'"
-    >Pending</span
+<div class="my-0 py-0">
+  <div *ngIf="descriptiveTitle" class="mt-3 mb-0" style="">
+    <span class="text-secondary">{{ descriptiveTitle | titlecase }}</span>
+  </div>
+  <div
+    class="d-flex align-items-center {{ !descriptiveTitle && 'mt-2' }}"
+    style=""
   >
-  <span
-    class="badge rounded-pill text-bg-primary mt-3 me-2"
-    *ngIf="status == 'a'"
-    >Active</span
-  >
-  <span
-    class="badge rounded-pill text-bg-primary mt-3 me-2"
-    *ngIf="action == 'revise'"
-    >Revision</span
-  >
+    <span class="fw-semibold mt-0 fs-4 me-2 text-body">{{ title }}</span>
+    <span
+      class="badge rounded-pill text-bg-primary mt-0 me-2"
+      *ngIf="status == 'p'"
+      >Pending</span
+    >
+    <span
+      class="badge rounded-pill text-bg-primary mt-0 me-2"
+      *ngIf="status == 'a'"
+    >
+      {{ action == "revise" ? "Approved" : "Active" }}
+    </span>
+    <span
+      class="badge rounded-pill text-bg-primary mt-0 me-2"
+      *ngIf="action == 'revise'"
+      >Revision</span
+    >
+  </div>
+  <div>
+    <span class="text-secondary">{{ author }}</span>
+  </div>
+  <div>
+    <span class="text-secondary">{{ created_at | date }}</span>
+  </div>
 </div>
 
 <!-- <div class="mt-2">
@@ -25,7 +40,8 @@
 
 <header class="d-flex justify-content-between align-items-center mt-4">
   <div *ngIf="currentUser$ | async as user" class="">
-    <mat-form-field class="me-2" *ngIf="type != 'view'">
+    <!-- <mat-form-field class="me-2" *ngIf="type != 'view' && (action == 'create') "> -->
+    <mat-form-field class="me-2" *ngIf="isShown()">
       <mat-label>Department</mat-label>
       <mat-select ngModel="1">
         <mat-option value="1"> BSIT </mat-option>
@@ -41,7 +57,7 @@
       </mat-select>
     </mat-form-field> -->
 
-    <mat-form-field class="example-full-width" *ngIf="type != 'view'">
+    <mat-form-field class="example-full-width" *ngIf="isShown()">
       <mat-label>Version</mat-label>
       <input
         type="number"
@@ -102,7 +118,7 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'a'"
+      *ngIf="type == 'view' && status == 'a' && action != 'revise'"
       (click)="revise()"
     >
       <mat-icon>edit</mat-icon>
@@ -142,6 +158,7 @@
             <form
               #firstSemesterForm="ngForm"
               (ngSubmit)="addSubject(firstSemesterForm, x, 'firstSem')"
+              class="mb-0"
             >
               <mat-form-field
                 class="subject-input"
@@ -200,9 +217,10 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
                   [(ngModel)]="addForms[x]['firstSem'].lecUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'add')"
                   required
               /></mat-form-field>
 
@@ -210,9 +228,10 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
                   [(ngModel)]="addForms[x]['firstSem'].labUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'add')"
                   required
               /></mat-form-field>
 
@@ -220,7 +239,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="addForms[x]['firstSem'].totalUnits"
                   required
@@ -230,7 +249,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="addForms[x]['firstSem'].hoursPerWeek"
                   required
@@ -287,6 +306,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             </form>
+            <small *ngIf="addFormError[x]['firstSem']" class="text-danger">{{
+              addFormError[x]["firstSem"]
+            }}</small>
           </td>
         </tr>
       </thead>
@@ -356,8 +378,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'firstSem', 'edit')"
                   [(ngModel)]="isForms[x]['firstSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -366,9 +389,10 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
                   [(ngModel)]="isForms[x]['firstSem'].labUnits"
+                  (input)="unitsOnChange(x, 'firstSem', 'edit')"
                   required
               /></mat-form-field>
 
@@ -376,7 +400,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="isForms[x]['firstSem'].totalUnits"
                   required
@@ -386,7 +410,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="isForms[x]['firstSem'].hoursPerWeek"
                   required
@@ -443,6 +467,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             </form>
+            <small *ngIf="editFormError[x]['firstSem']" class="text-danger">{{
+              editFormError[x]["firstSem"]
+            }}</small>
           </td>
         </tr>
       </thead>
@@ -497,10 +524,20 @@
               </button>
             </td>
           </tr>
+          <tr>
+            <div>
+              <span class="fs-6 text-dark me-2"
+                >Total Units: {{ getTotalUnits(x, 0) }}</span
+              >
+              <span class="fs-6 text-dark me-2"
+                >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
+              >
+            </div>
+          </tr>
         </tbody>
       </table>
     </div>
-
+    <hr />
     <div class="secondSem">
       <button
         class="mb-2 mt-2"
@@ -582,8 +619,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'add')"
                   [(ngModel)]="addForms[x]['secondSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -592,8 +630,9 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'add')"
                   [(ngModel)]="addForms[x]['secondSem'].labUnits"
                   required
               /></mat-form-field>
@@ -602,7 +641,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="addForms[x]['secondSem'].totalUnits"
                   required
@@ -612,7 +651,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="addForms[x]['secondSem'].hoursPerWeek"
                   required
@@ -672,6 +711,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             </form>
+            <small *ngIf="addFormError[x]['secondSem']" class="text-danger">{{
+              addFormError[x]["secondSem"]
+            }}</small>
           </td>
         </tr>
       </thead>
@@ -742,8 +784,9 @@
                 ><input
                   name="lecUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lec Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'edit')"
                   [(ngModel)]="isForms[x]['secondSem'].lecUnits"
                   required
               /></mat-form-field>
@@ -752,8 +795,9 @@
                 ><input
                   name="labUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Lab Units"
+                  (input)="unitsOnChange(x, 'secondSem', 'edit')"
                   [(ngModel)]="isForms[x]['secondSem'].labUnits"
                   required
               /></mat-form-field>
@@ -762,7 +806,7 @@
                 ><input
                   name="totalUnits"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Total Units"
                   [(ngModel)]="isForms[x]['secondSem'].totalUnits"
                   required
@@ -772,7 +816,7 @@
                 ><input
                   name="hoursPerWeek"
                   matInput
-                  type="text"
+                  type="number"
                   placeholder="Hours Per Week"
                   [(ngModel)]="isForms[x]['secondSem'].hoursPerWeek"
                   required
@@ -832,6 +876,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             </form>
+            <small *ngIf="editFormError[x]['secondSem']" class="text-danger">{{
+              editFormError[x]["secondSem"]
+            }}</small>
           </td>
         </tr>
       </thead>
@@ -885,6 +932,16 @@
                 <mat-icon>delete_forever</mat-icon>
               </button>
             </td>
+          </tr>
+          <tr class="">
+            <div class="">
+              <span class="fs-6 text-dark me-2"
+                >Total Units: span {{ getTotalUnits(x, 1) }}</span
+              >
+              <span class="fs-6 text-dark me-2"
+                >Total Hrs/Week: {{ getTotalHrs(x, 1) }}</span
+              >
+            </div>
           </tr>
         </tbody>
       </table>

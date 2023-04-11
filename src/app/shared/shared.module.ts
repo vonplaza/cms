@@ -5,6 +5,8 @@ import { MaterialModule } from './material';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { RouterModule } from '@angular/router';
+import { TimeDifferencePipePipe } from '../core/pipe/time-difference-pipe.pipe';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -12,7 +14,9 @@ import { RouterModule } from '@angular/router';
   declarations: [
     ToolbarComponent,
     SidenavComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    TimeDifferencePipePipe,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +26,7 @@ import { RouterModule } from '@angular/router';
   exports: [
     SidenavComponent,
     SpinnerComponent,
+    TimeDifferencePipePipe
   ]
 })
 export class SharedModule { }

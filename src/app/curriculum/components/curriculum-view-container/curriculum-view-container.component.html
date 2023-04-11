@@ -7,14 +7,19 @@
         [title]="title"
         [curriculum]="curriculum"
         [status]="status"
-        (submitCur)="submit($event)"
+        [created_at]="created_at"
+        [author]="author"
         (editCur)="edit()"
         (approveCur)="approve()"
         (reviseCur)="revise()"
       ></app-year-dropdown>
     </div>
     <div class="col-xl-3">
-      <app-comments></app-comments>
+      <app-comments
+        [type]="type"
+        [comments]="comments"
+        (addComment)="addComment($event)"
+      ></app-comments>
     </div>
   </div>
 </div>

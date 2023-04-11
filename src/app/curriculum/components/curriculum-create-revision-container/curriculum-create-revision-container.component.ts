@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { subjects } from '../curriculum-view/curriculum-view.component';
+import { CommentService } from 'src/app/core/services/comment.service';
+import { Comment } from 'src/app/core/models/comment';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-curriculum-create-revision-container',
@@ -13,13 +17,18 @@ import { subjects } from '../curriculum-view/curriculum-view.component';
 export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
   constructor(private curriculumService: CurriculumService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private commentService: CommentService,
+              private dialog: MatDialog,
+              private router: Router
     ){}
   
   errorMessage$ = new Subject<string>()
 
+  comments: Comment[] = []
   isLoading:boolean = true
   curriculum!: Curriculum2
+  descriptiveTitle:string = 'revising'
   subjects:subjects[] = [
     {
       firstSem: [],
@@ -29,17 +38,35 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   type:string = ''
   action:string = ''
   title:string = ''
+  author:any = ''
+  created_at:string = ''
   status:string = ''
   buttonTxt = 'submit revision'
 
   submit(subjects: any){
-    const data = { curriculumId: this.curriculum.id, metadata: subjects.subjects, version: subjects.version }
-    console.log(data);
-    
-    this.curriculumService.createRevision(data).subscribe({
-      next: datas => console.log(datas),
-      error: err => console.log(err)
-    })
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Create Revision Confirmation',
+        message: 'Are you sure you want to create this revision?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('confirm');
+        
+        const data = { curriculumId: this.curriculum.id, metadata: subjects.subjects, version: subjects.version }
+        
+        this.curriculumService.createRevision(data).subscribe({
+          next: (data:any) => {
+            this.router.navigate(['/curriculums', 'revisions', data.curriculum.id])
+          },
+          error: err => console.log(err)
+        })
+      } else {
+      }
+    });
+
   }
 
   ngOnInit(): void {
@@ -52,13 +79,18 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
     this.route.params.subscribe(({id}) => {
       this.curriculumService.getCurriculum(id).subscribe({
-        next: data => {
-          this.curriculum = data
-          console.log(JSON.parse(data.metadata));
+        next: curriculum => {
+          this.curriculum = curriculum
+          console.log(JSON.parse(curriculum.metadata));
           
           // console.log(JSON.parse(data.metadata))
-          this.subjects = JSON.parse(data.metadata)
-          this.title = `Creating a revision for `
+          this.subjects = JSON.parse(curriculum.metadata)
+          this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
+          this.author = curriculum.user?.profile?.name
+
+          this.commentService.getCurriculumComments(this.curriculum.id).pipe(
+            tap(comments => this.comments = comments)
+          ).subscribe()
           
         },
         error: err => {

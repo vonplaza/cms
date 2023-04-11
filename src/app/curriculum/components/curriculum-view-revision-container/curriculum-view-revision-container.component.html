@@ -8,12 +8,18 @@
         [curriculum]="curriculum"
         [action]="action"
         [status]="status"
+        [author]="author"
+        [created_at]="created_at"
         (editCur)="edit()"
         (approveCur)="approve()"
       ></app-year-dropdown>
     </div>
     <div class="col-xl-3">
-      <app-comments></app-comments>
+      <app-comments
+        [type]="type"
+        [comments]="comments"
+        (addComment)="addComment($event)"
+      ></app-comments>
     </div>
   </div>
 </div>

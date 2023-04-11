@@ -3,42 +3,57 @@
     <span class="me-1">Comments</span>
     <mat-icon class="mt-1">chat</mat-icon>
   </h2>
-  <div class="chat-c">
+  <div class="chat-c" [ngStyle]="{ 'max-height': height + 'px' }">
     <mat-card class="comment-card mb-3" *ngFor="let comment of comments">
       <mat-card-header>
         <img
           mat-card-avatar
-          src="https://randomuser.me/api/portraits/men/75.jpg"
+          src="{{
+            'http://127.0.0.1:8000/api/profiles/images/' +
+              (comment?.user?.profile?.profile_pic || 'no-image.jpg')
+          }}"
         />
 
-        <mat-card-subtitle>{{ comment.id }}</mat-card-subtitle>
+        <mat-card-subtitle>
+          <span>{{ comment.user?.profile?.name }}</span>
+          <div>
+            <small class="">{{
+              comment.created_at | timeDifferencePipe
+            }}</small>
+          </div>
+        </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content class="mt-2 bg-light-subtle">
         <p>{{ comment.body }}</p>
       </mat-card-content>
     </mat-card>
   </div>
-  <form class="w-100 p-2 shadow-sm">
+  <form
+    class="w-100 p-2 shadow-sm"
+    *ngIf="type == 'view' && role == 'reviewer'"
+    #commentForm="ngForm"
+    (ngSubmit)="submit(commentForm)"
+  >
     <mat-form-field class="example-full-width w-100">
       <mat-label>Subject</mat-label>
       <input
         matInput
         placeholder=""
         type="text"
-        name="header"
+        name="subject"
         value="Header"
-        ngModel
+        [(ngModel)]="comment.subject"
       />
     </mat-form-field>
     <mat-form-field class="example-full-width w-100">
       <mat-label>Leave a comment</mat-label>
       <textarea
         type="text"
-        name="feedback"
+        name="body"
         style="resize: none; height: 80px"
         matInput
         placeholder="Ex. It makes me feel..."
-        ngModel
+        [(ngModel)]="comment.body"
       ></textarea>
     </mat-form-field>
     <button mat-flat-button color="primary" class="">

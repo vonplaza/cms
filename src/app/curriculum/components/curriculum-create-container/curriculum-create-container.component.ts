@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { subjects } from '../year-dropdown/year-dropdown.component';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curriculum-create-container',
@@ -10,10 +13,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class CurriculumCreateContainerComponent {
   constructor(private curriculumService: CurriculumService,
-              private authService: AuthService){}
+              private authService: AuthService,
+              private dialog: MatDialog,
+              private router: Router
+              ){}
 
   subjects = []
   type:string = 'create'
+  action:string = 'curr'
   subject :subjects[] = [{
     firstSem: [],
     secondSem: []
@@ -206,15 +213,27 @@ export class CurriculumCreateContainerComponent {
 
   submit(subj: any){
     console.log(subj);
-    
-    this.curriculumService.createCurriculum(subj).subscribe({
-      next: response => {
-        console.log(response);
-        
-      },
-      error: err => {
-        console.log(err);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Create Confirmation',
+        message: 'Are you sure you want to create this curriculum?'
       }
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.curriculumService.createCurriculum(subj).subscribe({
+          next: curriculum => {
+            this.router.navigate(['/curriculums', curriculum.id])
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
+      } else {
+      }
+    });
+
   }
 }
