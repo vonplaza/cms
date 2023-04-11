@@ -24,6 +24,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   comments: Comment[] = []
   isLoading:boolean = true
   curriculum!: Curriculum2
+  descriptiveTitle:string = 'revising'
   subjects:subjects[] = [
     {
       firstSem: [],
@@ -33,6 +34,8 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   type:string = ''
   action:string = ''
   title:string = ''
+  author:any = ''
+  created_at:string = ''
   status:string = ''
   buttonTxt = 'submit revision'
 
@@ -56,19 +59,18 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
     this.route.params.subscribe(({id}) => {
       this.curriculumService.getCurriculum(id).subscribe({
-        next: data => {
-          this.curriculum = data
-          console.log(JSON.parse(data.metadata));
+        next: curriculum => {
+          this.curriculum = curriculum
+          console.log(JSON.parse(curriculum.metadata));
           
           // console.log(JSON.parse(data.metadata))
-          this.subjects = JSON.parse(data.metadata)
-          this.title = `Creating a revision for `
+          this.subjects = JSON.parse(curriculum.metadata)
+          this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
+          this.author = curriculum.user?.profile?.name
 
           this.commentService.getCurriculumComments(this.curriculum.id).pipe(
             tap(comments => this.comments = comments)
-          ).subscribe(
-            data => console.log(data)
-          )
+          ).subscribe()
           
         },
         error: err => {

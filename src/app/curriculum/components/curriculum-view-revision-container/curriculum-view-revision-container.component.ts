@@ -23,7 +23,9 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
   type:string = ''
   action:string = ''
   comments:Comment[] = []
-  
+  created_at: string = ''
+  author: string = ''
+
   curriculum!: Curriculum2
   subjects:any[] = []
   title = ''
@@ -45,8 +47,9 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
   approve(){
     console.log('approve');
   }
+  // revision/edit/:id
   edit(){
-    // this.router.navigate()
+    this.router.navigate(['/curriculums', 'revision', 'edit', this.curriculum.id])
     console.log('edit');
   }
  
@@ -66,12 +69,12 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
           this.subjects = JSON.parse(curriculum.metadata)
           this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
           this.status = curriculum.status    
-          
+          this.author = curriculum.user.profile.name
+          this.created_at = curriculum.created_at
+
           this.commentService.getRevisionComments(this.curriculum.id).pipe(
             tap(comments => this.comments = comments)
-          ).subscribe(
-            data => console.log(data)
-          )
+          ).subscribe()
         })
       )
     })

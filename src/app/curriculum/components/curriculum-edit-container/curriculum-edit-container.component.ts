@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
@@ -27,7 +28,8 @@ export class CurriculumEditContainerComponent implements OnInit{
   comments:Comment[] = []
   type:string = 'asdasd'
   action:string = ''
-
+  descriptiveTitle:string = 'editing pending curriculum'
+  author:any = ''
   curriculum!: Curriculum2
   subjects:any[] = []
   title = ''
@@ -46,10 +48,14 @@ export class CurriculumEditContainerComponent implements OnInit{
         this.curriculum = curriculum
         console.log(curriculum);
 
+        console.log(curriculum.user);
+        
+
         this.subjects = JSON.parse(curriculum.metadata)
         this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
         this.status = curriculum.status   
-        
+        this.author = curriculum.user.profile.name
+
         this.commentService.getCurriculumComments(this.curriculum.id).pipe(
           tap(comments => this.comments = comments)
         ).subscribe(

@@ -27,7 +27,8 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
   comments:Comment[] = []
   type:string = 'asdasd'
   action:string = ''
-
+  author:string = ''
+  descriptiveTitle:string = 'editing revision'
   curriculum!: Curriculum2
   subjects:any[] = []
   title = ''
@@ -44,12 +45,13 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
       this.curriculum$ = this.curriculumService.getRevisionCurriculum(+id).pipe(
         tap((curriculum:any) => {
         this.curriculum = curriculum
-        console.log(curriculum);
 
         this.subjects = JSON.parse(curriculum.metadata)
         this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
         this.status = curriculum.status 
+        console.log(curriculum.user.profile.name);
         
+        this.author = curriculum.user.profile.name
         this.commentService.getRevisionComments(this.curriculum.id).pipe(
           tap(comments => this.comments = comments)
         ).subscribe()

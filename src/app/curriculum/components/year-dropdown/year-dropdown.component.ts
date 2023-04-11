@@ -40,6 +40,9 @@ export class YearDropdownComponent {
   @Input() curriculum!: Curriculum2 
   @Input() buttonTxt: string = ''
   @Input() title: string = 'Creating Curriculum'
+  @Input() author: string = ''
+  @Input() created_at: string = ''
+  @Input() descriptiveTitle: string = ''
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
