@@ -59,8 +59,12 @@
                     >
                   </div>
                 </div>
-                <span class="author">{{ data.user?.profile?.name }}</span>
-                <span class="date">{{ data.created_at | date }}</span>
+                <small class="author text-secondary">{{
+                  data.user?.profile?.name
+                }}</small>
+                <small class="date text-secondary">{{
+                  data.created_at | date
+                }}</small>
               </div>
             </td>
             <td>
@@ -123,8 +127,10 @@
                   </span>
                   <div>
                     <span
-                      class="badge rounded-pill text-bg-danger {{
-                        data.status == 'a' && 'text-bg-primary'
+                      class="badge rounded-pill {{
+                        data.status == 'a'
+                          ? 'text-bg-primary'
+                          : 'text-bg-danger'
                       }} fs-7 me-2"
                       >{{ data.status == "a" ? "Approve" : "Pending" }}</span
                     >
@@ -133,8 +139,12 @@
                     >
                   </div>
                 </div>
-                <span class="author">{{ data.user?.profile?.name }}</span>
-                <span class="date">{{ data.created_at | date }}</span>
+                <small class="author text-secondary">{{
+                  data.user?.profile?.name
+                }}</small>
+                <small class="date text-secondary">{{
+                  data.created_at | date
+                }}</small>
               </div>
             </td>
             <td>
@@ -200,8 +210,12 @@
                     >
                   </div>
                 </div>
-                <span class="author">{{ data.user?.profile?.name }}</span>
-                <span class="date">{{ data.created_at | date }}</span>
+                <small class="author text-secondary">{{
+                  data.user?.profile?.name
+                }}</small>
+                <small class="date text-secondary">{{
+                  data.created_at | date
+                }}</small>
               </div>
             </td>
             <td>

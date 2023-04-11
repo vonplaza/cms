@@ -43,6 +43,7 @@ export class YearDropdownComponent {
   @Input() author: string = ''
   @Input() created_at: string = ''
   @Input() descriptiveTitle: string = ''
+  @Input() role: string = ''
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
@@ -64,6 +65,11 @@ export class YearDropdownComponent {
   
   isView = true
 
+  isShown(){
+    return this.type !== 'view' && 
+    ((this.type == 'create' && this.action == 'curr') 
+    || (this.type == 'edit' && this.action == 'curr'))
+  }
 
 
   currentUser$ = this.authService.getCurrentUser()

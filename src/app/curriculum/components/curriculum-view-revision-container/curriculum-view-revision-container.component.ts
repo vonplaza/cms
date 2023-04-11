@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { Comment } from 'src/app/core/models/comment';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -18,6 +20,7 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
               private commentService: CommentService,
               private authService: AuthService,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               private router: Router
   ){}
   type:string = ''
@@ -45,7 +48,30 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
   }
 
   approve(){
-    console.log('approve');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Approve Revision Confirmation',
+        message: 'Are you sure you want to approve this revision?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+        this.curriculumService.approveRevision(this.curriculum.id).subscribe({
+          next: response => {
+            this.curriculum.status = 'a'
+            this.status = 'a'
+          },
+          error: err => {
+            
+          }
+        })
+      } else {
+      }
+    });
+
   }
   // revision/edit/:id
   edit(){

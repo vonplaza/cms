@@ -15,8 +15,9 @@
     <span
       class="badge rounded-pill text-bg-primary mt-0 me-2"
       *ngIf="status == 'a'"
-      >Active</span
     >
+      {{ action == "revise" ? "Approved" : "Active" }}
+    </span>
     <span
       class="badge rounded-pill text-bg-primary mt-0 me-2"
       *ngIf="action == 'revise'"
@@ -39,7 +40,8 @@
 
 <header class="d-flex justify-content-between align-items-center mt-4">
   <div *ngIf="currentUser$ | async as user" class="">
-    <mat-form-field class="me-2" *ngIf="type != 'view'">
+    <!-- <mat-form-field class="me-2" *ngIf="type != 'view' && (action == 'create') "> -->
+    <mat-form-field class="me-2" *ngIf="isShown()">
       <mat-label>Department</mat-label>
       <mat-select ngModel="1">
         <mat-option value="1"> BSIT </mat-option>
@@ -55,7 +57,7 @@
       </mat-select>
     </mat-form-field> -->
 
-    <mat-form-field class="example-full-width" *ngIf="type != 'view'">
+    <mat-form-field class="example-full-width" *ngIf="isShown()">
       <mat-label>Version</mat-label>
       <input
         type="number"
@@ -116,7 +118,7 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'a'"
+      *ngIf="type == 'view' && status == 'a' && action != 'revise'"
       (click)="revise()"
     >
       <mat-icon>edit</mat-icon>

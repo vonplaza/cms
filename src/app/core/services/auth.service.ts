@@ -52,7 +52,7 @@ export class AuthService {
         this.currentUser = user
       }),
       catchError(() => {
-        this.removeToken()
+        // this.removeToken()
         return of(null);
       })
     )

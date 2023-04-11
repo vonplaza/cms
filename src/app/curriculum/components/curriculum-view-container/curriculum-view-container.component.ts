@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Comment } from 'src/app/core/models/comment';
@@ -7,6 +8,7 @@ import { Profile } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-curriculum-view-container',
@@ -19,6 +21,7 @@ export class CurriculumViewContainerComponent implements OnInit {
               private commentService: CommentService,
               private route: ActivatedRoute,
               private router: Router,
+              private dialog: MatDialog
     ){}
   
   comments:Comment[] = []
@@ -32,7 +35,27 @@ export class CurriculumViewContainerComponent implements OnInit {
   status = ''
 
   approve(){
-    console.log('approve');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Approve Confirmation',
+        message: 'Are you sure you want to approve this curriculum?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.curriculumService.approveCurriculum(this.curriculum.id).subscribe({
+          next: response => {
+            this.status = 'a'
+            this.curriculum.status = 'a'
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
+      } else {
+      }
+    });
   }
   edit(){
     this.router.navigate(['/curriculums', 'edit', this.curriculum.id])
