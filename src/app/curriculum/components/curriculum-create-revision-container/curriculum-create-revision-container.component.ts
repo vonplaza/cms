@@ -8,6 +8,8 @@ import { CommentService } from 'src/app/core/services/comment.service';
 import { Comment } from 'src/app/core/models/comment';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-curriculum-create-revision-container',
@@ -17,6 +19,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
   constructor(private curriculumService: CurriculumService,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private commentService: CommentService,
               private dialog: MatDialog,
@@ -24,6 +27,14 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
     ){}
   
   errorMessage$ = new Subject<string>()
+
+  currentUser!:User
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {      
+      this.role = user.role
+      this.currentUser = user
+    })
+  )
 
   comments: Comment[] = []
   isLoading:boolean = true
@@ -35,6 +46,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
       secondSem: [],
     }
   ]
+  role:any = ''
   type:string = ''
   action:string = ''
   title:string = ''
@@ -42,6 +54,10 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   created_at:string = ''
   status:string = ''
   buttonTxt = 'submit revision'
+
+  canCreateRevision(){
+    return this.role !== 'reviewer'
+  }
 
   submit(subjects: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -71,8 +87,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.data.subscribe((data:any) => {
-      console.log(data);
-      
+        
       this.type = data.type
       this.action = data.action
     })
@@ -81,7 +96,6 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
       this.curriculumService.getCurriculum(id).subscribe({
         next: curriculum => {
           this.curriculum = curriculum
-          console.log(JSON.parse(curriculum.metadata));
           
           // console.log(JSON.parse(data.metadata))
           this.subjects = JSON.parse(curriculum.metadata)

@@ -4,7 +4,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
-import { Profile } from 'src/app/core/models/user';
+import { Profile, User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
@@ -24,11 +24,25 @@ export class CurriculumViewContainerComponent implements OnInit {
               private dialog: MatDialog
     ){}
   
+  currentUser!:User
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {
+      this.role = user.role
+      this.currentUser = user
+    })
+  )
+  
+  canEdit():boolean{
+    return this.curriculum.user_id == this.currentUser.id
+  }
+
+
   comments:Comment[] = []
   created_at: string = ''
   author: any = ''
   type:string = ''
   action:string = ''
+  role:any = ''
   curriculum!: Curriculum2
   subjects:any[] = []
   title = ''

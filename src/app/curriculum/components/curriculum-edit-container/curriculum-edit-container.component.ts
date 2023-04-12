@@ -23,6 +23,21 @@ export class CurriculumEditContainerComponent implements OnInit{
               private commentService: CommentService,
               private dialog: MatDialog
   ){}
+  currentUser!:User
+  userId:any = 0
+  currUserId:any = 0
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {      
+      this.role = user.role
+      this.currentUser = user
+      this.userId = user.id
+    })
+  )
+
+  canEdit():boolean{
+    return this.currUserId == this.userId
+  }
+
 
   submit(data: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -34,7 +49,6 @@ export class CurriculumEditContainerComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('confirm');
         
         const body = {subjects: data.subjects, version: data.version}
         
@@ -52,12 +66,15 @@ export class CurriculumEditContainerComponent implements OnInit{
     });
   }
 
+
+
+  role:any = ''
   comments:Comment[] = []
+  curriculum:Curriculum2 | any
   type:string = 'asdasd'
   action:string = ''
   descriptiveTitle:string = 'editing pending curriculum'
   author:any = ''
-  curriculum!: Curriculum2
   subjects:any[] = []
   title = ''
   status = ''
@@ -65,6 +82,7 @@ export class CurriculumEditContainerComponent implements OnInit{
   buttonTxt = 'edit curriculum'
 
   ngOnInit(): void {
+
     this.route.data.subscribe((data:any) => {
       this.type = data.type
       this.action = data.action
@@ -73,10 +91,8 @@ export class CurriculumEditContainerComponent implements OnInit{
       this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
         tap((curriculum:any) => {
         this.curriculum = curriculum
-        console.log(curriculum);
-
-        console.log(curriculum.user);
-        
+        // console.log(curriculum);
+        this.currUserId = curriculum.user_id
 
         this.subjects = JSON.parse(curriculum.metadata)
         this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`

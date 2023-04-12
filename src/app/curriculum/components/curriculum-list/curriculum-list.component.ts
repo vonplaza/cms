@@ -4,6 +4,7 @@ import { Curriculum, Curriculum2 } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { map, tap } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -17,8 +18,16 @@ import { map, tap } from 'rxjs';
 export class CurriculumListComponent {
 
   constructor(private dialog: MatDialog,
-              private curriculumService: CurriculumService) {}
+              private curriculumService: CurriculumService,
+              private authService: AuthService
+              ) {}
   
+  role:any = ''            
+  currentUser$ = this.authService.getCurrentUser()
+  currentUser = this.authService.currentUser$.subscribe(
+    user => this.role = user?.role
+  )
+
   curriculums:Curriculum2[] = []
   curriculums$ = this.curriculumService.curriculums$.pipe(
     map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),

@@ -94,19 +94,18 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'p'"
+      *ngIf="type == 'view' && status == 'p' && role == 'reviewer'"
       (click)="approve()"
     >
       <mat-icon>pending</mat-icon>
       Approve
     </button>
-
     <!-- edit btn -->
     <button
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'p'"
+      *ngIf="type == 'view' && status == 'p' && canEdit && role != 'reviewer'"
       (click)="update()"
     >
       <mat-icon>edit</mat-icon>
@@ -118,7 +117,12 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'a' && action != 'revise'"
+      *ngIf="
+        type == 'view' &&
+        status == 'a' &&
+        action != 'revise' &&
+        role != 'reviewer'
+      "
       (click)="revise()"
     >
       <mat-icon>edit</mat-icon>

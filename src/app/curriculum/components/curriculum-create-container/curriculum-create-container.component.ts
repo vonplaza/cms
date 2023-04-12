@@ -1,23 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { subjects } from '../year-dropdown/year-dropdown.component';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-curriculum-create-container',
   templateUrl: './curriculum-create-container.component.html',
   styleUrls: ['./curriculum-create-container.component.css']
 })
-export class CurriculumCreateContainerComponent {
+export class CurriculumCreateContainerComponent implements OnInit{
   constructor(private curriculumService: CurriculumService,
               private authService: AuthService,
               private dialog: MatDialog,
               private router: Router
               ){}
 
+
+  currentUser!:User
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {      
+      this.role = user.role
+      this.currentUser = user
+    })
+  )
+  
+  ngOnInit(): void {
+
+  }
+
+  canCreate(){
+    return this.role != 'reviewer'
+  }
+
+  role:any = ''
   subjects = []
   type:string = 'create'
   action:string = 'curr'

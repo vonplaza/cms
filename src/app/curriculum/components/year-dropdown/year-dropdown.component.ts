@@ -44,6 +44,8 @@ export class YearDropdownComponent {
   @Input() created_at: string = ''
   @Input() descriptiveTitle: string = ''
   @Input() role: string = ''
+  @Input() canEdit: boolean = false
+
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()

@@ -8,6 +8,7 @@ import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { Comment } from 'src/app/core/models/comment';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { User } from 'src/app/core/models/user';
 
 
 @Component({
@@ -23,11 +24,27 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
               private dialog: MatDialog,
               private router: Router
   ){}
+
+  currentUser!:User
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {
+      this.role = user.role
+      this.currentUser = user
+    })
+  )
+  
+  canEdit():boolean{
+    return this.curriculum.user_id == this.currentUser.id
+  }
+
+  role:any = ''
+
   type:string = ''
   action:string = ''
   comments:Comment[] = []
   created_at: string = ''
   author: string = ''
+
 
   curriculum!: Curriculum2
   subjects:any[] = []

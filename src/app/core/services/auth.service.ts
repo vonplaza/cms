@@ -45,6 +45,9 @@ export class AuthService {
   }
 
   getCurrentUser(){
+    if(this.currentUser)
+      return of(this.currentUser)
+    
     return this.http.post(`${this.baseUrl}getUser`, {})
     .pipe(
       tap((user:any) => {

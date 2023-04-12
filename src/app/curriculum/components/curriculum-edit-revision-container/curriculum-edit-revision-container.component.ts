@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
@@ -22,6 +23,22 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
               private commentService: CommentService,
               private dialog: MatDialog
           ){}
+
+  userId:any = 0
+  currUserId:any = 0
+  currentUser!: User
+  role:any = ''
+  currentUser$ = this.authService.getCurrentUser().pipe(
+    tap(user => {      
+      this.role = user.role
+      this.currentUser = user
+      this.userId = user.id
+    })
+  )
+
+  canEdit(){
+    return this.currUserId == this.userId
+  }
 
   submit(data: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -69,7 +86,7 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
       this.curriculum$ = this.curriculumService.getRevisionCurriculum(+id).pipe(
         tap((curriculum:any) => {
         this.curriculum = curriculum
-
+        this.currUserId = curriculum.user_id
         this.subjects = JSON.parse(curriculum.metadata)
         this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
         this.status = curriculum.status 
