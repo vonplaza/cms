@@ -26,7 +26,7 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
   submit(data: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Update Revision Confirmation',
+        title: 'Update Revision',
         message: 'Are you sure you want to update this revision?'
       }
     });

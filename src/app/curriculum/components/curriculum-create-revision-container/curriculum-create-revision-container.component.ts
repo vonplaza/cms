@@ -46,7 +46,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   submit(subjects: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Create Revision Confirmation',
+        title: 'Create Revision',
         message: 'Are you sure you want to create this revision?'
       }
     });

@@ -216,7 +216,7 @@ export class CurriculumCreateContainerComponent {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Create Confirmation',
+        title: 'Create Curriculum',
         message: 'Are you sure you want to create this curriculum?'
       }
     });

@@ -37,7 +37,7 @@ export class CurriculumViewContainerComponent implements OnInit {
   approve(){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Approve Confirmation',
+        title: 'Approve Curriculum',
         message: 'Are you sure you want to approve this curriculum?'
       }
     });

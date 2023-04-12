@@ -27,7 +27,7 @@ export class CurriculumEditContainerComponent implements OnInit{
   submit(data: any){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Update Curriculum Confirmation',
+        title: 'Update Curriculum',
         message: 'Are you sure you want to update this curriculum?'
       }
     });
