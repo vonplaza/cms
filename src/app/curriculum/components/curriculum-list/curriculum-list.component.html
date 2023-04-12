@@ -1,9 +1,9 @@
 <div class="container">
-  <table class="table">
+  <table class="table mat-table mat-primary">
     <thead>
       <tr>
-        <th scope="col" style="padding: 40px">
-          <span class="tit">Curriculum Management</span>
+        <th scope="col" style="padding: 40px" class="mat-header-cell mat-primary">
+          <span class="tit mat-cell mat-primary">Curriculum Management</span>
         </th>
 
         <th style="padding: 20px">
@@ -38,14 +38,14 @@
         <td scope="row">
           <div class="float-left d-flex p-3 flex-column">
             <div class="title d-inline-flex">
-              <span class="title">{{ datas.title }}{{ datas.version }}</span>
+              <span class="title mat-cell mat-primary">{{ datas.title }}{{ datas.version }}</span>
               <div>
-                <div class="status mb-2 bg-success">{{ datas.status }}</div>
-                <div class="status bg-danger">{{ datas.status }}</div>
+                <div class="status mb-2 bg-success mat-cell mat-primary">{{ datas.status }}</div>
+                <div class="status bg-danger mat-cell mat-primary">{{ datas.status }}</div>
               </div>
             </div>
-            <span class="date">{{ datas.date }}</span>
-            <span class="author">{{ datas.author }}</span>
+            <span class="date mat-cell mat-primary">{{ datas.date }}</span>
+            <span class="author mat-cell mat-primary">{{ datas.author }}</span>
           </div>
         </td>
         <td>

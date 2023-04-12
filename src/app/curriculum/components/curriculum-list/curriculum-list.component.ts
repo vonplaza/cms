@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Curriculum } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
-
 @Component({
   selector: 'app-curriculum-list',
   templateUrl: './curriculum-list.component.html',
@@ -13,6 +12,14 @@ import {MatDialog} from '@angular/material/dialog';
 
 
 export class CurriculumListComponent {
+
+  items = [
+    { id: 1, name: 'Red', color: 'red', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 2, name: 'Blue', color: 'blue', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 3, name: 'Green', color: 'green', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 4, name: 'Yellow', color: 'yellow', theme: 'cict-curriculum-system-dark-theme' },
+  ];
+
 
   constructor(private dialog: MatDialog) {}
 
