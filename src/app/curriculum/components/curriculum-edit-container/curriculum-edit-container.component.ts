@@ -88,9 +88,9 @@ export class CurriculumEditContainerComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
-        const body = {subjects: data.subjects, version: data.version, departmentId: result.departmentId}
+        // const body = {subjects: data.subjects, version: data.version, departmentId: result.departmentId}
         
-        this.curriculumService.updateCurriculum(this.curriculum.id, body).subscribe({
+        this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe({
           next: (response:any) => {
             this.router.navigate(['/curriculums', response.id])
           },

@@ -507,8 +507,8 @@
             <td>{{ course.labUnits }}</td>
             <td>{{ course.totalUnits }}</td>
             <td>{{ course.hoursPerWeek }}</td>
-            <td>{{ course.preReq }}</td>
-            <td>{{ course.coReq }}</td>
+            <td>{{ course.preReq || "None" }}</td>
+            <td>{{ course.coReq || "None" }}</td>
             <td>
               <button mat-icon-button color="primary" [title]="view">
                 <mat-icon>remove_red_eye</mat-icon>
@@ -916,8 +916,8 @@
             <td>{{ course.labUnits }}</td>
             <td>{{ course.totalUnits }}</td>
             <td>{{ course.hoursPerWeek }}</td>
-            <td>{{ course.preReq }}</td>
-            <td>{{ course.coReq }}</td>
+            <td>{{ course.preReq || "None" }}</td>
+            <td>{{ course.coReq || "None" }}</td>
             <td>
               <button mat-icon-button color="primary" [title]="view">
                 <mat-icon>remove_red_eye</mat-icon>
@@ -945,7 +945,7 @@
           <tr class="">
             <div class="">
               <span class="fs-6 text-dark me-2"
-                >Total Units: span {{ getTotalUnits(x, 1) }}</span
+                >Total Units: {{ getTotalUnits(x, 1) }}</span
               >
               <span class="fs-6 text-dark me-2"
                 >Total Hrs/Week: {{ getTotalHrs(x, 1) }}</span
