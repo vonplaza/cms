@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Subject, tap } from 'rxjs';
+import { EMPTY, Subject, catchError, combineLatest, tap } from 'rxjs';
 import { AppError } from 'src/app/core/models/app-error';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -14,9 +14,31 @@ import { UserService } from 'src/app/core/services/user.service';
 export class ProfileContainerShellComponent {
   disableChangePass:boolean = true
   disableChangeProfile:boolean = true
-
+  isLoading:boolean = true
+  error:boolean = false
   messageProfileSuccess$ = new Subject<string>()
   messageProfileError$ = new Subject<string>()
+
+  neededData$ = combineLatest([
+    this.authService.getCurrentUser()
+  ]).pipe(
+    tap(([user]) => {
+      if(user.profile){
+               
+        this.profileForm.patchValue({
+          name: user.profile.name,
+          phoneNo: user.profile.phone_no,
+          address: user.profile.address,
+          birthDate: user.profile.birth_date,
+        })
+      }
+    }),
+    catchError(err => {
+      this.isLoading = false
+      this.error = true
+      return EMPTY
+    })
+  )
 
   profileForm: FormGroup
   constructor(private authService: AuthService, 
@@ -122,8 +144,6 @@ export class ProfileContainerShellComponent {
     this.selectedFile = event.target.files[0];
   }
   
-
-
   onUpload() {
     const formData = new FormData();
     formData.append('image', this.selectedFile);

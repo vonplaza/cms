@@ -5,8 +5,9 @@ import {MatDialog} from '@angular/material/dialog';
 
 
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
-import { map, tap } from 'rxjs';
+import { EMPTY, catchError, combineLatest, map, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { User } from 'src/app/core/models/user';
 
 
 @Component({
@@ -28,41 +29,66 @@ export class CurriculumListComponent {
     { id: 4, name: 'Yellow', color: 'yellow', theme: 'cict-curriculum-system-dark-theme' },
   ];
 
-
-
   constructor(private dialog: MatDialog,
               private curriculumService: CurriculumService,
               private authService: AuthService
               ) {}
   
-  role:any = ''            
-  currentUser$ = this.authService.getCurrentUser()
-  currentUser = this.authService.currentUser$.subscribe(
-    user => this.role = user?.role
-  )
-
+  role:any = ''  
+  isLoading:boolean = true
   curriculums:Curriculum2[] = []
-  curriculums$ = this.curriculumService.curriculums$.pipe(
-    map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
-    tap(curriculums => this.curriculums = curriculums)
-  )
-
-
-  curriculumPendings:Curriculum2[] = []
-  curriculumsPending$ = this.curriculumService.curriculums$.pipe(
-    map(curriculums => curriculums.filter(curr => curr.status === 'p')),
-    tap(curriculums => {
-      this.curriculumPendings = curriculums
-    })
-  )
-  
   revisions:any[] = []
-  revisions$ = this.curriculumService.revisions$.pipe(
-    tap((revisions:any) => {
+  curriculumPendings:Curriculum2[] = []
+  error:boolean = false
+  currentUser!: User
+  neededData$ = combineLatest([
+    this.authService.getCurrentUser(),
+    this.curriculumService.curriculums$,
+    this.curriculumService.revisions$
+  ]).pipe(
+    tap(([user, curriculums, revisions]) => {
+      this.currentUser = user
+      this.curriculums = curriculums.filter(curr => curr.status != 'p')
+      this.curriculumPendings = curriculums.filter(curr => curr.status == 'p')
       this.revisions = revisions
-      // console.log(revisions);
+      this.role = user.role
+      this.isLoading = false
+    }),
+    catchError(err => {
+      this.isLoading = false
+      this.error = true
+      return EMPTY
     })
   )
+
+            
+  // currentUser$ = this.authService.getCurrentUser()
+  // currentUser = this.authService.currentUser$.subscribe(
+  //   user => this.role = user?.role
+  // )
+
+  
+  // curriculums$ = this.curriculumService.curriculums$.pipe(
+  //   map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
+  //   tap(curriculums => this.curriculums = curriculums)
+  // )
+
+
+  
+  // curriculumsPending$ = this.curriculumService.curriculums$.pipe(
+  //   map(curriculums => curriculums.filter(curr => curr.status === 'p')),
+  //   tap(curriculums => {
+  //     this.curriculumPendings = curriculums
+  //   })
+  // )
+  
+  
+  // revisions$ = this.curriculumService.revisions$.pipe(
+  //   tap((revisions:any) => {
+  //     this.revisions = revisions
+  //     // console.log(revisions);
+  //   })
+  // )
     
   
   openDialog() {
