@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: '', component: CurriculumContainerComponent,
     children: [
       { path: '', component: CurriculumListComponent },
+      { path: 'view', component: CurriculumViewComponent },
       // { path: 'create', component: CurriculumViewComponent },
       
 
