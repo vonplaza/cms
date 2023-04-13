@@ -87,16 +87,16 @@ export class YearDropdownComponent {
     
   }
   getTotalUnits(yearLvl:number, sem:number){
-    const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => subj.totalUnits)
-    const totalUnits = units.reduce((accumulator:any, currentValue:any) => {
+    const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.totalUnits))
+    const totalUnits = units.reduce((accumulator:number, currentValue:number) => {
       return accumulator + currentValue;
     }, 0) 
     return totalUnits
   }
-
+  
   getTotalHrs(yearLvl:number, sem:number){
-    const hrs = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => subj.hoursPerWeek)
-    const totalHrs = hrs.reduce((accumulator:any, currentValue:any) => {
+    const hrs = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.hoursPerWeek))
+    const totalHrs = hrs.reduce((accumulator:number, currentValue:number) => {
       return accumulator + currentValue;
     }, 0) 
     return totalHrs
