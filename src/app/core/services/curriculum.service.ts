@@ -11,12 +11,12 @@ import { Curriculum2 } from '../models/curriculum';
 export class CurriculumService {
   private baseUrl = `http://127.0.0.1:8000/api/`;
   constructor(private http: HttpClient) { }
-
+  // {{baseUrl}}curriculums
   curriculums$ = this.http.get<Curriculum2[]>(`${this.baseUrl}curriculums`).pipe(
     catchError(handleError)
   )
 
-  revisions$ = this.http.get(`${this.baseUrl}curriculums/revisions`).pipe(
+  revisions$ = this.http.get<any[]>(`${this.baseUrl}curriculums/revisions`).pipe(
     catchError(handleError)
   )
 

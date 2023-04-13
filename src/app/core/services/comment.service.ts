@@ -13,6 +13,10 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
   commentSuccess = new Subject();
+
+  comments$ = this.http.get<Comment[]>(`${this.baseUrl}comments`).pipe(
+    catchError(handleError)
+  )
   
   getCurriculumComments(id: number){
     return this.http.get<Comment[]>(`${this.baseUrl}comments`).pipe(

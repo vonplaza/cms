@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, combineLatest, map, tap } from 'rxjs';
 import { Comment } from 'src/app/core/models/comment';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { Profile, User } from 'src/app/core/models/user';
@@ -23,30 +23,61 @@ export class CurriculumViewContainerComponent implements OnInit {
               private router: Router,
               private dialog: MatDialog
     ){}
-  
-  currentUser!:User
-  currentUser$ = this.authService.getCurrentUser().pipe(
-    tap(user => {
-      this.role = user.role
-      this.currentUser = user
-    })
-  )
-  
-  canEdit():boolean{
-    return this.curriculum.user_id == this.currentUser.id
-  }
-
-
+  currUserId:any = 0
+  userId:any = 0
   comments:Comment[] = []
   created_at: string = ''
   author: any = ''
   type:string = ''
   action:string = ''
   role:any = ''
-  curriculum!: Curriculum2
+  curriculum: Curriculum2 | any
   subjects:any[] = []
   title = ''
   status = ''
+  isLoading:boolean = true
+  error:boolean = false
+  currentUser!:User
+
+  needeedData$ = combineLatest([
+    this.route.data,
+    this.authService.getCurrentUser(),
+    this.curriculumService.curriculums$,
+    this.commentService.comments$,
+    this.route.params.pipe(
+      map(({id}) => id)
+    )
+  ]).pipe(
+    tap(([data, user, curriculums, comments, id]) => {
+      this.type = data['type']
+      this.action = data['action']
+
+      this.curriculum = curriculums.find(curriculum => curriculum.id == id)
+      this.currUserId = this.curriculum.user_id
+
+      this.currentUser = user
+      this.userId = this.currentUser.id
+      this.role = this.currentUser.role
+      this.comments = comments.filter(comment => comment.curriculum_id == id)
+
+      this.title = `CICT ${this.curriculum.department.department_code} Curriculum version ${this.curriculum.version}`
+
+      this.subjects = JSON.parse(this.curriculum.metadata)
+      this.status = this.curriculum.status   
+      this.author = this.curriculum.user.profile.name
+      this.isLoading = false
+
+    }),
+    catchError(err => {
+      this.error = true
+      this.isLoading = false
+      return EMPTY
+    })
+  )
+
+  canEdit():boolean{
+    return this.curriculum.user_id == this.currentUser.id
+  }
 
   approve(){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -79,8 +110,6 @@ export class CurriculumViewContainerComponent implements OnInit {
     this.router.navigate(['/curriculums', 'revise', 'create', this.curriculum.id])
   }
 
-
-
   addComment(data:any){
     const comment = {...data, curriculumId: this.curriculum.id}
     this.commentService.addComment(comment).subscribe({
@@ -94,50 +123,40 @@ export class CurriculumViewContainerComponent implements OnInit {
   }
   
   submit(data: any){
-    if(this.action === 'curr'){
-      this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
-        data => {
-          console.log(data)
-          this.router.navigate(['/curriculums', this.curriculum.id])
-        }   
-      )
-    }
-    else{
-      // this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
-      //   data => {
-      //     console.log(data)
-      //     this.router.navigate(['/curriculums', this.curriculum.id])
-      //   }   
-      // )
-    }
+    this.curriculumService.updateCurriculum(this.curriculum.id, data).subscribe(
+      data => {
+        console.log(data)
+        this.router.navigate(['/curriculums', this.curriculum.id])
+      }   
+    )
   }
 
   ngOnInit():void{
-    this.route.data.subscribe((data:any) => {
-      this.type = data.type
-      this.action = data.action
-    })
+    // this.route.data.subscribe((data:any) => {
+    //   this.type = data.type
+    //   this.action = data.action
+    // })
 
-    this.route.params.subscribe(({id}) => {
-      // for curriculum
-        this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
-          tap(curriculum => {
-            this.curriculum = curriculum
-            this.subjects = JSON.parse(curriculum.metadata)
-            this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
-            this.status = curriculum.status  
-            this.created_at = curriculum.created_at
-            this.author = curriculum.user?.profile?.name
+    // this.route.params.subscribe(({id}) => {
+    //   // for curriculum
+    //     this.curriculum$ = this.curriculumService.getCurriculum(+id).pipe(
+    //       tap(curriculum => {
+    //         this.curriculum = curriculum
+    //         this.subjects = JSON.parse(curriculum.metadata)
+    //         this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
+    //         this.status = curriculum.status  
+    //         this.created_at = curriculum.created_at
+    //         this.author = curriculum.user?.profile?.name
 
-            this.commentService.getCurriculumComments(this.curriculum.id).pipe(
-              tap(comments => this.comments = comments)
-            ).subscribe(
-              data => console.log(data)
-            )
+    //         this.commentService.getCurriculumComments(this.curriculum.id).pipe(
+    //           tap(comments => this.comments = comments)
+    //         ).subscribe(
+    //           data => console.log(data)
+    //         )
 
-          })
-        )
-    })
+    //       })
+    //     )
+    // })
 
 
   }

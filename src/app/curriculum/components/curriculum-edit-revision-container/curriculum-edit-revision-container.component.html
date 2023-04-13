@@ -1,7 +1,4 @@
-<div
-  class="container"
-  *ngIf="(curriculum$ | async) && (currentUser$ | async) && canEdit()"
->
+<div class="container" *ngIf="(neededData$ | async) && canEdit()">
   <div class="row">
     <div class="col-xl-9">
       <app-year-dropdown
@@ -22,4 +19,9 @@
     </div>
   </div>
 </div>
-<app-not-allowed *ngIf="!canEdit()"></app-not-allowed>
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+  <app-spinner class="mx-auto"></app-spinner>
+</div>
+<app-reload-page *ngIf="error"></app-reload-page>
+
+<app-not-allowed *ngIf="!canEdit() && !isLoading && !error"></app-not-allowed>

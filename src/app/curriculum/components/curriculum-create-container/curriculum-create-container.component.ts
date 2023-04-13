@@ -4,8 +4,8 @@ import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EMPTY, catchError, combineLatest, tap } from 'rxjs';
 import { User } from 'src/app/core/models/user';
 
 @Component({
@@ -13,34 +13,49 @@ import { User } from 'src/app/core/models/user';
   templateUrl: './curriculum-create-container.component.html',
   styleUrls: ['./curriculum-create-container.component.css']
 })
-export class CurriculumCreateContainerComponent implements OnInit{
+export class CurriculumCreateContainerComponent{
   constructor(private curriculumService: CurriculumService,
               private authService: AuthService,
               private dialog: MatDialog,
-              private router: Router
+              private router: Router,
+              private route: ActivatedRoute
               ){}
 
-
+  
+  isLoading:boolean = true
+  error:boolean = false
   currentUser!:User
-  currentUser$ = this.authService.getCurrentUser().pipe(
-    tap(user => {      
+
+  
+  neededData$ = combineLatest([
+    this.route.data,
+    this.authService.getCurrentUser()
+  ]).pipe(
+    tap(([data, user]) => {
+      this.type = data['type']
+      this.action = data['action']
       this.role = user.role
+      this.userDeptId = String(user.department_id)
       this.currentUser = user
+      this.isLoading = false
+    }),
+    catchError(err => {
+      this.isLoading = false
+      this.error = true
+      return EMPTY
     })
   )
-  
-  ngOnInit(): void {
 
-  }
 
   canCreate(){
     return this.role != 'reviewer'
   }
 
+  userDeptId:string = ''
   role:any = ''
   subjects = []
-  type:string = 'create'
-  action:string = 'curr'
+  type:string = ''
+  action:string = ''
   subject :subjects[] = [{
     firstSem: [],
     secondSem: []

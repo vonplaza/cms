@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, catchError, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, combineLatest, map, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CommentService } from 'src/app/core/services/comment.service';
@@ -24,15 +24,51 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
               private dialog: MatDialog,
               private router: Router
   ){}
-
+  
+  isLoading:boolean = true
+  error: boolean = false
+  currUserId:any = 0
+  userId:any = 0
   currentUser!:User
-  currentUser$ = this.authService.getCurrentUser().pipe(
-    tap(user => {
-      this.role = user.role
+
+  
+  neededData$ = combineLatest([
+    this.route.data,
+    this.authService.getCurrentUser(),
+    this.curriculumService.revisions$,
+    this.commentService.comments$,
+    this.route.params.pipe(
+      map(({id}) => id)
+    )
+  ]).pipe(
+    tap(([data, user, revisions, comments, id]) => {
+      this.type = data['type']
+      this.action = data['action']
+
+      this.curriculum = revisions.find((curriculum:any) => curriculum.id == id)
+      this.currUserId = this.curriculum.user_id
+
       this.currentUser = user
+      this.userId = this.currentUser.id
+      this.role = this.currentUser.role
+      this.comments = comments.filter(comment => comment.curriculum_revision_id == id)
+
+      this.title = `CICT ${this.curriculum.curriculum.department.department_code} Curriculum version ${this.curriculum.version}`
+      
+
+      this.subjects = JSON.parse(this.curriculum.metadata)
+      this.status = this.curriculum.status   
+      this.author = this.curriculum.user.profile.name
+      this.isLoading = false
+
+    }),
+    catchError(err => {
+      this.error = true
+      this.isLoading = false
+      return EMPTY
     })
   )
-  
+
   canEdit():boolean{
     return this.curriculum.user_id == this.currentUser.id
   }
@@ -46,7 +82,7 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
   author: string = ''
 
 
-  curriculum!: Curriculum2
+  curriculum: any
   subjects:any[] = []
   title = ''
   status = ''
@@ -98,29 +134,29 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
  
 
   ngOnInit(): void {
-    this.route.data.subscribe((data:any) => {
-      this.type = data.type
-      this.action = data.action
-    })
+    // this.route.data.subscribe((data:any) => {
+    //   this.type = data.type
+    //   this.action = data.action
+    // })
 
-    this.route.params.subscribe(({id}) => {
-      this.curriculum$ = this.curriculumService.getRevisionCurriculum(+id).pipe(
-        tap((curriculum:any) => {
-          this.curriculum = curriculum
-          console.log(curriculum);
+    // this.route.params.subscribe(({id}) => {
+    //   this.curriculum$ = this.curriculumService.getRevisionCurriculum(+id).pipe(
+    //     tap((curriculum:any) => {
+    //       this.curriculum = curriculum
+    //       console.log(curriculum);
           
-          this.subjects = JSON.parse(curriculum.metadata)
-          this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
-          this.status = curriculum.status    
-          this.author = curriculum.user.profile.name
-          this.created_at = curriculum.created_at
+    //       this.subjects = JSON.parse(curriculum.metadata)
+    //       this.title = `CICT ${curriculum.curriculum.department.department_code} Curriculum version ${curriculum.curriculum.version}`
+    //       this.status = curriculum.status    
+    //       this.author = curriculum.user.profile.name
+    //       this.created_at = curriculum.created_at
 
-          this.commentService.getRevisionComments(this.curriculum.id).pipe(
-            tap(comments => this.comments = comments)
-          ).subscribe()
-        })
-      )
-    })
+    //       this.commentService.getRevisionComments(this.curriculum.id).pipe(
+    //         tap(comments => this.comments = comments)
+    //       ).subscribe()
+    //     })
+    //   )
+    // })
   }
 
 

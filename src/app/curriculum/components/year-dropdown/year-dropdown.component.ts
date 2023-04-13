@@ -45,7 +45,7 @@ export class YearDropdownComponent {
   @Input() descriptiveTitle: string = ''
   @Input() role: string = ''
   @Input() canEdit: boolean = false
-
+  @Input() department:string = '1'
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
@@ -53,7 +53,7 @@ export class YearDropdownComponent {
   @Output() reviseCur = new EventEmitter()
   
   approve(){
-    this.approveCur.emit()
+    this.approveCur.emit()    
   }
   update(){
     this.editCur.emit()
@@ -61,9 +61,18 @@ export class YearDropdownComponent {
   revise(){
     this.reviseCur.emit()
   }
+  departmentDisable(){
+    return this.role != 'admin'
+  }
+  submitCurriculum(){ 
+    this.submitCur.emit({
+      subjects: this.subject,
+      version: this.version,
+      departmentId: this.department
+    })
+  }
 
   version = 1
-  department:number = 1
   unitsOnChange(yearLvl: number, sem:string, type:string){
     // this.addForms[yearLvl][sem][type]
     if(type == 'add'){
@@ -96,7 +105,7 @@ export class YearDropdownComponent {
   isView = true
 
   isShown(){
-    return this.type !== 'view' && 
+    return this.type !== 'view' &&
     ((this.type == 'create' && this.action == 'curr') 
     || (this.type == 'edit' && this.action == 'curr'))
   }
@@ -106,13 +115,6 @@ export class YearDropdownComponent {
       tap(data => console.log(data.department_id))
     )
 
-  submitCurriculum(){
-    this.submitCur.emit({
-      subjects: this.subject,
-      version: this.version,
-      departmentId: this.department
-    })
-  }
   
   availableSubjects: any[] = []
   availableSubjects$ = this.subjectService.subjectsComplete$
