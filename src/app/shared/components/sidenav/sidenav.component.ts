@@ -17,7 +17,7 @@ export class SidenavComponent {
               private authService: AuthService,
               private router: Router
     ) { }
-
+  
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const query = params['showSidenav'];
