@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import {jsPDF} from 'jspdf';
+
 
 export interface subjects{
   firstSem :subject[];
@@ -43,7 +45,6 @@ export class CurriculumViewComponent implements OnInit{
   uploadSyllabus='Upload Syllabus';
   yearLevel='';
   editForm: any;
-
 
   assignYearX(x:number){
     if(x==0){
@@ -159,135 +160,487 @@ export class CurriculumViewComponent implements OnInit{
     {
     firstSem:[
       {
-        courseCode: 'CSC101 1st year 1st Sem',
-        descriptiveTitle: 'Introduction to Computer Science',
+        courseCode: 'IT 102',
+        descriptiveTitle: 'Introduction to Computing',
         lecUnits: '3',
         labUnits: '1',
         totalUnits: '4',
         hoursPerWeek: '4',
-        preReq: '',
-        coReq: '',     },
+        preReq: 'NONE',
+        coReq: 'NONE',     },
       {
-        courseCode: 'ENG101 1st year 1st Sem',
-        descriptiveTitle: 'English Composition',
+        courseCode: 'IT 103',
+        descriptiveTitle: 'Computer Programming 1',
         lecUnits: '3',
         labUnits: '0',
         totalUnits: '3',
         hoursPerWeek: '3',
-        preReq: '',
-        coReq: '',     },
+        preReq: 'NONE',
+        coReq: 'NONE',     },
+      {
+        courseCode: 'IT 104',
+        descriptiveTitle: 'Hardware System and Servicing',
+        lecUnits: '3',
+        labUnits: '0',
+        totalUnits: '3',
+        hoursPerWeek: '3',
+        preReq: 'NONE',
+        coReq: 'NONE',     },
+        {
+          courseCode: 'RPH 101',
+          descriptiveTitle: 'Readings in the Philippine History',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',     },
+          {
+            courseCode: 'AAP 101',
+            descriptiveTitle: 'Art Appreciation',
+            lecUnits: '3',
+            labUnits: '0',
+            totalUnits: '3',
+            hoursPerWeek: '3',
+            preReq: 'NONE',
+            coReq: 'NONE',     },
+            {
+              courseCode: 'STS 101',
+              descriptiveTitle: 'Science, Technology and Society',
+              lecUnits: '3',
+              labUnits: '0',
+              totalUnits: '3',
+              hoursPerWeek: '3',
+              preReq: 'NONE',
+              coReq: 'NONE',     },
+              {
+                courseCode: 'ARP 101',
+                descriptiveTitle: 'Araling Pilipino',
+                lecUnits: '3',
+                labUnits: '0',
+                totalUnits: '3',
+                hoursPerWeek: '3',
+                preReq: 'NONE',
+                coReq: 'NONE',     },
+                {
+                  courseCode: 'PE 10',
+                  descriptiveTitle: 'Physical Education 1',
+                  lecUnits: '3',
+                  labUnits: '0',
+                  totalUnits: '3',
+                  hoursPerWeek: '3',
+                  preReq: 'NONE',
+                  coReq: 'NONE',     },
+                  {
+                    courseCode: 'NSTP 10',
+                    descriptiveTitle: 'National Service Training Program 1',
+                    lecUnits: '3',
+                    labUnits: '0',
+                    totalUnits: '3',
+                    hoursPerWeek: '3',
+                    preReq: 'NONE',
+                    coReq: 'NONE',     },
     ],
     secondSem:[
       {
-        courseCode: 'CSC102 1st Year 2nd Sem',
-        descriptiveTitle: 'Data Structures and Algorithms',
+        courseCode: 'IT 105',
+        descriptiveTitle: 'Computer Programming 2',
         lecUnits: '3',
         labUnits: '1',
         totalUnits: '4',
         hoursPerWeek: '4',
         preReq: 'CSC101',
-        coReq: '',     },
+        coReq: 'NONE',     },
       {
-        courseCode: 'ENG102 1st year 2nd Sem',
-        descriptiveTitle: 'English Literature',
+        courseCode: 'IT 106',
+        descriptiveTitle: 'Networking 1',
         lecUnits: '3',
         labUnits: '0',
         totalUnits: '3',
         hoursPerWeek: '3',
-        preReq: '',
-        coReq: '',     }
+        preReq: 'NONE',
+        coReq: 'NONE',     },{
+          courseCode: 'IT 107',
+          descriptiveTitle: 'Discrete Structures for IT',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',     },
+          {
+            courseCode: 'PCM 101',
+            descriptiveTitle: 'Purposive Communication',
+            lecUnits: '3',
+            labUnits: '0',
+            totalUnits: '3',
+            hoursPerWeek: '3',
+            preReq: 'NONE',
+            coReq: 'NONE',     },
+            {
+              courseCode: 'MMW 101',
+              descriptiveTitle: 'Mathematics in the Modern World',
+              lecUnits: '3',
+              labUnits: '0',
+              totalUnits: '3',
+              hoursPerWeek: '3',
+              preReq: 'NONE',
+              coReq: 'NONE',     },
+              {
+                courseCode: 'UTS 101',
+                descriptiveTitle: 'Understanding the Self',
+                lecUnits: '3',
+                labUnits: '0',
+                totalUnits: '3',
+                hoursPerWeek: '3',
+                preReq: 'NONE',
+                coReq: 'NONE',     },
+                {
+                  courseCode: 'PAL 101',
+                  descriptiveTitle: 'Panitikan at Lipunan',
+                  lecUnits: '3',
+                  labUnits: '0',
+                  totalUnits: '3',
+                  hoursPerWeek: '3',
+                  preReq: 'NONE',
+                  coReq: 'NONE',     },
+                  {
+                    courseCode: 'PE 11',
+                    descriptiveTitle: 'Physical Education 2',
+                    lecUnits: '3',
+                    labUnits: '0',
+                    totalUnits: '3',
+                    hoursPerWeek: '3',
+                    preReq: 'NONE',
+                    coReq: 'NONE',     },
+                    {
+                      courseCode: 'NSTP 11',
+                      descriptiveTitle: 'National Service Training Program 2',
+                      lecUnits: '3',
+                      labUnits: '0',
+                      totalUnits: '3',
+                      hoursPerWeek: '3',
+                      preReq: 'NONE',
+                      coReq: 'NONE',     },
+                        
     ],
     },
     {
       firstSem:[
         {
-          courseCode: 'MAT102 1st Year 2nd Sem',
-          descriptiveTitle: 'Plane Trigonometry',
+          courseCode: 'IT 201',
+          descriptiveTitle: 'Data Structures and Algorithms',
           lecUnits: '3',
           labUnits: '0',
           totalUnits: '3',
           hoursPerWeek: '3',
-          preReq: 'MAT101',
-          coReq: '',
-        },
+          preReq: 'NONE',
+          coReq: 'NONE',     },
+          {
+            courseCode: 'IT 202',
+            descriptiveTitle: 'Information Management',
+            lecUnits: '3',
+            labUnits: '0',
+            totalUnits: '3',
+            hoursPerWeek: '3',
+            preReq: 'NONE',
+            coReq: 'NONE',     },
+            {
+              courseCode: 'IT 203',
+              descriptiveTitle: 'Object-Oriented Programming 1',
+              lecUnits: '3',
+              labUnits: '0',
+              totalUnits: '3',
+              hoursPerWeek: '3',
+              preReq: 'NONE',
+              coReq: 'NONE',     },
+              {
+                courseCode: 'IT 204',
+                descriptiveTitle: 'Integrative Programming and Technologies 1',
+                lecUnits: '3',
+                labUnits: '0',
+                totalUnits: '3',
+                hoursPerWeek: '3',
+                preReq: 'NONE',
+                coReq: 'NONE',     },
+                {
+                  courseCode: 'IT 205',
+                  descriptiveTitle: 'Human Computer Interface',
+                  lecUnits: '3',
+                  labUnits: '0',
+                  totalUnits: '3',
+                  hoursPerWeek: '3',
+                  preReq: 'NONE',
+                  coReq: 'NONE',     },
+                  {
+                    courseCode: 'ETH 101',
+                    descriptiveTitle: 'Ethics',
+                    lecUnits: '3',
+                    labUnits: '0',
+                    totalUnits: '3',
+                    hoursPerWeek: '3',
+                    preReq: 'NONE',
+                    coReq: 'NONE',     },
+                    {
+                      courseCode: 'PE 12',
+                      descriptiveTitle: 'Physical Education 3',
+                      lecUnits: '3',
+                      labUnits: '0',
+                      totalUnits: '3',
+                      hoursPerWeek: '3',
+                      preReq: 'NONE',
+                      coReq: 'NONE',     },
+                      {
+                        courseCode: 'AAH 101d',
+                        descriptiveTitle: 'Reading Visual Art',
+                        lecUnits: '3',
+                        labUnits: '0',
+                        totalUnits: '3',
+                        hoursPerWeek: '3',
+                        preReq: 'NONE',
+                        coReq: 'NONE',     },
       ],
       secondSem:[
         {
-          courseCode: 'MAT101',
-        descriptiveTitle: 'College Algebra 2nd Year',
-        lecUnits: '3',
-        labUnits: '0',
-        totalUnits: '3',
-        hoursPerWeek: '3',
-        preReq: '',
-        coReq: '',       },
+          courseCode: 'IT 206',
+          descriptiveTitle: 'Advanced Database Systems',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',     },
+          {
+            courseCode: 'IT 207',
+            descriptiveTitle: 'Object-Oriented Programming 2',
+            lecUnits: '3',
+            labUnits: '0',
+            totalUnits: '3',
+            hoursPerWeek: '3',
+            preReq: 'NONE',
+            coReq: 'NONE',     },
+            {
+              courseCode: 'IT 208',
+              descriptiveTitle: 'Platform Technologies',
+              lecUnits: '3',
+              labUnits: '0',
+              totalUnits: '3',
+              hoursPerWeek: '3',
+              preReq: 'NONE',
+              coReq: 'NONE',     },
+              {
+                courseCode: 'IT 209',
+                descriptiveTitle: 'Interactive Systems and Technologies',
+                lecUnits: '3',
+                labUnits: '0',
+                totalUnits: '3',
+                hoursPerWeek: '3',
+                preReq: 'NONE',
+                coReq: 'NONE',     },
+                {
+                  courseCode: 'IT 210',
+                  descriptiveTitle: 'Networking 2',
+                  lecUnits: '3',
+                  labUnits: '0',
+                  totalUnits: '3',
+                  hoursPerWeek: '3',
+                  preReq: 'NONE',
+                  coReq: 'NONE',     },
+                  {
+                    courseCode: 'TCW 101',
+                    descriptiveTitle: 'The Contemporary World',
+                    lecUnits: '3',
+                    labUnits: '0',
+                    totalUnits: '3',
+                    hoursPerWeek: '3',
+                    preReq: 'NONE',
+                    coReq: 'NONE',     },
+                    {
+                      courseCode: 'PE 13',
+                      descriptiveTitle: 'Physical Education 4',
+                      lecUnits: '3',
+                      labUnits: '0',
+                      totalUnits: '3',
+                      hoursPerWeek: '3',
+                      preReq: 'NONE',
+                      coReq: 'NONE',     },
+                      {
+                        courseCode: 'MST 101d',
+                        descriptiveTitle: 'Living in the IT Era',
+                        lecUnits: '3',
+                        labUnits: '0',
+                        totalUnits: '3',
+                        hoursPerWeek: '3',
+                        preReq: 'NONE',
+                        coReq: 'NONE',     
+                      },
       ]
     },
 
     {
       firstSem: [
         {
-          courseCode: 'MATH101 3rd year 1st Sem',
-          descriptiveTitle: 'Calculus 1',
+          courseCode: 'IT 301',
+          descriptiveTitle: 'Application Development and Emerging Technologies',
           lecUnits: '3',
           labUnits: '0',
           totalUnits: '3',
           hoursPerWeek: '3',
-          preReq: '',
-          coReq: '',
+          preReq: 'NONE',
+          coReq: 'NONE',
         },
         {
-          courseCode: 'PHY101 3rd year 1st Sem',
-          descriptiveTitle: 'Introduction to Physics',
+          courseCode: 'IT 302',
+          descriptiveTitle: 'Social and Professional Issues',
           lecUnits: '3',
-          labUnits: '2',
-          totalUnits: '5',
-          hoursPerWeek: '5',
-          preReq: '',
-          coReq: '',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
         },
         {
-          courseCode: 'CS101 3rd year 1st Sem',
-          descriptiveTitle: 'Programming Fundamentals',
+          courseCode: 'IT 303',
+          descriptiveTitle: 'System Analysis and Design',
           lecUnits: '3',
-          labUnits: '1',
-          totalUnits: '4',
-          hoursPerWeek: '4',
-          preReq: '',
-          coReq: '',
-        }
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 304',
+          descriptiveTitle: 'Web Systems and Technologies 1',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 305',
+          descriptiveTitle: 'Quantitative Methods',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 306',
+          descriptiveTitle: 'Elective 1',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 307',
+          descriptiveTitle: 'Elective 2',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'FL301',
+          descriptiveTitle: 'Foreign Language 1',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
       ],
       secondSem: [
         {
-          courseCode: 'MATH102 3rd Year 2nd Sem',
-          descriptiveTitle: 'Calculus 2',
+          courseCode: '	IT 308',
+          descriptiveTitle: 'Information Assurance and Security',
           lecUnits: '3',
           labUnits: '0',
           totalUnits: '3',
           hoursPerWeek: '3',
-          preReq: 'MATH101',
-          coReq: '',
+          preReq: 'NONE',
+          coReq: 'NONE',
         },
         {
-          courseCode: 'PHY102 3rd year 2nd Sem',
-          descriptiveTitle: 'Electricity and Magnetism',
+          courseCode: 'IT 309',
+          descriptiveTitle: 'Systems Integration and Architecture 1',
           lecUnits: '3',
-          labUnits: '2',
-          totalUnits: '5',
-          hoursPerWeek: '5',
-          preReq: 'PHY101',
-          coReq: '',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
         },
         {
-          courseCode: 'CS102 3rd year 2nd Sem',
-          descriptiveTitle: 'Object Oriented Programming',
+          courseCode: 'IT 310',
+          descriptiveTitle: 'Web Systems and Technologies 2',
           lecUnits: '3',
-          labUnits: '1',
-          totalUnits: '4',
-          hoursPerWeek: '4',
-          preReq: 'CS101',
-          coReq: '',
-        }
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'CAP 301',
+          descriptiveTitle: 'Capstone Project and Research 1',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 311',
+          descriptiveTitle: 'Elective 3',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 312',
+          descriptiveTitle: 'Elective 4',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'FL302',
+          descriptiveTitle: 'Foreign Language 2',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'RLW 101',
+          descriptiveTitle: '	Life and Works of Rizal',
+          lecUnits: '3',
+          labUnits: '0',
+          totalUnits: '3',
+          hoursPerWeek: '3',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
       ],
     },
 
@@ -295,46 +648,66 @@ export class CurriculumViewComponent implements OnInit{
     {
       firstSem:[
         {
-          courseCode: 'PHY101 4th year 1st Sem',
-          descriptiveTitle: 'Introduction to Physics',
+          courseCode: 'IT 401',
+          descriptiveTitle: 'System Administration and Maintenance',
           lecUnits: '3',
           labUnits: '1',
           totalUnits: '4',
           hoursPerWeek: '4',
-          preReq: '',
-          coReq: '',
+          preReq: 'NONE',
+          coReq: 'NONE',
         },
         {
-          courseCode: 'BIO101 4th year 1st Sem',
-          descriptiveTitle: 'Introduction to Biology',
+          courseCode: 'IT 402',
+          descriptiveTitle: 'System Integration and Architecture 2',
           lecUnits: '3',
           labUnits: '1',
           totalUnits: '4',
           hoursPerWeek: '4',
-          preReq: '',
-          coReq: '',
-        }
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'IT 403',
+          descriptiveTitle: 'Elective 5',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'CAP 401',
+          descriptiveTitle: 'Capstone Project and Research 2',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
+        {
+          courseCode: 'SSP 101c',
+          descriptiveTitle: 'Gender and Society',
+          lecUnits: '3',
+          labUnits: '1',
+          totalUnits: '4',
+          hoursPerWeek: '4',
+          preReq: 'NONE',
+          coReq: 'NONE',
+        },
       ],
       secondSem:[
         {
-          courseCode: 'CHEM102 4th Year 2nd Sem',
-          descriptiveTitle: 'Organic Chemistry',
+          courseCode: 'IT 404',
+          descriptiveTitle: 'Internship',
           lecUnits: '3',
           labUnits: '1',
           totalUnits: '4',
           hoursPerWeek: '4',
           preReq: 'CHEM101',
-          coReq: '',
-        },
-        {
-          courseCode: 'MATH102 4th year 2nd Sem',
-          descriptiveTitle: 'Calculus I',
-          lecUnits: '3',
-          labUnits: '0',
-          totalUnits: '3',
-          hoursPerWeek: '3',
-          preReq: 'MATH101',
-          coReq: '',
+          coReq: 'NONE',
         }
       ],
     },
@@ -342,6 +715,8 @@ export class CurriculumViewComponent implements OnInit{
 
 
 ];
+
+columns = ['COURSE CODE', 'DESCRIPTIVE TITLE', 'LEC UNITS', 'LAB UNITS', 'TOTAL UNITS', 'HOURS PER WEEK', 'PRE-REQ', 'CO-REQ'];
 
 selectedCourse:any = {
   courseCode: '',
@@ -414,5 +789,136 @@ deleteCourse(yearLevel:number, index:number, sem:string){
   }
   
 
+public convertToPDF(){
+  let docHeight = 330.2;
+  let docWidth = 215.9;
+  let cellDivision = docWidth/8; //26.9875
+  let cellHeaderHeight = 9;
+  let cellDataHeight = 9;
+  //A4 210mm(height)x297mm(width)
+  //html2canvas(document.body).then(canvas=> {
+    let pdf = new jsPDF('p','mm',[800, docWidth]);
+    
 
+    //header
+    var bulsuLogoSrc = 'assets/bulsu.png';
+    var cictLogoSrc = 'assets/logo-cict.png';
+    pdf.addImage(bulsuLogoSrc, 'PNG', 30, 3, 25, 25);
+    pdf.addImage(cictLogoSrc, 'PNG', 155, 3, 25, 25);
+    pdf.setFontSize(9);
+    pdf.setFont("helvetica", "bold");
+    pdf.text('Republic of the Philippines',105,15,{align: 'center'});
+    pdf.text('Bulacan State University',105,20,{align: 'center'});
+    pdf.setFont("helvetica", "normal");
+    pdf.text('City Of Malolos Bulacan',105,25,{align: 'center'});
+    pdf.text('Tel/Fax (044) 791-0153',105,30,{align: 'center'});
+    pdf.setFont("helvetica", "bold");
+    pdf.text('College of Information and Communications Technology',105,35,{align: 'center'});
+    pdf.line(20,38,190,38)
+    pdf.setFont("time new roman", "bold");
+    pdf.text('BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',105,50,{align: 'center'});
+    pdf.setFont("time new roman", "normal");
+    pdf.text('(Based on CMO No. 25 s 2015)',105,55,{align: 'center'});
+
+    //table
+    
+
+let yearLvl = 0;
+pdf.setFont("time new roman", "normal");
+for (let subjects of this.subject){
+  let year = '';
+  let firstSemesterShowed=false;
+  let secondSemesterShowed=false;
+  let i = 3;
+  let x = 0;
+if(yearLvl==0){
+  year='\t\t\t\t\t\t\t\t\t\t\t\t\t  FIRST YEAR'
+}
+else if(yearLvl==1){
+  year='\t\t\t\t\t\t\t\t\t\t\t\t\tSECOND YEAR'
+  pdf.cell(10, 65, 190, 16, '', -1,'');
+}
+else if(yearLvl==2){
+  year='\t\t\t\t\t\t\t\t\t\t\t\t\tTHIRD YEAR'
+  pdf.cell(10, 65, 190, 16, '', -1,'');
+}
+else if(yearLvl==3){
+  year='\t\t\t\t\t\t\t\t\t\t\t\t\tFOURTH YEAR'
+  pdf.cell(10, 65, 190, 16, '', -1,'');
+}
+  pdf.setFontSize(9);
+  
+    pdf.setFont("time new roman", "bold");
+    pdf.cell(10,65,docWidth-19,8,year,0,'center');
+
+    pdf.setFontSize(7);
+  for(let course of subjects.firstSem){
+    if(!firstSemesterShowed){
+    pdf.cell(10,65,docWidth-19,cellHeaderHeight,'FIRST SEMESTER',1,"center");
+    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'COURSE CODE',2,"center");
+    pdf.cell(10,65,cellDivision+27,cellHeaderHeight,'DESCRIPTIVE TITLE',2,"center");
+    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'LEC UNITS',2,"center");
+    pdf.cell(10,65,cellDivision-10,cellHeaderHeight,'LAB UNITS',2,"center");
+    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'TOTAL UNITS',2,"center");
+    pdf.cell(10,65,cellDivision+2,cellHeaderHeight,'HOURS PER WEEK',2,"center");
+    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'PRE-REQ',2,"center");
+    pdf.cell(10,65,cellDivision-8,cellHeaderHeight,'CO-REQ',2,"center");
+    }
+    pdf.setFont("time new roman", "normal");
+    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.courseCode,i,"center");
+    pdf.cell(10,65,cellDivision+27,cellDataHeight,course.descriptiveTitle,i,"center");
+    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.lecUnits,i,"center");
+    pdf.cell(10,65,cellDivision-10,cellDataHeight,course.labUnits,i,"center");
+    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.totalUnits,i,"center");
+    pdf.cell(10,65,cellDivision+2,cellDataHeight,course.hoursPerWeek,i,"center");
+    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.preReq,i,"center");
+    pdf.cell(10,65,cellDivision-8,cellDataHeight,course.coReq,i,"center");
+    i++;
+    firstSemesterShowed=true;
+  }
+  x=i;
+  x+=2;
+  for(let course of subjects.secondSem){
+    if(!secondSemesterShowed){
+      x--;
+      pdf.setFont("time new roman", "bold");
+    pdf.cell(10,65,docWidth-19,8,'SECOND SEMESTER',x,"center");
+    x++;
+    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'COURSE CODE',x,"center");
+    pdf.cell(10,65,cellDivision+27,cellHeaderHeight,'DESCRIPTIVE TITLE',x,"center");
+    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'LEC UNITS',x,"center");
+    pdf.cell(10,65,cellDivision-10,cellHeaderHeight,'LAB UNITS',x,"center");
+    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'TOTAL UNITS',x,"center");
+    pdf.cell(10,65,cellDivision+2,cellHeaderHeight,'HOURS PER WEEK',x,"center");
+    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'PRE-REQ',x,"center");
+    pdf.cell(10,65,cellDivision-8,cellHeaderHeight,'CO-REQ',x,"center");
+    i+=1;
+    }
+    pdf.setFont("time new roman", "normal");
+    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.courseCode,i,"center");
+    pdf.cell(10,65,cellDivision+27,cellDataHeight,course.descriptiveTitle,i,"center");
+    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.lecUnits,i,"center");
+    pdf.cell(10,65,cellDivision-10,cellDataHeight,course.labUnits,i,"center");
+    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.totalUnits,i,"center");
+    pdf.cell(10,65,cellDivision+2,cellDataHeight,course.hoursPerWeek,i,"center");
+    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.preReq,i,"center");
+    pdf.cell(10,65,cellDivision-8,cellDataHeight,course.coReq,i,"center");
+    i++;
+    secondSemesterShowed=true;
+  }
+  i*=0;
+  x*=0;
+  yearLvl++;
+
+
+}
+
+    
+    var sample = pdf.output('datauristring',{filename:'Curriculum'});
+    var pdfWindow = window.open("Curriculum");
+    if(pdfWindow)
+    pdfWindow.document.write("<iframe width='100%' height='100%' src='" + sample + "'></iframe>");
+
+    
+}
 }

@@ -1,3 +1,4 @@
+
 <div class="container pt-2" *ngIf="currentUser$ | async">
   <!-- <header class="mt-3 d-flex p-3">
     <h2>Curriculums</h2>
@@ -190,6 +191,7 @@
                   placeholder="Search..."
                 />
 
+
                 <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                           <mat-icon>clear</mat-icon>
                       </button> --> </mat-form-field
@@ -239,6 +241,7 @@
           </tr>
         </tbody>
       </table>
+
 
       <mat-paginator
         [length]="totalItems"

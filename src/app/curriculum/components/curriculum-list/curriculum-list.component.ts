@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Curriculum, Curriculum2 } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
+
+
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { map, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+
 
 @Component({
   selector: 'app-curriculum-list',
@@ -16,6 +19,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
 
 
 export class CurriculumListComponent {
+
+
+  items = [
+    { id: 1, name: 'Red', color: 'red', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 2, name: 'Blue', color: 'blue', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 3, name: 'Green', color: 'green', theme: 'cict-curriculum-system-dark-theme' },
+    { id: 4, name: 'Yellow', color: 'yellow', theme: 'cict-curriculum-system-dark-theme' },
+  ];
+
+
 
   constructor(private dialog: MatDialog,
               private curriculumService: CurriculumService,
@@ -33,6 +46,7 @@ export class CurriculumListComponent {
     map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
     tap(curriculums => this.curriculums = curriculums)
   )
+
 
   curriculumPendings:Curriculum2[] = []
   curriculumsPending$ = this.curriculumService.curriculums$.pipe(
