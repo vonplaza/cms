@@ -1,0 +1,27 @@
+<div class="container" *ngIf="(neededData$ | async) && canCreateRevision()">
+  <div class="row">
+    <div class="col-xl-9">
+      <app-year-dropdown
+        [subject]="subjects"
+        [type]="type"
+        [title]="title"
+        [curriculum]="curriculum"
+        [status]="status"
+        [action]="action"
+        [author]="author"
+        [descriptiveTitle]="descriptiveTitle"
+        [created_at]="created_at"
+        [buttonTxt]="buttonTxt"
+        (submitCur)="submit($event)"
+      ></app-year-dropdown>
+    </div>
+    <div class="col-xl-3">
+      <app-comments [comments]="comments"></app-comments>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+  <app-spinner class="mx-auto"></app-spinner>
+</div>
+<app-reload-page *ngIf="error"></app-reload-page>
+<app-not-allowed *ngIf="!canCreateRevision()"></app-not-allowed>

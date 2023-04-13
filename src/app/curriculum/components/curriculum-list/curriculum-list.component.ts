@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Curriculum } from 'src/app/core/models/curriculum';
+import { Curriculum, Curriculum2 } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
+
+
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { map, tap } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+
 @Component({
   selector: 'app-curriculum-list',
   templateUrl: './curriculum-list.component.html',
@@ -13,6 +20,7 @@ import {MatDialog} from '@angular/material/dialog';
 
 export class CurriculumListComponent {
 
+
   items = [
     { id: 1, name: 'Red', color: 'red', theme: 'cict-curriculum-system-dark-theme' },
     { id: 2, name: 'Blue', color: 'blue', theme: 'cict-curriculum-system-dark-theme' },
@@ -21,8 +29,42 @@ export class CurriculumListComponent {
   ];
 
 
-  constructor(private dialog: MatDialog) {}
 
+  constructor(private dialog: MatDialog,
+              private curriculumService: CurriculumService,
+              private authService: AuthService
+              ) {}
+  
+  role:any = ''            
+  currentUser$ = this.authService.getCurrentUser()
+  currentUser = this.authService.currentUser$.subscribe(
+    user => this.role = user?.role
+  )
+
+  curriculums:Curriculum2[] = []
+  curriculums$ = this.curriculumService.curriculums$.pipe(
+    map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
+    tap(curriculums => this.curriculums = curriculums)
+  )
+
+
+  curriculumPendings:Curriculum2[] = []
+  curriculumsPending$ = this.curriculumService.curriculums$.pipe(
+    map(curriculums => curriculums.filter(curr => curr.status === 'p')),
+    tap(curriculums => {
+      this.curriculumPendings = curriculums
+    })
+  )
+  
+  revisions:any[] = []
+  revisions$ = this.curriculumService.revisions$.pipe(
+    tap((revisions:any) => {
+      this.revisions = revisions
+      // console.log(revisions);
+    })
+  )
+    
+  
   openDialog() {
     const dialogRef = this.dialog.open(curriculumDialog);
 

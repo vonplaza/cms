@@ -4,8 +4,8 @@
       <p class="h5">Subjects</p>
       <mat-form-field style="width: 200px" class="example-form-field">
         <mat-label><mat-icon>search</mat-icon>Search</mat-label>
-        <input matInput type="text" [(ngModel)]="listFilter"/>
-        
+        <input matInput type="text" [(ngModel)]="listFilter" />
+
         <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                   <mat-icon>clear</mat-icon>
               </button> -->
@@ -69,40 +69,69 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Subject Code    <button mat-icon-button (click)="sort('subject_code')"><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col">Description    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col">Status    <button mat-icon-button (click)="sort('status')"><mat-icon>unfold_more</mat-icon></button></th>
-            <th scope="col">Department    <button mat-icon-button (click)="sort('description')"><mat-icon>unfold_more</mat-icon></button></th>
+            <th scope="col">
+              Subject Code
+              <button mat-icon-button (click)="sort('subject_code')">
+                <mat-icon>unfold_more</mat-icon>
+              </button>
+            </th>
+            <th scope="col">
+              Description
+              <button mat-icon-button (click)="sort('description')">
+                <mat-icon>unfold_more</mat-icon>
+              </button>
+            </th>
+            <th scope="col">
+              Status
+              <button mat-icon-button (click)="sort('status')">
+                <mat-icon>unfold_more</mat-icon>
+              </button>
+            </th>
+            <th scope="col">
+              Department
+              <button mat-icon-button (click)="sort('description')">
+                <mat-icon>unfold_more</mat-icon>
+              </button>
+            </th>
             <th scope="col">Syllabus</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody *ngFor="let subject of displayedItems | orderBy: currentSortColumn: currentSortDirection">
+        <tbody
+          *ngFor="
+            let subject of displayedItems
+              | orderBy : currentSortColumn : currentSortDirection
+          "
+        >
           <tr>
             <th scope="row">{{ subject.subject_code }}</th>
             <td>{{ subject.description }}</td>
-            <td>{{ subject.status }}</td>
-            <td>{{ subject?.department?.description }}</td>
+            <td>{{ subject.status == "a" ? "Active" : "Inactive" }}</td>
+            <td>{{ subject?.department?.department_code }}</td>
             <td>
-              <button mat-icon-button color="primary"><mat-icon>remove_red_eye</mat-icon></button></td>
+              <button mat-icon-button color="primary">
+                <mat-icon>remove_red_eye</mat-icon>
+              </button>
+            </td>
             <td>
               <!-- <button mat-icon-button color="primary" (click)="editSubject(subject)"><mat-icon>edit</mat-icon></button> -->
-              <button mat-icon-button color="primary"><mat-icon>delete_forever</mat-icon></button>
+              <button mat-icon-button color="primary">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
       <mat-paginator
-    [length]="totalItems"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="onPageChange($event)"
-  >
-  </mat-paginator>
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
     </div>
   </div>
 </app-sidenav>
-
 
 <ng-template #dialogEditContent>
   <!-- <form #editForm="ngForm" (ngSubmit)="">

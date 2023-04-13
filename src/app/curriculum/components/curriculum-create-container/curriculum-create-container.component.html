@@ -1,0 +1,16 @@
+<div class="container" *ngIf="(neededData$ | async) && canCreate()">
+  <app-year-dropdown
+    [subject]="subject"
+    [type]="type"
+    [role]="role"
+    [action]="action"
+    [buttonTxt]="buttonTxt"
+    [department]="userDeptId"
+    (submitCur)="submit($event)"
+  ></app-year-dropdown>
+</div>
+<div class="d-flex" *ngIf="isLoading">
+  <app-spinner class="mx-auto"></app-spinner>
+</div>
+<app-reload-page *ngIf="error"></app-reload-page>
+<app-not-allowed *ngIf="!canCreate() && !error && !isLoading"></app-not-allowed>

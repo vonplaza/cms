@@ -97,6 +97,7 @@ export class CurriculumViewComponent implements OnInit{
       this.expansionTitle='Second Year';
     }
   }
+  
   comment: comments[]=[
     {'username':'Mang ben', 
     'header':'IT 309',

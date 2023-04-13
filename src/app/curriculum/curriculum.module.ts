@@ -9,6 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { YearDropdownComponent } from './components/year-dropdown/year-dropdown.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { CurriculumCreateContainerComponent } from './components/curriculum-create-container/curriculum-create-container.component';
+import { CurriculumViewContainerComponent } from './components/curriculum-view-container/curriculum-view-container.component';
+import { CurriculumCreateRevisionContainerComponent } from './components/curriculum-create-revision-container/curriculum-create-revision-container.component';
+import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
+import { CurriculumEditContainerComponent } from './components/curriculum-edit-container/curriculum-edit-container.component';
+import { CurriculumEditRevisionContainerComponent } from './components/curriculum-edit-revision-container/curriculum-edit-revision-container.component';
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
@@ -17,8 +25,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CurriculumContainerComponent,
     CurriculumListComponent,
     CurriculumViewComponent, 
-    curriculumDialog
-    // DialogContentExampleDialog
+    curriculumDialog, 
+    YearDropdownComponent, 
+    CommentsComponent, 
+    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent, CurriculumEditContainerComponent, CurriculumEditRevisionContainerComponent
   ],
   imports: [
     CommonModule,
