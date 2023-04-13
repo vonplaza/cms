@@ -14,7 +14,7 @@ export class CommentsComponent implements OnChanges, OnInit{
   // @Input() comments:any
   @Input() type: string = ''
   @Input() action: string = ''
-  @Input() role: string = 'reviewer'
+  @Input() role: string = ''
   
   @Input() comments: Comment[] = []
   @Output() addComment = new EventEmitter()

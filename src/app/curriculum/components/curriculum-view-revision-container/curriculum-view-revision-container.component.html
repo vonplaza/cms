@@ -1,4 +1,4 @@
-<div class="container" *ngIf="curriculum$ | async">
+<div class="container" *ngIf="neededData$ | async">
   <div class="row">
     <div class="col-xl-9">
       <app-year-dropdown
@@ -9,6 +9,8 @@
         [action]="action"
         [status]="status"
         [author]="author"
+        [role]="role"
+        [canEdit]="canEdit()"
         [created_at]="created_at"
         (editCur)="edit()"
         (approveCur)="approve()"
@@ -17,9 +19,14 @@
     <div class="col-xl-3">
       <app-comments
         [type]="type"
+        [role]="role"
         [comments]="comments"
         (addComment)="addComment($event)"
       ></app-comments>
     </div>
   </div>
 </div>
+<div class="d-flex" *ngIf="isLoading">
+  <app-spinner class="mx-auto"></app-spinner>
+</div>
+<app-reload-page *ngIf="error && !isLoading"></app-reload-page>

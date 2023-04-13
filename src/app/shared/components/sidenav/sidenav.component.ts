@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -12,12 +13,21 @@ export class SidenavComponent {
   }
 
   showSideNav = false
+  constructor(private route: ActivatedRoute, 
+              private authService: AuthService,
+              private router: Router
+    ) { }
 
-  constructor(private route: ActivatedRoute) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const query = params['showSidenav'];
       this.showSideNav = query
     });
+  }
+
+  logout(){
+    this.authService.logout().subscribe(
+      data => this.router.navigate(['/login'])
+    )
   }
 }

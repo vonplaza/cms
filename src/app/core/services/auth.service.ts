@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, of, tap, throwError } from 'rxjs';
 import { AppError } from '../models/app-error';
 import { User } from '../models/user';
+import { handleError } from '../errorHandling/errorHandler';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthService {
           console.log(response.user);
           
         }),
-        catchError(this.handleError)
+        catchError(handleError)
       )
   }
 
@@ -33,7 +34,8 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.removeToken()
-        })
+        }),
+        catchError(handleError)
       )
   }
 
@@ -45,6 +47,9 @@ export class AuthService {
   }
 
   getCurrentUser(){
+    if(this.currentUser)
+      return of(this.currentUser)
+    
     return this.http.post(`${this.baseUrl}getUser`, {})
     .pipe(
       tap((user:any) => {
@@ -67,23 +72,23 @@ export class AuthService {
 
 
 
-  private handleError(error: HttpErrorResponse) {
-    console.log(error);
+  // private handleError(error: HttpErrorResponse) {
+  //   console.log(error);
     
-    const appError: AppError = {
-      status: error.status,
-      message: error.error.message
-    }
-    // if (error.status === 0) {
-    //   // A client-side or network error occurred. Handle it accordingly.
-    //   console.error('An error occurred:', error.error);
-    // } else {
-    //   // The backend returned an unsuccessful response code.
-    //   // The response body may contain clues as to what went wrong.
-    //   console.error(
-    //     `Backend returned code ${error.status}, body was: `, error.error);
-    // }
-    // Return an observable with a user-facing error message.
-    return throwError(() => appError);
-  }
+  //   const appError: AppError = {
+  //     status: error.status,
+  //     message: error.error.message
+  //   }
+  //   // if (error.status === 0) {
+  //   //   // A client-side or network error occurred. Handle it accordingly.
+  //   //   console.error('An error occurred:', error.error);
+  //   // } else {
+  //   //   // The backend returned an unsuccessful response code.
+  //   //   // The response body may contain clues as to what went wrong.
+  //   //   console.error(
+  //   //     `Backend returned code ${error.status}, body was: `, error.error);
+  //   // }
+  //   // Return an observable with a user-facing error message.
+  //   return throwError(() => appError);
+  // }
 }

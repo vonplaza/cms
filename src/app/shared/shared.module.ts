@@ -7,6 +7,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { RouterModule } from '@angular/router';
 import { TimeDifferencePipePipe } from '../core/pipe/time-difference-pipe.pipe';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { NotAllowedComponent } from './components/not-allowed/not-allowed.component';
+import { ReloadPageComponent } from './components/reload-page/reload-page.component';
 
 
 
@@ -16,7 +18,9 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     SidenavComponent,
     SpinnerComponent,
     TimeDifferencePipePipe,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    NotAllowedComponent,
+    ReloadPageComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
   exports: [
     SidenavComponent,
     SpinnerComponent,
-    TimeDifferencePipePipe
+    TimeDifferencePipePipe,
+    NotAllowedComponent,
+    ReloadPageComponent
   ]
 })
 export class SharedModule { }

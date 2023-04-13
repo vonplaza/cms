@@ -43,11 +43,16 @@
     <!-- <mat-form-field class="me-2" *ngIf="type != 'view' && (action == 'create') "> -->
     <mat-form-field class="me-2" *ngIf="isShown()">
       <mat-label>Department</mat-label>
-      <mat-select ngModel="1">
+      <mat-select [(ngModel)]="department" [disabled]="departmentDisable()">
         <mat-option value="1"> BSIT </mat-option>
         <mat-option value="2"> BLIS </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- <mat-form-field class="me-2" *ngIf="isShown()">
+      <mat-label>Department</mat-label>
+      <input type="text" >
+    </mat-form-field> -->
 
     <!-- <mat-form-field class="me-2" *ngIf="user.role != 'admin'">
       <mat-label>Department</mat-label>
@@ -94,19 +99,18 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'p'"
+      *ngIf="type == 'view' && status == 'p' && role == 'reviewer'"
       (click)="approve()"
     >
       <mat-icon>pending</mat-icon>
       Approve
     </button>
-
     <!-- edit btn -->
     <button
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'p'"
+      *ngIf="type == 'view' && status == 'p' && canEdit && role != 'reviewer'"
       (click)="update()"
     >
       <mat-icon>edit</mat-icon>
@@ -118,7 +122,12 @@
       mat-flat-button
       color="primary"
       class="me-2"
-      *ngIf="type == 'view' && status == 'a' && action != 'revise'"
+      *ngIf="
+        type == 'view' &&
+        status == 'a' &&
+        action != 'revise' &&
+        role != 'reviewer'
+      "
       (click)="revise()"
     >
       <mat-icon>edit</mat-icon>
