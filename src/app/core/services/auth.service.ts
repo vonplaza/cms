@@ -34,6 +34,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.removeToken()
+          this.currentUserSubject.next(null)
         }),
         catchError(handleError)
       )
