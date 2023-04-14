@@ -1,10 +1,27 @@
-<body class="theme-light">
-<app-sidenav >
-    <div class="container">
-        <header class="mt-3"><h1>Content Management</h1></header>
-        <button mat-raised-button (click)="toggle()">Toggle Dark Mode</button>
-    
-    </div>
+<div style="width: 400px; height:200px;">
+    <header><h3><mat-icon>wb_sunny</mat-icon>Content Management</h3></header>
+  <mat-tab-group>
 
-</app-sidenav>
-</body>
+    <mat-tab label="Change Theme"><mat-slide-toggle mat-raised-button (click)="toggle()">Toggle Dark Mode</mat-slide-toggle></mat-tab>
+
+    <mat-tab label="Change Logo" >
+        <div class="mat-card theme-light" style="display: flex; justify-content: center; align-items: center;">
+            <div class="image-wrapper text-center">
+                <img
+                  src="src/assets/bulsu.png"
+                />
+              </div>
+              <div class="name-wrapper text-center">
+                <h2>Logo-cict.png</h2>
+              </div>
+      <form>
+        <button type="submit" mat-flat-button color="primary">
+          <mat-icon>upload</mat-icon>
+          Upload
+        </button>
+      </form>
+    </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

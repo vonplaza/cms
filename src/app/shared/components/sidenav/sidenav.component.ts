@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ContentManagementComponent } from 'src/app/content/components/content-management/content-management.component';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -8,6 +10,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent {
+  
   click(){
     console.log('asdads');
   }
@@ -15,7 +18,8 @@ export class SidenavComponent {
   showSideNav = false
   constructor(private route: ActivatedRoute, 
               private authService: AuthService,
-              private router: Router
+              private router: Router,
+              public dialog: MatDialog
     ) { }
   
   ngOnInit() {
@@ -29,5 +33,9 @@ export class SidenavComponent {
     this.authService.logout().subscribe(
       data => this.router.navigate(['/login'])
     )
+  }
+
+  openContentManagement() {
+    const dialogRef = this.dialog.open(ContentManagementComponent);
   }
 }
