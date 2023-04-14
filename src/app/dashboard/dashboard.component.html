@@ -1,9 +1,32 @@
-<h1 class="pageTitle">Dashboard</h1>
-<mat-grid-list cols="4" rowHeight="1:0.5" class="grid">
-    <mat-grid-tile  class="tile"> <h3>Current Curriculum Version <br> <br> <span>{{currentVersion}}</span></h3> </mat-grid-tile>
-    <mat-grid-tile class="tile"> <h3>Version in Revision <br> <br> <span>{{inRevision}}</span></h3> </mat-grid-tile>
-    <mat-grid-tile class="tile"> <h3>Date Today<br> <br> <span>{{currentVersion}}</span></h3></mat-grid-tile>
+<app-sidenav>
+  <mat-grid-list cols="4" rowHeight="1:0.5" class="grid">
+    <mat-grid-tile class="tile">
+      <h3>
+        Current Curriculum Version <br />
+        <br />
+        <span>{{ currentVersion }}</span>
+      </h3>
+    </mat-grid-tile>
+    <mat-grid-tile class="tile">
+      <h3>
+        Version in Revision <br />
+        <br />
+        <span>{{ inRevision }}</span>
+      </h3>
+    </mat-grid-tile>
+    <mat-grid-tile class="tile">
+      <h3>
+        Date Today<br />
+        <br />
+        <span>{{ currentVersion }}</span>
+      </h3></mat-grid-tile
+    >
     <mat-grid-tile class="tile" rowspan="3"> </mat-grid-tile>
-    <mat-grid-tile class="tile" colspan="2" rowspan="2"><div class="lineChart" [chart]='lineChart2'></div></mat-grid-tile>
-    <mat-grid-tile class="tile" colspan="1" rowspan="2"><div class="pieChart" [chart]='pieChart'></div></mat-grid-tile>
-</mat-grid-list>
+    <mat-grid-tile class="tile" colspan="2" rowspan="2"
+      ><div class="lineChart" [chart]="lineChart2"></div
+    ></mat-grid-tile>
+    <mat-grid-tile class="tile" colspan="1" rowspan="2"
+      ><div class="pieChart" [chart]="pieChart"></div
+    ></mat-grid-tile>
+  </mat-grid-list>
+</app-sidenav>
