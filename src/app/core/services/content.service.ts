@@ -30,4 +30,13 @@ export class ContentService {
       catchError(handleError)
     )
   }
+
+  addContent(data:any){
+    return this.http.post<Content>(`${this.baseUrl}content-init`, data).pipe(
+      tap(data => {        
+        this.contentSubject.next(data)
+      }),
+      catchError(handleError)
+    )
+  }
 }

@@ -44,9 +44,13 @@ export class ContentManagementComponent {
       this.originalContent = {...contentObs}  
       this.content.is_dark_mode_active = !!Number(contentObs.is_dark_mode_active)
       this.content.logo_path = contentObs.logo_path || ''
-      this.content.title_text = contentObs.title_text
+      this.content.title_text = contentObs.title_text || ''
       this.isLoading = false
       this.role = user.role      
+      // console.log(contentObs);
+      
+      console.log(!!Object.keys(contentObs).length);
+      
     })
   )
 
@@ -60,14 +64,34 @@ export class ContentManagementComponent {
     formData.append('is_dark_mode_active', this.content.is_dark_mode_active ? '1' : '0')
     formData.append('title_text', this.content.title_text)
     
-    this.contentService.updateContent(formData).subscribe({
-      next: data => {
-        this.toggleIsEdit()
-      },
-      error: err => {
-        this.error.next(err.message)
-      }
-    })
+    if(!Object.keys(this.originalContent).length){
+       console.log(this.content);
+      
+      this.contentService.addContent(formData).subscribe({
+        next: data => {
+          this.toggleIsEdit()      
+          this.imageUrl = ''
+          this.error.next('')
+          this.selectedFile = ''
+        },
+        error: err => {
+          this.error.next(err.message)
+        }
+      })
+    }
+    else{
+      this.contentService.updateContent(formData).subscribe({
+        next: data => {
+          this.toggleIsEdit()
+          this.imageUrl = ''
+          this.error.next('')
+          this.selectedFile = ''
+        },
+        error: err => {
+          this.error.next(err.message)
+        }
+      })
+    }
   }
   
   cancelEdit(){

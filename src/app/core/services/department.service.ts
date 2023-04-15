@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { handleError } from '../errorHandling/errorHandler';
+import { Department } from '../models/department';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
-  departments$ = this.http.get(`${this.baseUrl}departments`).pipe(
+  departments$ = this.http.get<Department[]>(`${this.baseUrl}departments`).pipe(
     catchError(handleError)
   )
 }
