@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
   { path: 'content', loadChildren: () => import('./content/content.module').then(m => m.ContentModule)},
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
+  { path: 'departments', loadChildren: () => import('./department/department.module').then(m => m.DepartmentModule)},
 ];
 
 @NgModule({
