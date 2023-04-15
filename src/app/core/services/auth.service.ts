@@ -41,10 +41,10 @@ export class AuthService {
   }
 
   storeToken(token:string){
-    sessionStorage.setItem('token', token)
+    localStorage.setItem('token', token)
   }
   removeToken(){
-    sessionStorage.removeItem('token')
+    localStorage.removeItem('token')
   }
 
   getCurrentUser(){
