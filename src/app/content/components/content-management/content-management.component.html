@@ -14,7 +14,7 @@
             (change)="toggleTheme()"
             name="isDarkModeActivated"
             [disabled]="!isEdit"
-            [(ngModel)]="content.isDarkModeActive"
+            [(ngModel)]="content.is_dark_mode_active"
             >Dark Mode</mat-slide-toggle
           >
         </div>
@@ -45,13 +45,15 @@
             style="max-width: 500px"
             class="form-control"
             [disabled]="!isEdit"
-            [(ngModel)]="content.titleText"
+            [(ngModel)]="content.title_text"
             value="asdasd"
           />
         </div>
         <span class="text-danger" *ngIf="error | async as errorMessage">{{
           errorMessage
         }}</span>
+
+        <!-- <app-notification></app-notification> -->
         <div class="mt-4 d-flex gap-2">
           <button
             mat-flat-button

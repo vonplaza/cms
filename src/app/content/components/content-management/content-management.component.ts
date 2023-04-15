@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject, combineLatest, tap } from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
+import { Content } from 'src/app/core/models/content.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ContentService } from 'src/app/core/services/content.service';
 @Component({
@@ -18,17 +19,17 @@ export class ContentManagementComponent {
   isLoading:boolean = true
     
   error = new Subject<string>()
-  content = {
-    isDarkModeActive: false,
-    logoPath: '',
-    titleText: ""
+  content:Content = {
+    is_dark_mode_active: false,
+    logo_path: '',
+    title_text: ''
   }
 
   src(){
     if(this.imageUrl)
       return this.imageUrl
-    if(this.content.logoPath)
-      return 'http://127.0.0.1:8000/api/content/logo/' + this.content.logoPath
+    if(this.content.logo_path)
+      return 'http://127.0.0.1:8000/api/content/logo/' + this.content.logo_path
     else
       return ''
   }
@@ -41,9 +42,9 @@ export class ContentManagementComponent {
   ]).pipe(
     tap(([content, user, contentObs]) => {    
       this.originalContent = {...contentObs}  
-      this.content.isDarkModeActive = !!contentObs.is_dark_mode_active
-      this.content.logoPath = contentObs.logo_path || ''
-      this.content.titleText = contentObs.title_text
+      this.content.is_dark_mode_active = !!Number(contentObs.is_dark_mode_active)
+      this.content.logo_path = contentObs.logo_path || ''
+      this.content.title_text = contentObs.title_text
       this.isLoading = false
       this.role = user.role      
     })
@@ -56,9 +57,9 @@ export class ContentManagementComponent {
       formData.append('logo', this.selectedFile)
     }
     
-    formData.append('is_dark_mode_activate', this.content.isDarkModeActive ? 'true' : 'false')
-    formData.append('title_text', this.content.titleText)
-
+    formData.append('is_dark_mode_active', this.content.is_dark_mode_active ? '1' : '0')
+    formData.append('title_text', this.content.title_text)
+    
     this.contentService.updateContent(formData).subscribe({
       next: data => {
         this.toggleIsEdit()
@@ -73,9 +74,9 @@ export class ContentManagementComponent {
     this.toggleIsEdit()
 
     this.imageUrl = ''
-    this.content.isDarkModeActive = this.originalContent.is_dark_mode_activate
-    this.content.logoPath = this.originalContent.logo_path
-    this.content.titleText = this.originalContent.title_text
+    this.content.is_dark_mode_active = this.originalContent.is_dark_mode_activate
+    this.content.logo_path = this.originalContent.logo_path
+    this.content.title_text = this.originalContent.title_text
 
     this.error.next('')
   }
