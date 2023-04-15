@@ -1,15 +1,111 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subject, combineLatest, tap } from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ContentService } from 'src/app/core/services/content.service';
 @Component({
   selector: 'app-content-management',
   templateUrl: './content-management.component.html',
   styleUrls: ['./content-management.component.css']
 })
 export class ContentManagementComponent {
+  constructor(private contentService: ContentService,
+              private authService: AuthService){}
+  
+  isEdit:boolean = false
+  role:string = ''
+  isLoading:boolean = true
+    
+  error = new Subject<string>()
+  content = {
+    isDarkModeActive: false,
+    logoPath: '',
+    titleText: ""
+  }
+
+  src(){
+    if(this.imageUrl)
+      return this.imageUrl
+    if(this.content.logoPath)
+      return 'http://127.0.0.1:8000/api/content/logo/' + this.content.logoPath
+    else
+      return ''
+  }
+
+  originalContent:any = {}
+  neededData$ = combineLatest([
+    this.contentService.content$,
+    this.authService.getCurrentUser(),
+    this.contentService.contentAction$
+  ]).pipe(
+    tap(([content, user, contentObs]) => {    
+      this.originalContent = {...contentObs}  
+      this.content.isDarkModeActive = !!contentObs.is_dark_mode_active
+      this.content.logoPath = contentObs.logo_path || ''
+      this.content.titleText = contentObs.title_text
+      this.isLoading = false
+      this.role = user.role      
+    })
+  )
+
+  submit(form: NgForm){
+    
+    const formData = new FormData()
+    if(this.selectedFile){
+      formData.append('logo', this.selectedFile)
+    }
+    
+    formData.append('is_dark_mode_activate', this.content.isDarkModeActive ? 'true' : 'false')
+    formData.append('title_text', this.content.titleText)
+
+    this.contentService.updateContent(formData).subscribe({
+      next: data => {
+        this.toggleIsEdit()
+      },
+      error: err => {
+        this.error.next(err.message)
+      }
+    })
+  }
+  
+  cancelEdit(){
+    this.toggleIsEdit()
+
+    this.imageUrl = ''
+    this.content.isDarkModeActive = this.originalContent.is_dark_mode_activate
+    this.content.logoPath = this.originalContent.logo_path
+    this.content.titleText = this.originalContent.title_text
+
+    this.error.next('')
+  }
+
+  canEdit(){
+    return this.role == 'admin'
+  }
 
   toggleTheme(){
     
   }
+
+  selectedFile:any 
+  imageUrl = ''
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  toggleIsEdit(){
+    this.isEdit = !this.isEdit
+  }
+
 //  toggleTheme = new AppComponent();
 //  isDark=false;
 //  toggle(){

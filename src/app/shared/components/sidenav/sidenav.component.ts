@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, tap } from 'rxjs';
+import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ContentService } from 'src/app/core/services/content.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -11,9 +13,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class SidenavComponent {
 
   constructor(private route: ActivatedRoute, 
-    private authService: AuthService,
-    private router: Router
-    ) { }
+              private authService: AuthService,
+              private router: Router,
+              private contentService: ContentService
+    ){}
     
   showSideNav = false
   // currentUser = this.authService.currentUser$
@@ -24,10 +27,25 @@ export class SidenavComponent {
 
   neededData$ = combineLatest([
     this.authService.getCurrentUser(),
-    this.authService.currentUser$
+    this.authService.currentUser$,
+    
   ]).pipe(
-    map(([x, user]) => user)
+    map(([x, user]) => {
+      return user
+    })
   )
+  
+  logo: string = ''
+  title:string = ''
+  contentData$ = combineLatest([
+    this.contentService.content$,
+    this.contentService.contentAction$
+  ]).pipe(
+      tap(([x, content]) => {
+        this.title = content.title_text
+        this.logo = content.logo_path
+      })
+    ).subscribe()
   
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
