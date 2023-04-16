@@ -8,6 +8,7 @@ import {AccountRegistrationComponent} from 'src/app/account/components/account-r
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { ViewProfileComponent } from 'src/app/shared/components/view-profile/view-profile.component';
 export interface UserData {
   age: number;
   name: string;
@@ -24,13 +25,7 @@ export class AccountListComponent2{
   constructor(private accountService: AccountService, 
               private dialog: MatDialog,
               private authService: AuthService,
-              ) {
-
-
-                
-               }
-
-  
+              ) {}
 
 
   user:User | any
@@ -56,7 +51,31 @@ export class AccountListComponent2{
   )
 
   canView(){
-    return this.role === 'admin'
+    // return this.role === 'admin'
+    return true
+  }
+
+  viewProfile(user: User){
+    const dialogRef = this.dialog.open(ViewProfileComponent, {
+      data: {
+        user: user,
+        role: this.role
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const status = user.status == 'a' ? 'i' : 'a'
+        const data = {status: status}
+        this.accountService.toggleStatus(user.id, data).subscribe(
+          data => {
+            this.users = this.users.map(use => use.id != user.id ? use : data)
+          }
+        )
+      } else {
+
+      }
+    });
   }
 
   isLoading$ = new BehaviorSubject<boolean>(true)

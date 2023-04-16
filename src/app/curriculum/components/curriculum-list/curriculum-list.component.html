@@ -178,7 +178,7 @@
       </mat-paginator>
     </mat-tab>
     <mat-tab label="Pending">
-      <table class="table" *ngIf="curriculumPendings && false" >
+      <table class="table" *ngIf="curriculumPendings">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -188,8 +188,7 @@
                   type="text"
                   [(ngModel)]="listFilter"
                   placeholder="Search..."
-                />
-                </mat-form-field
+                /> </mat-form-field
               ><mat-icon>search</mat-icon>
             </th>
           </tr>
@@ -200,7 +199,8 @@
               <div class="float-left d-flex p-3 flex-column">
                 <div class="d-flex align-items-center">
                   <span class="h5 m-0 p-0 me-2"
-                    >CICT {{ data.department.department_code | uppercase }} Curriculum
+                    >CICT
+                    {{ data.department.department_code | uppercase }} Curriculum
                     version {{ data.version }}</span
                   >
                   <div>
