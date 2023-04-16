@@ -6,6 +6,7 @@ import { Observable, filter, tap } from 'rxjs';
 import {Subject} from 'src/app/core/models/subject';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-subject-list',
@@ -30,6 +31,53 @@ export class SubjectListComponent {
       this.currentSortColumn = column;
       this.currentSortDirection = 'asc';
     }
+  }
+
+  removeSubject(id:number){
+    
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Remove Subject',
+        message: 'Are you sure you want to move this subject to inactive?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subjectService.removeSubject(id, {status: 'i'}).subscribe({
+          next: data => {
+            this.subjects = this.subjects.map(subj => subj.id != id ? subj : data)
+          },
+          error: err => {
+
+          }
+        })
+      } else {
+      }
+    });
+  }
+
+  restoreSubject(id:number){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Restore Subject',
+        message: 'Are you sure you want to restore this subject?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subjectService.removeSubject(id, {status: 'a'}).subscribe({
+          next: data => {
+            this.subjects = this.subjects.map(subj => subj.id != id ? subj : data)
+          },
+          error: err => {
+
+          }
+        })
+      } else {
+      }
+    });
   }
 
   subjectsComplete$ = this.subjectService.subjectsComplete$

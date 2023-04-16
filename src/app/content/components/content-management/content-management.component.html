@@ -43,17 +43,29 @@
             type="text"
             name="titleText"
             style="max-width: 500px"
-            class="form-control"
+            class="form-control mb-2"
             [disabled]="!isEdit"
             [(ngModel)]="content.title_text"
             value="asdasd"
           />
         </div>
-        <span class="text-danger" *ngIf="error | async as errorMessage">{{
-          errorMessage
-        }}</span>
-
-        <!-- <app-notification></app-notification> -->
+  
+        <div style="max-width: 500px;">
+        <app-notification
+          *ngIf="error$ | async as errorMessage" 
+          [message]="errorMessage" 
+          type="error"
+          (close)="closeAlert()"
+          >
+        </app-notification>
+          <app-notification 
+          *ngIf="success$ | async as message" 
+          [message]="message" 
+          type="success"
+          (close)="closeSuccessAlert()"
+          >
+        </app-notification>
+      </div>
         <div class="mt-4 d-flex gap-2">
           <button
             mat-flat-button

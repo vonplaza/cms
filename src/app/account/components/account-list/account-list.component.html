@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="(neededData$ | async) && canView()">
   <table class="table">
     <thead>
       <tr>
@@ -84,4 +84,10 @@
     (page)="onPageChange($event)"
   >
   </mat-paginator>
+
+  <div class="d-flex" *ngIf="isLoading">
+    <app-spinner class="mx-auto"></app-spinner>
+  </div>
+  <app-reload-page *ngIf="error && !isLoading"></app-reload-page>
+  <app-not-allowed *ngIf="!canView() && !isLoading"></app-not-allowed>
 </div>

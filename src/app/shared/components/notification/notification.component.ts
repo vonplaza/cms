@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-notification',
@@ -6,5 +6,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent {
-  
+  @Input() message:string = 'Input Field Required'
+  @Input() type: string = ''
+
+  @Output() close = new EventEmitter()
+
+  logo:any = {
+    error: 'error',
+    success: 'check'
+  }
+
+  getType:any = {
+    error: 'danger',
+    success: 'success'
+  }
+
+  onClose(){
+    this.close.emit()
+  }
 }

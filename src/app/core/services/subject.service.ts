@@ -35,5 +35,10 @@ export class SubjectService {
     })
   )
   
-
+  removeSubject(id:number, data:any){
+    return this.http.patch<Subject>(`${this.baseUrl}/subjects/${id}`, data)
+      .pipe(
+        catchError(handleError)
+      )
+  }
 }
