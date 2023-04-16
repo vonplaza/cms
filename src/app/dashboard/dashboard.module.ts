@@ -6,7 +6,7 @@ import { dashboard } from './dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartModule } from 'angular-highcharts';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { NgChartsModule } from 'ng2-charts';
+// import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -19,7 +19,7 @@ import { NgChartsModule } from 'ng2-charts';
     SharedModule,
     MaterialModule,
     ChartModule,
-    NgChartsModule,
+    // NgChartsModule,
     DashboardRoutingModule
   ]
 })
