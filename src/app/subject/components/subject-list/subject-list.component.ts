@@ -378,7 +378,7 @@ export class SubjectListComponent {
       courses.department?.department_code.toLowerCase().includes(filterBy)||
       courses.department?.description.toLowerCase().includes(filterBy)||
       courses.department?.chairs.toLowerCase().includes(filterBy)||
-      courses.department?.members.toLowerCase().includes(filterBy)||
+      // courses.department?.members.toLowerCase().includes(filterBy)||
       courses.department?.created_at.toLowerCase().includes(filterBy)||
       courses.department?.updated_at.toLowerCase().includes(filterBy)
       );

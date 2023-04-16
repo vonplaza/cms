@@ -1,5 +1,5 @@
 <app-sidenav>
-  <div class="container" *ngIf="currentUser$ | async as profile">
+  <div class="container" *ngIf="neededData$ | async">
     <div class="row align-items-stretch py-4 px-2 gy-2">
       <div class="col-lg-4">
         <div class="mat-card theme-light" style="padding:30px; filter:contrast(1.5);">
@@ -7,7 +7,7 @@
             <img
               src="{{
                 'http://127.0.0.1:8000/api/profiles/images/' +
-                  (profile?.profile?.profile_pic || 'no-image.jpg')
+                  (user.profile?.profile_pic || 'no-image.jpg')
               }}"
               style="width: 150px; height: 150px"
               class="img-fluid rounded-circle"
@@ -15,16 +15,16 @@
             />
           </div>
           <div class="name-wrapper text-center">
-            <h2>{{ profile?.profile?.name || "name hasn't been set" }}</h2>
+            <h2>{{ user.profile?.name || "name hasn't been set" }}</h2>
           </div>
           <hr />
           <div class="text-center">
             <span
               >Status:
               <span class="text-success">
-                Selected as {{ profile.role | titlecase }}
-                <span *ngIf="profile?.department_id"
-                  >({{ profile?.department?.department_code }})</span
+                Selected as {{ user.role | titlecase }}
+                <span *ngIf="user?.department_id"
+                  >({{ user.department?.department_code }})</span
                 >
               </span>
             </span>
@@ -128,7 +128,7 @@
               </div>
             </mat-tab>
             <mat-tab label="Change Profile Picture">
-              <div class="text-center mt-4" *ngIf="!profile.profile">
+              <div class="text-center mt-4" *ngIf="!user.profile">
                 <h3>
                   Your profile has not been set up yet. Set up your profile
                   first before adding a Profile picture.
@@ -139,7 +139,7 @@
                 (ngSubmit)="onUpload()"
                 enctype="multipart/form-data"
                 class="p-4"
-                *ngIf="profile.profile"
+                *ngIf="user.profile"
               >
                 <div
                   class="alert alert-success"

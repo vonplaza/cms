@@ -34,16 +34,17 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.removeToken()
+          this.currentUserSubject.next(null)
         }),
         catchError(handleError)
       )
   }
 
   storeToken(token:string){
-    sessionStorage.setItem('token', token)
+    localStorage.setItem('token', token)
   }
   removeToken(){
-    sessionStorage.removeItem('token')
+    localStorage.removeItem('token')
   }
 
   getCurrentUser(){

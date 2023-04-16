@@ -9,6 +9,7 @@ import { TimeDifferencePipePipe } from '../core/pipe/time-difference-pipe.pipe';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { NotAllowedComponent } from './components/not-allowed/not-allowed.component';
 import { ReloadPageComponent } from './components/reload-page/reload-page.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 
 
@@ -20,7 +21,8 @@ import { ReloadPageComponent } from './components/reload-page/reload-page.compon
     TimeDifferencePipePipe,
     ConfirmDialogComponent,
     NotAllowedComponent,
-    ReloadPageComponent
+    ReloadPageComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { ReloadPageComponent } from './components/reload-page/reload-page.compon
     SpinnerComponent,
     TimeDifferencePipePipe,
     NotAllowedComponent,
-    ReloadPageComponent
+    ReloadPageComponent,
+    NotificationComponent
   ]
 })
 export class SharedModule { }

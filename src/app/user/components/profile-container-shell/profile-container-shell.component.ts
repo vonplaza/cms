@@ -19,12 +19,15 @@ export class ProfileContainerShellComponent {
   messageProfileSuccess$ = new Subject<string>()
   messageProfileError$ = new Subject<string>()
 
+  user!:User | any
+
   neededData$ = combineLatest([
-    this.authService.getCurrentUser()
+    this.authService.getCurrentUser(),
+    this.authService.currentUser$
   ]).pipe(
-    tap(([user]) => {
+    tap(([user, obsUser]) => {
+      this.user = user
       if(user.profile){
-               
         this.profileForm.patchValue({
           name: user.profile.name,
           phoneNo: user.profile.phone_no,
@@ -32,6 +35,21 @@ export class ProfileContainerShellComponent {
           birthDate: user.profile.birth_date,
         })
       }
+
+      if(obsUser){
+        this.user = obsUser
+      if(obsUser.profile){
+        this.profileForm.patchValue({
+          name: obsUser.profile.name,
+          phoneNo: obsUser.profile.phone_no,
+          address: obsUser.profile.address,
+          birthDate: obsUser.profile.birth_date,
+        })
+      }
+      }
+
+      this.isLoading = false
+
     }),
     catchError(err => {
       this.isLoading = false
@@ -60,27 +78,6 @@ export class ProfileContainerShellComponent {
     )
   }
 
-  // currentUser!:User
-
-  currentUser$ = this.authService.currentUser$
-  profile$ = this.authService.getCurrentUser()
-  .pipe(
-    tap(user => {
-      // this.currentUser = user 
-      console.log(user);
-      
-      if(user.profile){
-        console.log(user.profile)
-        
-        this.profileForm.patchValue({
-          name: user.profile.name,
-          phoneNo: user.profile.phone_no,
-          address: user.profile.address,
-          birthDate: user.profile.birth_date,
-        })
-      }
-    })
-  ).subscribe()
 
   submit(){
     this.userService.updateCurrentUser(this.profileForm.value)

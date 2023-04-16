@@ -2,6 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { AppError } from 'src/app/core/models/app-error';
+import { Department } from 'src/app/core/models/department';
+import { DepartmentService } from 'src/app/core/services/department.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
 
 @Component({
@@ -11,8 +13,18 @@ import { SubjectService } from 'src/app/core/services/subject.service';
 })
 export class SubjectAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<SubjectAddDialogComponent>, 
-              private subjectService: SubjectService
+              private subjectService: SubjectService,
+              private departmentService: DepartmentService
     ) {}
+    
+  departments: Department[] | undefined
+  departments$ = this.departmentService.departments$.subscribe({
+    next: departments => {
+      console.log(departments);
+      
+      this.departments = departments
+    }
+  })
 
   selectedFile:any 
   onFileSelected(event:any) {

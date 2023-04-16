@@ -3,7 +3,9 @@ import { NgForm } from '@angular/forms';
 import { EventManager } from '@angular/platform-browser';
 import { map, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
+import { Department } from 'src/app/core/models/department';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { DepartmentService } from 'src/app/core/services/department.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
 
 export interface subjects{
@@ -29,8 +31,17 @@ export interface Subject {
 })
 export class YearDropdownComponent {
   constructor(private subjectService: SubjectService,
-              private authService: AuthService
+              private authService: AuthService,
+              private departmentService: DepartmentService
     ){}
+  departments: Department[] | undefined
+  departments$ = this.departmentService.departments$.subscribe({
+    next: departments => {
+      console.log(departments);
+      
+      this.departments = departments
+    }
+  })
 
   @Input() subject: subjects[] = []
   @Input() type: string = ''
@@ -120,11 +131,12 @@ export class YearDropdownComponent {
   availableSubjects$ = this.subjectService.subjectsComplete$
     .pipe(
       map(subjects => {
+        console.log(subjects);
+        
         const subs = subjects.filter(subj => subj.department_id == this.departmentId || !subj.department_id)
-        this.availableSubjects = subs   
-        console.log(this.availableSubjects);
+        this.availableSubjects = subjects   
 
-        return subs
+        return subjects
       })
     )
   

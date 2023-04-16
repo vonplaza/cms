@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div style="width: 400px; height:200px;">
     <header><h4><mat-icon>wb_sunny</mat-icon>Content Management</h4></header>
   <mat-tab-group>
@@ -25,3 +26,93 @@
 
   </mat-tab-group>
 </div>
+=======
+<body class="theme-light">
+  <app-sidenav>
+    <div class="container p-4" *ngIf="(neededData$ | async) && canEdit()">
+      <header class="">
+        <span class="h3">Content Management</span>
+      </header>
+      <form
+        #contentForm="ngForm"
+        (ngSubmit)="submit(contentForm)"
+        enctype="multipart/form-data"
+      >
+        <div class="dark-mode-wrapper mt-4">
+          <mat-slide-toggle
+            (change)="toggleTheme()"
+            name="isDarkModeActivated"
+            [disabled]="!isEdit"
+            [(ngModel)]="content.is_dark_mode_active"
+            >Dark Mode</mat-slide-toggle
+          >
+        </div>
+        <div class="logo-wrapper mt-4">
+          <span>Logo</span>
+          <div
+            class="logo-preview border"
+            style="max-width: 75px; height: 75px"
+          >
+            <img [src]="src()" alt="" height="75px" />
+          </div>
+          <input
+            type="file"
+            name="logo"
+            style="max-width: 500px"
+            id=""
+            (change)="onFileSelected($event)"
+            *ngIf="isEdit"
+            class="form-control mt-2"
+          />
+        </div>
+
+        <div class="title-wrapper mt-4">
+          <span>Title</span>
+          <input
+            type="text"
+            name="titleText"
+            style="max-width: 500px"
+            class="form-control"
+            [disabled]="!isEdit"
+            [(ngModel)]="content.title_text"
+            value="asdasd"
+          />
+        </div>
+        <span class="text-danger" *ngIf="error | async as errorMessage">{{
+          errorMessage
+        }}</span>
+
+        <!-- <app-notification></app-notification> -->
+        <div class="mt-4 d-flex gap-2">
+          <button
+            mat-flat-button
+            color="primary"
+            *ngIf="!isEdit"
+            (click)="toggleIsEdit()"
+            type="button"
+          >
+            Edit
+          </button>
+          <button mat-flat-button color="primary" *ngIf="isEdit" type="submit">
+            Save
+          </button>
+          <button
+            mat-flat-button
+            type="button"
+            color="primary"
+            *ngIf="isEdit"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex">
+      <app-spinner *ngIf="isLoading" class="mx-auto"></app-spinner>
+    </div>
+    <app-not-allowed *ngIf="!canEdit() && !isLoading"></app-not-allowed>
+  </app-sidenav>
+</body>
+>>>>>>> 51fbebd694b62d2e07447ccd7c96c857e0aaa430

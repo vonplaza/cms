@@ -33,7 +33,6 @@ import { AuthInterceptor } from './core/interceptor/auth.interceptor';
   declarations: [
     AppComponent, 
     LoginComponent, 
-    dashboard, 
   ],
   imports: [
     BrowserModule,
