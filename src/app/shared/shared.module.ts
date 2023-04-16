@@ -10,6 +10,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { NotAllowedComponent } from './components/not-allowed/not-allowed.component';
 import { ReloadPageComponent } from './components/reload-page/reload-page.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 
 
 
@@ -22,7 +23,8 @@ import { NotificationComponent } from './components/notification/notification.co
     ConfirmDialogComponent,
     NotAllowedComponent,
     ReloadPageComponent,
-    NotificationComponent
+    NotificationComponent,
+    ViewProfileComponent
   ],
   imports: [
     CommonModule,

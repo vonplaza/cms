@@ -26,11 +26,25 @@ export class SubjectAddDialogComponent {
     }
   })
 
+  closeAlert(){
+    this.error$.next('')
+  }
+
+  closeSuccessAlert(){
+    this.success$.next('')
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
+  }
+
   selectedFile:any 
   onFileSelected(event:any) {
     this.selectedFile = event.target.files[0];
   }
   error$ = new Subject<string>();
+  success$ = new Subject<string>()
+
   createSubject(form:any){
     const fd = new FormData()
     
@@ -43,9 +57,11 @@ export class SubjectAddDialogComponent {
       .subscribe({
         next: data => {
           this.error$.next('')
+          this.success$.next('Subject created Successfully')
         },
         error: (err:AppError) => {
           this.error$.next(err.message)
+          this.success$.next('')
         }
       })
   }

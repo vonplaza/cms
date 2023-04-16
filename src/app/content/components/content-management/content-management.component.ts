@@ -18,7 +18,17 @@ export class ContentManagementComponent {
   role:string = ''
   isLoading:boolean = true
     
-  error = new Subject<string>()
+  error$ = new Subject<string>()
+  success$ = new Subject<string>()
+
+  closeAlert(){
+    this.error$.next('')
+  }
+
+  closeSuccessAlert(){
+    this.success$.next('')
+  }
+  
   content:Content = {
     is_dark_mode_active: false,
     logo_path: '',
@@ -71,11 +81,13 @@ export class ContentManagementComponent {
         next: data => {
           this.toggleIsEdit()      
           this.imageUrl = ''
-          this.error.next('')
+          this.error$.next('')
+          this.success$.next('Website Content update successfully')
           this.selectedFile = ''
         },
         error: err => {
-          this.error.next(err.message)
+          this.error$.next(err.message)
+          this.success$.next('')
         }
       })
     }
@@ -84,11 +96,13 @@ export class ContentManagementComponent {
         next: data => {
           this.toggleIsEdit()
           this.imageUrl = ''
-          this.error.next('')
+          this.error$.next('')
+          this.success$.next('Website Content update successfully')
           this.selectedFile = ''
         },
         error: err => {
-          this.error.next(err.message)
+          this.error$.next(err.message)
+          this.success$.next('')
         }
       })
     }
@@ -102,7 +116,7 @@ export class ContentManagementComponent {
     this.content.logo_path = this.originalContent.logo_path
     this.content.title_text = this.originalContent.title_text
 
-    this.error.next('')
+    this.error$.next('')
   }
 
   canEdit(){

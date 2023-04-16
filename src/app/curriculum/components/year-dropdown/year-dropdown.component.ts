@@ -36,12 +36,14 @@ export class YearDropdownComponent {
     ){}
   departments: Department[] | undefined
   departments$ = this.departmentService.departments$.subscribe({
-    next: departments => {
-      console.log(departments);
-      
+    next: departments => {      
       this.departments = departments
     }
   })
+
+  getDepartment(){
+    return this.departments?.find(dep => dep.id == Number(this.department))?.department_code
+  }
 
   @Input() subject: subjects[] = []
   @Input() type: string = ''
@@ -56,7 +58,7 @@ export class YearDropdownComponent {
   @Input() descriptiveTitle: string = ''
   @Input() role: string = ''
   @Input() canEdit: boolean = false
-  @Input() department:string = '1'
+  @Input() department:string = ''
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
@@ -82,6 +84,8 @@ export class YearDropdownComponent {
       departmentId: this.department
     })
   }
+
+  
 
   version = 1
   unitsOnChange(yearLvl: number, sem:string, type:string){

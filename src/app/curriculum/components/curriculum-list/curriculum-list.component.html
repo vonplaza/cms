@@ -188,15 +188,8 @@
                   type="text"
                   [(ngModel)]="listFilter"
                   placeholder="Search..."
-                />
-
-                <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-                          <mat-icon>clear</mat-icon>
-                      </button> --> </mat-form-field
+                /> </mat-form-field
               ><mat-icon>search</mat-icon>
-              <!-- <button mat-raised-button color="primary"></button> -->
-
-              <!--  -->
             </th>
           </tr>
         </thead>
@@ -206,7 +199,8 @@
               <div class="float-left d-flex p-3 flex-column">
                 <div class="d-flex align-items-center">
                   <span class="h5 m-0 p-0 me-2"
-                    >CICT {{ data.department.department_code }} Curriculum
+                    >CICT
+                    {{ data.department.department_code | uppercase }} Curriculum
                     version {{ data.version }}</span
                   >
                   <div>
