@@ -491,7 +491,7 @@ viewPdf(ref: string){
 
 @ViewChild('dialogEditContent') EditSubjectDialogComponent!: TemplateRef<any>;
 // const dialogRef = this.dialog.open(this.EditSubjectDialogComponent, { pang bukas nung dialog
-//   data: subjects
+//   data: subje
 // });
 
 
