@@ -126,7 +126,7 @@
       Revise
     </button>
 
-    <button mat-flat-button color="primary" class="me-2" *ngIf="type == 'view'">
+    <button mat-flat-button (click)="convertToPDF()" color="primary" class="me-2" *ngIf="type == 'view'" >
       <mat-icon>print</mat-icon>
       Print
     </button>
