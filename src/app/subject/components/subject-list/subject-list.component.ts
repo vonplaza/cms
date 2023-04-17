@@ -8,7 +8,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 //import {jsPDF} from 'jspdf';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-subject-list',
   templateUrl: './subject-list.component.html',
@@ -503,13 +503,15 @@ viewPdf(ref: string){
 })
 export class ViewPdfClass {
   pdfLoc = 'http://127.0.0.1:8000/api/subjectsGetSyllabus/';
+  myUrl: SafeResourceUrl;
   constructor(
+    private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<ViewPdfClass>,
     @Inject(MAT_DIALOG_DATA) public data: { ref: string }
   ) {
-    this.pdfLoc += data.ref;
-    console.log(this.pdfLoc);
-  };
+    this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://127.0.0.1:8000/api/subjectsGetSyllabus/' + data.ref);
+  }
+  
   
   
 }

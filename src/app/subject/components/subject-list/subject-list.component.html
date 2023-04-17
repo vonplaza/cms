@@ -109,7 +109,11 @@
             <td>{{ subject.status == "a" ? "Active" : "Inactive" }}</td>
             <td>{{ subject?.department?.department_code | uppercase }}</td>
             <td>
-              <button mat-icon-button color="primary" (click)="viewPdf(subject.syllabus_path )">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="viewPdf(subject.syllabus_path)"
+              >
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
             </td>
@@ -146,8 +150,6 @@
     </div>
   </div>
 </app-sidenav>
-
-
 
 <ng-template #dialogEditContent>
   <!-- <form #editForm="ngForm" (ngSubmit)="">
