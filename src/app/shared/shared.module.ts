@@ -13,7 +13,6 @@ import { NotificationComponent } from './components/notification/notification.co
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 
 
-
 @NgModule({
   declarations: [
     ToolbarComponent,
