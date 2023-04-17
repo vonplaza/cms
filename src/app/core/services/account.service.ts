@@ -25,6 +25,12 @@ export class AccountService {
       )
   }
 
+  toggleStatus(id: number, data: any){
+    return this.http.patch<User>(`${this.baseUrl}/users/${id}`, data).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     

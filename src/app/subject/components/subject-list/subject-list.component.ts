@@ -1,11 +1,13 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { SubjectAddDialogComponent } from '../subject-add-dialog/subject-add-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubjectService } from 'src/app/core/services/subject.service';
 import { Observable, filter, tap } from 'rxjs';
 import {Subject} from 'src/app/core/models/subject';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+//import {jsPDF} from 'jspdf';
 
 @Component({
   selector: 'app-subject-list',
@@ -13,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./subject-list.component.css']
 })
 export class SubjectListComponent {
-  constructor(public dialog: MatDialog, private subjectService: SubjectService) {}
+  constructor(public dialog: MatDialog, private subjectService: SubjectService, public viewPdfDialog: MatDialog) {}
   openDialog(): void {
     this.dialog.open(SubjectAddDialogComponent);
   }
@@ -30,6 +32,53 @@ export class SubjectListComponent {
       this.currentSortColumn = column;
       this.currentSortDirection = 'asc';
     }
+  }
+
+  removeSubject(id:number){
+    
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Remove Subject',
+        message: 'Are you sure you want to move this subject to inactive?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subjectService.removeSubject(id, {status: 'i'}).subscribe({
+          next: data => {
+            this.subjects = this.subjects.map(subj => subj.id != id ? subj : data)
+          },
+          error: err => {
+
+          }
+        })
+      } else {
+      }
+    });
+  }
+
+  restoreSubject(id:number){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Restore Subject',
+        message: 'Are you sure you want to restore this subject?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subjectService.removeSubject(id, {status: 'a'}).subscribe({
+          next: data => {
+            this.subjects = this.subjects.map(subj => subj.id != id ? subj : data)
+          },
+          error: err => {
+
+          }
+        })
+      } else {
+      }
+    });
   }
 
   subjectsComplete$ = this.subjectService.subjectsComplete$
@@ -432,8 +481,35 @@ export class SubjectListComponent {
   }
 //paginator
 
+viewPdf(ref: string){
+  const dialogRef = this.viewPdfDialog.open(ViewPdfClass, {
+    data: {
+      ref
+    }
+  });
+}
+
 @ViewChild('dialogEditContent') EditSubjectDialogComponent!: TemplateRef<any>;
 // const dialogRef = this.dialog.open(this.EditSubjectDialogComponent, { pang bukas nung dialog
 //   data: subjects
 // });
+
+
+}
+
+@Component({
+  selector: 'view-pdf',
+  templateUrl: 'view-pdf.html',
+})
+export class ViewPdfClass {
+  pdfLoc = 'http://127.0.0.1:8000/api/subjectsGetSyllabus/';
+  constructor(
+    public dialogRef: MatDialogRef<ViewPdfClass>,
+    @Inject(MAT_DIALOG_DATA) public data: { ref: string }
+  ) {
+    this.pdfLoc += data.ref;
+    console.log(this.pdfLoc);
+  };
+  
+  
 }

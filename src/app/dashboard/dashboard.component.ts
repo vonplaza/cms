@@ -1,6 +1,9 @@
 import { SlicePipe } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {Chart} from 'angular-highcharts';
+// import * as Chart from 'chart.js';
+
+// import { ChartOptions, ChartType, ChartDataset, Chart } from 'chart.js';
 
 @Component({
     selector:'dash-board',
@@ -9,32 +12,6 @@ import {Chart} from 'angular-highcharts';
 })
 
 export class dashboard{
-  // constructor(private chart: Chart){}
-
-  ngOnInit(): void {
-  //   const canvas = <HTMLCanvasElement> document.getElementById('myChart');
-
-  //   new Chart(canvas, {
-  //     type: 'bar',
-  //     data: {
-  //       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  //       datasets: [{
-  //         label: '# of Votes',
-  //         data: [12, 19, 3, 5, 2, 3],
-  //         borderWidth: 1
-  //       }]
-  //     },
-  //     options: {
-  //       scales: {
-  //         y: {
-  //           beginAtZero: true
-  //         }
-  //       }
-  //     }
-  //   });
-   }
-
-
     currentVersion = '3.2.1';
     inRevision = '3.2.2';
 

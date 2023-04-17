@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {jsPDF} from 'jspdf';
-
+import { first } from 'rxjs';
+import autoTable from 'jspdf-autotable';
+import { elements } from 'chart.js';
 
 export interface subjects{
   firstSem :subject[];
@@ -790,17 +792,9 @@ deleteCourse(yearLevel:number, index:number, sem:string){
   
 
 public convertToPDF(){
-  let docHeight = 330.2;
-  let docWidth = 215.9;
-  let cellDivision = docWidth/8; //26.9875
-  let cellHeaderHeight = 9;
-  let cellDataHeight = 9;
-  //A4 210mm(height)x297mm(width)
-  //html2canvas(document.body).then(canvas=> {
-    let pdf = new jsPDF('p','mm',[800, docWidth]);
-    
+    let pdf = new jsPDF('p','mm','a4');
 
-    //header
+    function addHeader() {
     var bulsuLogoSrc = 'assets/bulsu.png';
     var cictLogoSrc = 'assets/logo-cict.png';
     pdf.addImage(bulsuLogoSrc, 'PNG', 30, 3, 25, 25);
@@ -815,103 +809,316 @@ public convertToPDF(){
     pdf.setFont("helvetica", "bold");
     pdf.text('College of Information and Communications Technology',105,35,{align: 'center'});
     pdf.line(20,38,190,38)
-    pdf.setFont("time new roman", "bold");
+    pdf.setFont("times new roman", "bold");
     pdf.text('BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',105,50,{align: 'center'});
-    pdf.setFont("time new roman", "normal");
+    pdf.setFont("times new roman", "normal");
     pdf.text('(Based on CMO No. 25 s 2015)',105,55,{align: 'center'});
+    }
 
-    //table
+
+let tableMargin = 65;
+const firstYear = this.subject[0];
+const firstYearFirstSem = firstYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infofirstYear: string[][] = [];
+firstYearFirstSem.forEach((element,index,array)=>{
+  infofirstYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+
+const firstYearsecondSem = firstYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infofirstYearSecondSem: string[][] = [];
+firstYearsecondSem.forEach((element,index,array)=>{
+  infofirstYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const secondYear = this.subject[1];
+const secondYearFirstSem = secondYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infoSecondYear: string[][] = [];
+secondYearFirstSem.forEach((element,index,array)=>{
+  infoSecondYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const secondYearSecondSem = secondYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infoSecondYearSecondSem: string[][] = [];
+secondYearSecondSem.forEach((element,index,array)=>{
+  infoSecondYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const thirdYear = this.subject[2];
+const thirdYearFirstSem = thirdYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infoThirdYear: string[][] = [];
+thirdYearFirstSem.forEach((element,index,array)=>{
+  infoThirdYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const thirdYearSecondSem = thirdYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infoThirdYearSecondSem: string[][] = [];
+thirdYearSecondSem.forEach((element,index,array)=>{
+  infoThirdYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const fourthYear = this.subject[3];
+const fuorthYearFirstSem = fourthYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infoFourthYear: string[][] = [];
+fuorthYearFirstSem.forEach((element,index,array)=>{
+  infoFourthYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const fourthYearSecondSem = fourthYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle+'        ',
+  "Lec Units": subject.lecUnits.toString()+'   ',
+  "Lab Units": subject.lecUnits.toString()+'   ',
+  "Total Units": subject.totalUnits.toString()+'   ',
+  "Hours Per Week": subject.hoursPerWeek.toString()+'   ',
+  "Pre Req": subject.preReq+'   ',
+  "Co Req": subject.coReq+'   ',
+}));
+let infofourthYearSecondSem: string[][] = [];
+fourthYearSecondSem.forEach((element,index,array)=>{
+  infofourthYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'FIRST YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofirstYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
     
+    
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofirstYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+    
+    
+  })
 
-let yearLvl = 0;
-pdf.setFont("time new roman", "normal");
-for (let subjects of this.subject){
-  let year = '';
-  let firstSemesterShowed=false;
-  let secondSemesterShowed=false;
-  let i = 3;
-  let x = 0;
-if(yearLvl==0){
-  year='\t\t\t\t\t\t\t\t\t\t\t\t\t  FIRST YEAR'
-}
-else if(yearLvl==1){
-  year='\t\t\t\t\t\t\t\t\t\t\t\t\tSECOND YEAR'
-  pdf.cell(10, 65, 190, 16, '', -1,'');
-}
-else if(yearLvl==2){
-  year='\t\t\t\t\t\t\t\t\t\t\t\t\tTHIRD YEAR'
-  pdf.cell(10, 65, 190, 16, '', -1,'');
-}
-else if(yearLvl==3){
-  year='\t\t\t\t\t\t\t\t\t\t\t\t\tFOURTH YEAR'
-  pdf.cell(10, 65, 190, 16, '', -1,'');
-}
-  pdf.setFontSize(9);
+ 
+  //second year
+  pdf.addPage();
+   addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'SECOND YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoSecondYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
+    
+    
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoSecondYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+    
+    
+  })
+
+ 
+  //third year
+  pdf.addPage();
+   addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'THIRD YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoThirdYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
+    
+    
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoThirdYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+    
+    
+  })
+
+  //fourth year
+  pdf.addPage();
+  addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'FOURTH YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoFourthYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
+    
+    
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofourthYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+    
+    
+  })
+
   
-    pdf.setFont("time new roman", "bold");
-    pdf.cell(10,65,docWidth-19,8,year,0,'center');
-
-    pdf.setFontSize(7);
-  for(let course of subjects.firstSem){
-    if(!firstSemesterShowed){
-    pdf.cell(10,65,docWidth-19,cellHeaderHeight,'FIRST SEMESTER',1,"center");
-    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'COURSE CODE',2,"center");
-    pdf.cell(10,65,cellDivision+27,cellHeaderHeight,'DESCRIPTIVE TITLE',2,"center");
-    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'LEC UNITS',2,"center");
-    pdf.cell(10,65,cellDivision-10,cellHeaderHeight,'LAB UNITS',2,"center");
-    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'TOTAL UNITS',2,"center");
-    pdf.cell(10,65,cellDivision+2,cellHeaderHeight,'HOURS PER WEEK',2,"center");
-    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'PRE-REQ',2,"center");
-    pdf.cell(10,65,cellDivision-8,cellHeaderHeight,'CO-REQ',2,"center");
-    }
-    pdf.setFont("time new roman", "normal");
-    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.courseCode,i,"center");
-    pdf.cell(10,65,cellDivision+27,cellDataHeight,course.descriptiveTitle,i,"center");
-    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.lecUnits,i,"center");
-    pdf.cell(10,65,cellDivision-10,cellDataHeight,course.labUnits,i,"center");
-    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.totalUnits,i,"center");
-    pdf.cell(10,65,cellDivision+2,cellDataHeight,course.hoursPerWeek,i,"center");
-    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.preReq,i,"center");
-    pdf.cell(10,65,cellDivision-8,cellDataHeight,course.coReq,i,"center");
-    i++;
-    firstSemesterShowed=true;
-  }
-  x=i;
-  x+=2;
-  for(let course of subjects.secondSem){
-    if(!secondSemesterShowed){
-      x--;
-      pdf.setFont("time new roman", "bold");
-    pdf.cell(10,65,docWidth-19,8,'SECOND SEMESTER',x,"center");
-    x++;
-    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'COURSE CODE',x,"center");
-    pdf.cell(10,65,cellDivision+27,cellHeaderHeight,'DESCRIPTIVE TITLE',x,"center");
-    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'LEC UNITS',x,"center");
-    pdf.cell(10,65,cellDivision-10,cellHeaderHeight,'LAB UNITS',x,"center");
-    pdf.cell(10,65,cellDivision-9,cellHeaderHeight,'TOTAL UNITS',x,"center");
-    pdf.cell(10,65,cellDivision+2,cellHeaderHeight,'HOURS PER WEEK',x,"center");
-    pdf.cell(10,65,cellDivision-6,cellHeaderHeight,'PRE-REQ',x,"center");
-    pdf.cell(10,65,cellDivision-8,cellHeaderHeight,'CO-REQ',x,"center");
-    i+=1;
-    }
-    pdf.setFont("time new roman", "normal");
-    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.courseCode,i,"center");
-    pdf.cell(10,65,cellDivision+27,cellDataHeight,course.descriptiveTitle,i,"center");
-    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.lecUnits,i,"center");
-    pdf.cell(10,65,cellDivision-10,cellDataHeight,course.labUnits,i,"center");
-    pdf.cell(10,65,cellDivision-9,cellDataHeight,course.totalUnits,i,"center");
-    pdf.cell(10,65,cellDivision+2,cellDataHeight,course.hoursPerWeek,i,"center");
-    pdf.cell(10,65,cellDivision-6,cellDataHeight,course.preReq,i,"center");
-    pdf.cell(10,65,cellDivision-8,cellDataHeight,course.coReq,i,"center");
-    i++;
-    secondSemesterShowed=true;
-  }
-  i*=0;
-  x*=0;
-  yearLvl++;
-
-
-}
 
     
     var sample = pdf.output('datauristring',{filename:'Curriculum'});

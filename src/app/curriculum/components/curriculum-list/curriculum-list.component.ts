@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Curriculum, Curriculum2 } from 'src/app/core/models/curriculum';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -8,7 +8,8 @@ import { CurriculumService } from 'src/app/core/services/curriculum.service';
 import { EMPTY, catchError, combineLatest, map, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-curriculum-list',
@@ -20,8 +21,6 @@ import { User } from 'src/app/core/models/user';
 
 
 export class CurriculumListComponent {
-
-
   items = [
     { id: 1, name: 'Red', color: 'red', theme: 'cict-curriculum-system-dark-theme' },
     { id: 2, name: 'Blue', color: 'blue', theme: 'cict-curriculum-system-dark-theme' },
@@ -62,33 +61,6 @@ export class CurriculumListComponent {
   )
 
             
-  // currentUser$ = this.authService.getCurrentUser()
-  // currentUser = this.authService.currentUser$.subscribe(
-  //   user => this.role = user?.role
-  // )
-
-  
-  // curriculums$ = this.curriculumService.curriculums$.pipe(
-  //   map(curriculums => curriculums.filter(curriculum => curriculum.status !== 'p')),
-  //   tap(curriculums => this.curriculums = curriculums)
-  // )
-
-
-  
-  // curriculumsPending$ = this.curriculumService.curriculums$.pipe(
-  //   map(curriculums => curriculums.filter(curr => curr.status === 'p')),
-  //   tap(curriculums => {
-  //     this.curriculumPendings = curriculums
-  //   })
-  // )
-  
-  
-  // revisions$ = this.curriculumService.revisions$.pipe(
-  //   tap((revisions:any) => {
-  //     this.revisions = revisions
-  //     // console.log(revisions);
-  //   })
-  // )
     
   
   openDialog() {

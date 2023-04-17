@@ -35,7 +35,7 @@ export class CurriculumCreateContainerComponent{
       this.type = data['type']
       this.action = data['action']
       this.role = user.role
-      this.userDeptId = String(user.department_id)
+      this.userDeptId = user.department_id
       this.currentUser = user
       this.isLoading = false
     }),
