@@ -41,7 +41,8 @@ export class CurriculumEditContainerComponent implements OnInit{
 
       this.curriculum = curriculums.find(curriculum => curriculum.id == id)
       this.currUserId = this.curriculum.user_id
-      
+      this.departmentId = this.curriculum.department_id
+
       this.currentUser = user
       this.userId = this.currentUser.id
       this.role = this.currentUser.role
@@ -60,7 +61,7 @@ export class CurriculumEditContainerComponent implements OnInit{
       return EMPTY
     })
   )
-
+  departmentId:any = ''
   currentUser!:User
   userId:any = 0
   currUserId:any = 0
