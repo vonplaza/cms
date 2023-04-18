@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Subject, catchError, combineLatest, map, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
-import { subjects } from '../curriculum-view/curriculum-view.component';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { Comment } from 'src/app/core/models/comment';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
+import { subjects } from '../year-dropdown/year-dropdown.component';
 
 @Component({
   selector: 'app-curriculum-create-revision-container',

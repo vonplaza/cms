@@ -11,6 +11,7 @@ import { NotAllowedComponent } from './components/not-allowed/not-allowed.compon
 import { ReloadPageComponent } from './components/reload-page/reload-page.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
     NotAllowedComponent,
     ReloadPageComponent,
     NotificationComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    PdfViewerComponent,
   ],
   imports: [
     CommonModule,

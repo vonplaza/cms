@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { EventManager } from '@angular/platform-browser';
 import { map, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
@@ -7,6 +8,7 @@ import { Department } from 'src/app/core/models/department';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DepartmentService } from 'src/app/core/services/department.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
+import { PdfViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
 import {jsPDF} from 'jspdf';
 import autoTable from 'jspdf-autotable';
 export interface subjects{
@@ -23,6 +25,7 @@ export interface Subject {
   hoursPerWeek:string;
   preReq:string;
   coReq:string;
+  syllabus: string
 }
 
 @Component({
@@ -33,7 +36,8 @@ export interface Subject {
 export class YearDropdownComponent {
   constructor(private subjectService: SubjectService,
               private authService: AuthService,
-              private departmentService: DepartmentService
+              private departmentService: DepartmentService,
+              private dialog: MatDialog
     ){}
   departments: Department[] | undefined
   departments$ = this.departmentService.departments$.subscribe({
@@ -60,6 +64,7 @@ export class YearDropdownComponent {
   @Input() role: string = ''
   @Input() canEdit: boolean = false
   @Input() department:string = ''
+  @Input() dep:number|null = null
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
@@ -100,7 +105,6 @@ export class YearDropdownComponent {
       this.isForms[yearLvl][sem]['lecUnits'] 
       + this.isForms[yearLvl][sem]['labUnits']
     }
-    
   }
   getTotalUnits(yearLvl:number, sem:number){
     const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.totalUnits))
@@ -117,7 +121,7 @@ export class YearDropdownComponent {
     }, 0) 
     return totalHrs
   }
-  
+
   isView = true
 
   isShown(){
@@ -150,10 +154,11 @@ export class YearDropdownComponent {
       console.log(subjCode);
       
       const isValid = this.availableSubjects.find(subj => subj.subject_code == subjCode)
-      console.log(isValid);
       
       if(isValid){
         this.addForms[yearLevel][sem].descriptiveTitle = isValid.description
+        this.addForms[yearLevel][sem].syllabus = isValid.syllabus_path
+        console.log(isValid.syllabus_path);
       }
     }
     onDescriptionSelected(event:any, yearLevel: number, sem: string){
@@ -161,6 +166,7 @@ export class YearDropdownComponent {
       const isValid = this.availableSubjects.find(subj => subj.description == description)      
       if(isValid){
         this.addForms[yearLevel][sem].courseCode = isValid.subject_code
+        this.addForms[yearLevel][sem].syllabus = isValid.syllabus_path
       }
     }
 
@@ -215,6 +221,16 @@ export class YearDropdownComponent {
       this.addFormError.pop()
       this.editFormError.pop()
     }
+  }
+
+  viewSyllabus(path: string){
+    console.log(path);
+    
+    const dialogRef = this.dialog.open(PdfViewerComponent, {
+      data: {
+        ref: path
+      }
+    });
   }
 
   expansionTitle='';
@@ -361,13 +377,14 @@ export class YearDropdownComponent {
     this.editFormError[yearLevel][sem] = errors.join(', ')
 
     if(errors.length == 0){
+      const syllabus = this.availableSubjects.find(subj => subj.subject_code == form.value.courseCode).syllabus_path
       this.subject[yearLevel][sem === 'firstSem' ? 'firstSem' : 'secondSem'][this.selectedSubjIndex] = 
-      {...this.subject[yearLevel][sem === 'firstSem' ? 'firstSem' : 'secondSem'][this.selectedSubjIndex], ...form.value}
+      {...this.subject[yearLevel][sem === 'firstSem' ? 'firstSem' : 'secondSem'][this.selectedSubjIndex], ...form.value, syllabus: syllabus}
       this.isEditFormShow[yearLevel][sem] = false
       // this.selectedCourse = this.getSubjectDs()
     }
   }
-
+  
   getSubjectDs(){
     return {  
       courseCode: '',
@@ -398,14 +415,17 @@ export class YearDropdownComponent {
     this.addFormError[yearLevel][sem] = errors.join(', ')
     
     if(errors.length == 0){
+      const syllabus = this.availableSubjects.find(subj => subj.subject_code == form.value.courseCode).syllabus_path
       if(sem === 'firstSem'){
-        this.subject[yearLevel]['firstSem'].push(form.value)
+        this.subject[yearLevel]['firstSem'].push({...form.value, syllabus: syllabus})
         this.addForms[yearLevel]['firstSem'] = this.getSubjectDs()
+        console.log({...form.value, syllabus: syllabus});
+        
         // form.reset();
         // this.removeAddForm(yearLevel, sem);
       }
       else{
-        this.subject[yearLevel]['secondSem'].push(form.value)
+        this.subject[yearLevel]['secondSem'].push({...form.value, syllabus: syllabus})
         this.addForms[yearLevel]['secondSem'] = this.getSubjectDs()
         // form.reset();
         // this.removeAddForm(yearLevel, sem);
