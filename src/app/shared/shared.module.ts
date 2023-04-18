@@ -14,7 +14,6 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 
 
-
 @NgModule({
   declarations: [
     ToolbarComponent,

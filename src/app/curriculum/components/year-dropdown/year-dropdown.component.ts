@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DepartmentService } from 'src/app/core/services/department.service';
 import { SubjectService } from 'src/app/core/services/subject.service';
 import { PdfViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
-
+import {jsPDF} from 'jspdf';
+import autoTable from 'jspdf-autotable';
 export interface subjects{
   firstSem :Subject[];
   secondSem: Subject[];
@@ -472,5 +473,337 @@ export class YearDropdownComponent {
       this.subject[yearLevel]['firstSem'].splice(index, 1)
     else
       this.subject[yearLevel]['secondSem'].splice(index, 1)
+  }
+
+  public convertToPDF(){
+    let pdf = new jsPDF('p','mm','a4');
+
+    function addHeader() {
+    var bulsuLogoSrc = 'assets/bulsu.png';
+    var cictLogoSrc = 'assets/logo-cict.png';
+    pdf.addImage(bulsuLogoSrc, 'PNG', 30, 3, 25, 25);
+    pdf.addImage(cictLogoSrc, 'PNG', 155, 3, 25, 25);
+    pdf.setFontSize(9);
+    pdf.setFont("helvetica", "bold");
+    pdf.text('Republic of the Philippines',105,15,{align: 'center'});
+    pdf.text('Bulacan State University',105,20,{align: 'center'});
+    pdf.setFont("helvetica", "normal");
+    pdf.text('City Of Malolos Bulacan',105,25,{align: 'center'});
+    pdf.text('Tel/Fax (044) 791-0153',105,30,{align: 'center'});
+    pdf.setFont("helvetica", "bold");
+    pdf.text('College of Information and Communications Technology',105,35,{align: 'center'});
+    pdf.line(20,38,190,38)
+    pdf.setFont("times new roman", "bold");
+    pdf.text('BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',105,50,{align: 'center'});
+    pdf.setFont("times new roman", "normal");
+    pdf.text('(Based on CMO No. 25 s 2015)',105,55,{align: 'center'});
+    }
+
+
+let tableMargin = 65;
+
+
+const firstYear = this.subject[0];
+if(firstYear){
+const firstYearFirstSem = firstYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infofirstYear: string[][] = [];
+firstYearFirstSem.forEach((element,index,array)=>{
+  infofirstYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+
+const firstYearsecondSem = firstYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infofirstYearSecondSem: string[][] = [];
+firstYearsecondSem.forEach((element,index,array)=>{
+  infofirstYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'FIRST YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofirstYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofirstYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin, 
+  })}
+
+const secondYear = this.subject[1];
+if(secondYear){
+const secondYearFirstSem = secondYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infoSecondYear: string[][] = [];
+secondYearFirstSem.forEach((element,index,array)=>{
+  infoSecondYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const secondYearSecondSem = secondYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infoSecondYearSecondSem: string[][] = [];
+secondYearSecondSem.forEach((element,index,array)=>{
+  infoSecondYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+ //second year
+ pdf.addPage();
+ addHeader()
+autoTable(pdf,{
+  styles: {
+    fontSize: 8,
+     cellWidth:"auto", 
+     halign:'center',
+     lineWidth: 0.3,
+     lineColor: 10,
+     font: 'times new roman'
+    },
+  head:[[
+    {content: 'SECOND YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+  ],
+  [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+  body: infoSecondYear,
+  theme:'plain',
+  columnStyles: {0:{halign: 'center'}},
+  startY: tableMargin,
+  
+  
+})
+autoTable(pdf,{
+  styles: {
+    fontSize: 8,
+     cellWidth:"auto", 
+     halign:'center',
+     lineWidth: 0.3,
+     lineColor: 10,
+     font: 'times new roman'
+    },
+  head:[
+  [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+  body: infoSecondYearSecondSem,
+  theme:'plain',
+  columnStyles: {0:{halign: 'center'}},
+  //startY: tableMargin,
+  
+  
+})}
+
+const thirdYear = this.subject[2];
+if(thirdYear){
+const thirdYearFirstSem = thirdYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infoThirdYear: string[][] = [];
+thirdYearFirstSem.forEach((element,index,array)=>{
+  infoThirdYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const thirdYearSecondSem = thirdYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infoThirdYearSecondSem: string[][] = [];
+thirdYearSecondSem.forEach((element,index,array)=>{
+  infoThirdYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+//third year
+pdf.addPage();
+addHeader()
+autoTable(pdf,{
+ styles: {
+   fontSize: 8,
+    cellWidth:"auto", 
+    halign:'center',
+    lineWidth: 0.3,
+    lineColor: 10,
+    font: 'times new roman'
+   },
+ head:[[
+   {content: 'THIRD YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+ ],
+ [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+   ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+ body: infoThirdYear,
+ theme:'plain',
+ columnStyles: {0:{halign: 'center'}},
+ startY: tableMargin,
+ 
+ 
+})
+autoTable(pdf,{
+ styles: {
+   fontSize: 8,
+    cellWidth:"auto", 
+    halign:'center',
+    lineWidth: 0.3,
+    lineColor: 10,
+    font: 'times new roman'
+   },
+ head:[
+ [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+   ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+ body: infoThirdYearSecondSem,
+ theme:'plain',
+ columnStyles: {0:{halign: 'center'}},
+ //startY: tableMargin,
+ 
+ 
+})}
+
+
+const fourthYear = this.subject[3];
+if(fourthYear){
+const fuorthYearFirstSem = fourthYear.firstSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infoFourthYear: string[][] = [];
+fuorthYearFirstSem.forEach((element,index,array)=>{
+  infoFourthYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+
+const fourthYearSecondSem = fourthYear.secondSem.map((subject) => ({
+  "Course": subject.courseCode,
+  "Descriptive Title": subject.descriptiveTitle,
+  "Lec Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.lecUnits.toString() || '0',
+  "Total Units": subject.totalUnits.toString() || '0',
+  "Hours Per Week": subject.hoursPerWeek.toString() || '0',
+  "Pre Req": subject.preReq || 'NONE',
+  "Co Req": subject.coReq || 'NONE',
+}));
+let infofourthYearSecondSem: string[][] = [];
+fourthYearSecondSem.forEach((element,index,array)=>{
+  infofourthYearSecondSem.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
+});
+  //fourth year
+  pdf.addPage();
+  addHeader()
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'FOURTH YEAR', colSpan: 8, styles: {halign: 'center', fillColor: [202, 202, 202]}}
+    ],
+    [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infoFourthYear,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    startY: tableMargin,
+    
+    
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[
+    [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
+    body: infofourthYearSecondSem,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+  })
+}
+
+    
+    var sample = pdf.output('datauristring',{filename:'Curriculum'});
+    var pdfWindow = window.open("Curriculum");
+    if(pdfWindow)
+    pdfWindow.document.write("<iframe width='100%' height='100%' src='" + sample + "'></iframe>");
   }
 }
