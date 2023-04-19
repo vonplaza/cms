@@ -1,5 +1,5 @@
 <app-sidenav>
-  <mat-grid-list cols="4" rowHeight="1:0.5" class="grid">
+  <!-- <mat-grid-list cols="4" rowHeight="1:0.5" class="grid">
     <mat-grid-tile class="tile">
       <h3>
         Current Curriculum Version <br />
@@ -28,5 +28,141 @@
     <mat-grid-tile class="tile" colspan="1" rowspan="2"
       ><div class="pieChart" [chart]="pieChart"></div
     ></mat-grid-tile>
-  </mat-grid-list>
+  </mat-grid-list> -->
+  <!-- <div class="container" style="width:80%; padding:30px;">
+    <header><h2>Dashboard</h2></header>
+<header><h1>Good day,     <b>Mr. Keno Piad</b>!</h1></header>
+    <div class="row">
+        <div class="col-sm-8 col-md-8">
+          <div class="row">
+            <div class="user d-flex">
+            <div class="cur">
+              <header>CICT BSIT Curriculum version 1.00 <button mat-icon-button><mat-icon color="primary">remove_red_eye</mat-icon></button></header>
+          <h5>Juan Dela Cruz</h5>
+          <h5>04-03-00 </h5>
+              </div>
+              <div class="cur">
+                <header>CICT BSIT Curriculum version 1.00 <button mat-icon-button><mat-icon color="primary">remove_red_eye</mat-icon></button></header>
+            <h5>Juan Dela Cruz</h5>
+            <h5>04-03-00 </h5>
+                </div>
+            </div></div>
+          
+          
+        <div class="row">
+  
+          <div class="user col-sm-4 col-md-4">
+            <header>Total Users</header>
+          <span style="font-size: 40px;">30</span>
+          </div>
+  
+          <div class="user col-sm-8 col-md-8 ">
+            <div style="display: flex;">
+            <div>
+              <header>Admin</header>
+          <span style="font-size: 40px; margin-right:50px;">30</span>
+        </div>
+        <div>
+          <header>Reviewers</header>
+      <span style="font-size: 40px; margin-right:50px;">30</span>
+    </div>
+    <div>
+      <header>Chair</header>
+  <span style="font-size: 40px; margin-right:50px;">30</span>
+</div>
+<div>
+  <header>Faculty</header>
+<span style="font-size: 40px; margin-right:50px;">30</span>
+</div>
+</div> 
+          </div>
+
+        </div>
+        <div class="row">
+  
+          <div class="user col-sm-4 col-md-4 ml-md-auto">
+            <header>Total Users</header>
+          <span style="font-size: 40px;">30</span>
+          </div>
+  
+          <div class="user col-sm-8 col-md-8 ">
+            <div style="display: flex;">
+            <div>
+              <header>Admin</header>
+          <span style="font-size: 40px; margin-right:50px;">30</span>
+        </div>
+        <div>
+          <header>Reviewers</header>
+      <span style="font-size: 40px; margin-right:50px;">30</span>
+    </div>
+    <div>
+      <header>Chair</header>
+  <span style="font-size: 40px; margin-right:50px;">30</span>
+</div>
+<div>
+  <header>Faculty</header>
+<span style="font-size: 40px; margin-right:50px;">30</span>
+</div>
+</div> 
+          </div>
+        </div>
+        </div>
+        
+      <div class="col-sm-4 col-md-4">
+        <div class="comments">Comments</div>
+      </div>
+    </div>
+    
+
+  </div> -->
+  <div class="container" style="width: 80%; padding: 30px">
+    <div class="mb-3">
+      <header><h2>Dashboard</h2></header>
+      <header>
+        <h1>Good day, <b>Mr. Keno Piad</b>!</h1>
+      </header>
+    </div>
+
+    <div class="row">
+      <div class="num col-sm">
+        <header>Roles</header>
+        <div class="pieChart" [chart]="pieChart"></div>
+      </div>
+      <div class="num col-sm">
+        <header>Curriculum Statistics</header>
+        <div class="pieChart" [chart]="pieChart2"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="user col-sm">
+        <header>Latest Submitted Revision</header>
+        <div>
+          <header>
+            CICT Curriculum 1.3.2
+            <button mat-icon-button>
+              <mat-icon color="primary">remove_red_eye</mat-icon>
+            </button>
+          </header>
+          <h5>Juan Dela Cruz</h5>
+          <h5>04-03-00</h5>
+        </div>
+      </div>
+      <div class="user col-sm">
+        <header>Latest Approved Revision</header>
+        <div>
+          <header>
+            CICT Curriculum 1.3.2
+            <button mat-icon-button>
+              <mat-icon color="primary">remove_red_eye</mat-icon>
+            </button>
+          </header>
+          <h5>Juan Dela Cruz</h5>
+          <h5>04-03-00</h5>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="comments col-sm">Latest Comments</div>
+    </div>
+  </div>
 </app-sidenav>

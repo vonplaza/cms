@@ -19,7 +19,7 @@ export class dashboard{
       chart:{
         type: 'line',
         style:{
-          width:350,
+          height:350,
           marginTop:20
         }
       },
@@ -41,8 +41,8 @@ export class dashboard{
     pieChart = new Chart({
       chart:{
         type: 'pie',
-          width:500,
-          marginRight:100
+          height:120,
+          width:150
       },
       title:{
         text:'',
@@ -57,6 +57,29 @@ export class dashboard{
       {name: 'Commitee Chair', y: 5},
     {name:'Commitee Members', y:8},
     {name:'Stakeholders', y:20}
+  ]
+      }as any]
+    })
+
+    pieChart2 = new Chart({
+      chart:{
+        type: 'pie',
+          height:120,
+          width:100
+      },
+      title:{
+        text:'',
+        
+      },
+      credits:{
+        enabled: false
+      },
+      series:[{
+        name: 'Roles',
+        data: [{name: 'Pending Curriculums', y: 1},
+      {name: 'Pending Revisions', y: 5},
+    {name:'Active Curriculums', y:8},
+    {name:'Approved Revisions', y:20}
   ]
       }as any]
     })
