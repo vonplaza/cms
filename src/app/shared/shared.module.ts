@@ -12,6 +12,8 @@ import { ReloadPageComponent } from './components/reload-page/reload-page.compon
 import { NotificationComponent } from './components/notification/notification.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,11 +28,13 @@ import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component
     NotificationComponent,
     ViewProfileComponent,
     PdfViewerComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
   ],
   exports: [
     SidenavComponent,
