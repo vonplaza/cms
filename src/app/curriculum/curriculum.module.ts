@@ -20,6 +20,7 @@ import { CurriculumEditRevisionContainerComponent } from './components/curriculu
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
+
 @NgModule({
   declarations: [
     CurriculumContainerComponent,

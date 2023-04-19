@@ -16,7 +16,6 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { FormsModule } from '@angular/forms';
 
 
-
 @NgModule({
   declarations: [
     ToolbarComponent,
