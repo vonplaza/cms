@@ -26,30 +26,45 @@ h3{
 .user{
     height: 180px;
     background-color: white;
+    border-style: solid;
+    border-width: thin;
     padding: 30px;
     border-radius: 1rem;
-    box-shadow: 1px 1px 1px 0.5px black;
 }
 .comments{
     height: 525px;
     background-color: white;
     border-radius: 1rem;
-    padding: 30px;
-    box-shadow: 1px 1px 1px 0.5px black;
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 1rem;
     /* width: 300px; */
 }
 .row{
     padding-top: 10px;
 }
 .cur{
-    box-shadow: 1px 1px 1px 0.5px black;
-    padding: 30px;
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
     border-radius: 1rem;
 }
 .num{
-    height: 300px;
+    height: 120px;
     background-color: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 1rem;
-    box-shadow: 1px 1px 1px 0.5px black;
+    margin-right: 10px;
+    border-style: solid;
+    border-width: thin;
+}
+.chart{
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 1rem;
+}
+header{
+    font-weight: bold;
 }

@@ -40,12 +40,13 @@ export class dashboard{
 
     pieChart = new Chart({
       chart:{
+        // backgroundColor: '#FCFFC5',
         type: 'pie',
-          height:120,
-          width:150
+          height:250,
       },
       title:{
-        text:'',
+        text:'Roles',
+        align:'left',
         
       },
       credits:{
@@ -59,29 +60,8 @@ export class dashboard{
     {name:'Stakeholders', y:20}
   ]
       }as any]
+      
     })
 
-    pieChart2 = new Chart({
-      chart:{
-        type: 'pie',
-          height:120,
-          width:100
-      },
-      title:{
-        text:'',
-        
-      },
-      credits:{
-        enabled: false
-      },
-      series:[{
-        name: 'Roles',
-        data: [{name: 'Pending Curriculums', y: 1},
-      {name: 'Pending Revisions', y: 5},
-    {name:'Active Curriculums', y:8},
-    {name:'Approved Revisions', y:20}
-  ]
-      }as any]
-    })
 
 }

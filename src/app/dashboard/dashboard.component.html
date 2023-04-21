@@ -115,26 +115,50 @@
     
 
   </div> -->
-  <div class="container" style="width: 80%; padding: 30px">
+  <div class="container" style="width: 80%; padding: 30px; background-color:white;">
     <div class="mb-3">
       <header><h2>Dashboard</h2></header>
       <header>
         <h1>Good day, <b>Mr. Keno Piad</b>!</h1>
       </header>
     </div>
+    <div class="row">
+      <div class="col-sm">
+        <div class="row">
+          
+          <div class="num col-sm">
+          <header>Pending Curriculums</header>
+        <span style="font-size: 30px;">5</span>
+      </div>
+      <div class="num col-sm">
+        <header>Pending Revisions</header>
+      <span style="font-size: 30px;">5</span>
+    </div>
+    
+    </div>
 
     <div class="row">
+          
       <div class="num col-sm">
-        <header>Roles</header>
+      <header>Active Curriculums</header>
+    <span style="font-size: 30px;">5</span>
+  </div>
+  <div class="num col-sm">
+    <header>Approved Revisions</header>
+  <span style="font-size: 30px;">5</span>
+</div>
+
+</div>
+        
+        
+      </div>
+      <div class="chart col-sm">
         <div class="pieChart" [chart]="pieChart"></div>
       </div>
-      <div class="num col-sm">
-        <header>Curriculum Statistics</header>
-        <div class="pieChart" [chart]="pieChart2"></div>
       </div>
-    </div>
+
     <div class="row">
-      <div class="user col-sm">
+      <div class="user col-sm" style="margin-right: 10px;">
         <header>Latest Submitted Revision</header>
         <div>
           <header>
@@ -146,8 +170,10 @@
           <h5>Juan Dela Cruz</h5>
           <h5>04-03-00</h5>
         </div>
+
       </div>
-      <div class="user col-sm">
+      <div class="user col-sm" style="margin-right: 10px;">
+
         <header>Latest Approved Revision</header>
         <div>
           <header>
@@ -159,10 +185,13 @@
           <h5>Juan Dela Cruz</h5>
           <h5>04-03-00</h5>
         </div>
+        
       </div>
     </div>
     <div class="row">
-      <div class="comments col-sm">Latest Comments</div>
+      <div class="comments col-sm"><header>Latest Comments</header>
+        <!-- <app-comments [comments]="comments"></app-comments> -->
+      </div>
     </div>
   </div>
 </app-sidenav>
