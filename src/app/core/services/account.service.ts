@@ -25,6 +25,12 @@ export class AccountService {
       )
   }
 
+  sendEmailForgotPassword(email: string){
+    return this.http.post(`${this.baseUrl}/forgot-password`, {email: email}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   toggleStatus(id: number, data: any){
     return this.http.patch<User>(`${this.baseUrl}/users/${id}`, data).pipe(
       catchError(this.handleError)

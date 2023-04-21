@@ -43,16 +43,24 @@
     <!-- <mat-form-field class="me-2" *ngIf="type != 'view' && (action == 'create') "> -->
     <mat-form-field class="me-2" *ngIf="isShown() && role == 'admin'">
       <mat-label>Department</mat-label>
-      <mat-select [(ngModel)]="department" [disabled]="departmentDisable()">
-        <mat-option *ngFor="let department of departments" [value]="department.id">{{ department.department_code | uppercase }}</mat-option>
+      <mat-select [(ngModel)]="department">
+        <mat-option
+          *ngFor="let department of departments"
+          [value]="department.id"
+          >{{ department.department_code | uppercase }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="me-2" *ngIf="isShown() && role != 'admin'">
       <mat-label>Department</mat-label>
-      <input type="text" matInput  [value]="getDepartment() | uppercase" [disabled]="true">
+      <input
+        type="text"
+        matInput
+        [value]="getDepartment() | uppercase"
+        [disabled]="true"
+      />
     </mat-form-field>
-    
 
     <mat-form-field class="example-full-width" *ngIf="isShown()">
       <mat-label>Version</mat-label>
@@ -507,7 +515,12 @@
             <td>{{ course.preReq || "None" }}</td>
             <td>{{ course.coReq || "None" }}</td>
             <td>
-              <button mat-icon-button color="primary" [title]="view">
+              <button
+                mat-icon-button
+                color="primary"
+                [title]="view"
+                (click)="viewSyllabus(course.syllabus)"
+              >
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
               <button
@@ -916,7 +929,12 @@
             <td>{{ course.preReq || "None" }}</td>
             <td>{{ course.coReq || "None" }}</td>
             <td>
-              <button mat-icon-button color="primary" [title]="view">
+              <button
+                mat-icon-button
+                color="primary"
+                [title]="view"
+                (click)="viewSyllabus(course.syllabus)"
+              >
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
               <button
