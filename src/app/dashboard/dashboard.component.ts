@@ -19,7 +19,7 @@ export class dashboard{
       chart:{
         type: 'line',
         style:{
-          width:350,
+          height:350,
           marginTop:20
         }
       },
@@ -40,12 +40,13 @@ export class dashboard{
 
     pieChart = new Chart({
       chart:{
+        // backgroundColor: '#FCFFC5',
         type: 'pie',
-          width:500,
-          marginRight:100
+          height:250,
       },
       title:{
-        text:'',
+        text:'Roles',
+        align:'left',
         
       },
       credits:{
@@ -59,6 +60,8 @@ export class dashboard{
     {name:'Stakeholders', y:20}
   ]
       }as any]
+      
     })
+
 
 }

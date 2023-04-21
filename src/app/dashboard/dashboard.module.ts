@@ -8,8 +8,6 @@ import { ChartModule } from 'angular-highcharts';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 // import { NgChartsModule } from 'ng2-charts';
 
-
-
 @NgModule({
   declarations: [
     dashboard
