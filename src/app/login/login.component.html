@@ -3,7 +3,7 @@
     <div class="h-100 d-flex align-items-center justify-content-center">
       <div>
         <img src="assets/bulsu.png" class="logos" />
-        <img src="assets/logo-cict.png" class="logos" />
+        <img src="assets/logo-cict.png" class="logos"/>
         <h3>
           CICT<span>
             Curriculum<br />
@@ -43,13 +43,22 @@
         </button>
 
         <!--Forgot Password-->
-        <a
+        <!-- <a
           href=""
           class="text-danger float-right"
           style="margin-left: 120px"
           [routerLink]="['/forgot-password']"
           >Forgot Password?</a
-        >
+        > -->
+
+        <button
+        mat-button
+        class="text-danger float-right"
+        style="margin-left: 120px"
+        (click)="openForgotPass()"
+        >Forgot Password?</button
+      >
+
       </div>
     </div>
   </div>
