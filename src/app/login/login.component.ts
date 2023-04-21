@@ -3,6 +3,9 @@ import { AuthService } from "../core/services/auth.service";
 import { Subject } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Dialog } from "@angular/cdk/dialog";
+import { MatDialog } from "@angular/material/dialog";
+import { ForgotPasswordComponent } from "../shared/components/forgot-password/forgot-password.component";
 
 @Component({
     selector: 'login-page',
@@ -15,7 +18,7 @@ export class LoginComponent{
         email: '',
         password: ''
     }
-    constructor(private authService: AuthService, private router: Router){}
+    constructor(private authService: AuthService, private router: Router,private dialog: MatDialog){}
 
     error = new Subject<string>(); //valid creds bool
     
@@ -27,5 +30,9 @@ export class LoginComponent{
                 },
                 error: err => this.error.next(err.message)
             })
+    }
+
+    openForgotPass(){
+        this.dialog.open(ForgotPasswordComponent);
     }
 }
