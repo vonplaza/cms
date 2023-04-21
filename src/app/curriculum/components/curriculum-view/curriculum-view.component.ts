@@ -1118,6 +1118,30 @@ addHeader()
     
   })
 
+
+
+autoTable(pdf,{
+  styles: {
+    fontSize: 8,
+     cellWidth:"auto", 
+     halign:'center',
+     lineWidth: 0.3,
+     lineColor: 10,
+     font: 'times new roman'
+    },
+  head:[[
+    {content: 'SPECIALIZATION', colSpan: 4, styles: {halign: 'center',lineWidth: 0, fontSize:10}}
+  ],
+    ['\t\t\t\t\t\t\t', 'SERVICE MANAGEMENT SPECIALIZATION TRACK', 'BUSINESS ANALYTICS SPECIALIZATION TRACK','WEB AND MOBILE DEVELOPMENT SPECIALIZATION TRACK']],
+  body: [['Elective 1','etits 1','etits 2','etits 3'],
+  ['Elective 2','eguls  1','eguls 2','eguls 3'],
+  ['Elective 3','tite 1','tite 2','tite 3'],
+  ['Elective 4','lorem ipsum 1','lorem ipsum 2', 'lorem ipsum 3'],
+  ['Elective 5','test 1', 'test 2','test 3']],
+  theme:'plain',
+  columnStyles: {0:{halign: 'center'}},
+  //startY: tableMargin,
+})
   
 
     
