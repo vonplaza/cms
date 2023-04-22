@@ -4,7 +4,7 @@
 .tile{
     background-color: white;
     border-radius: 2rem;
-    box-shadow: 2px 2px 2px black;
+    /* box-shadow: 2px 2px 2px black; */
     text-align: center;
 }
 .grid{
@@ -53,8 +53,8 @@ h3{
 .num{
     height: 120px;
     background-color: white;
-    padding: 10px;
-    border-radius: 1rem;
+    padding: 20px;
+    border-radius: .3rem;
     margin-right: 10px;
     border-style: solid;
     border-width: thin;

@@ -17,6 +17,7 @@ import { CurriculumCreateRevisionContainerComponent } from './components/curricu
 import { CurriculumViewRevisionContainerComponent } from './components/curriculum-view-revision-container/curriculum-view-revision-container.component';
 import { CurriculumEditContainerComponent } from './components/curriculum-edit-container/curriculum-edit-container.component';
 import { CurriculumEditRevisionContainerComponent } from './components/curriculum-edit-revision-container/curriculum-edit-revision-container.component';
+import { ElectiveSubjectDialogComponent } from './components/elective-subject-dialog/elective-subject-dialog.component';
 // import { DialogContentExampleDialog} from './components/curriculum-list/curriculum-list.component'
 
 
@@ -29,7 +30,7 @@ import { CurriculumEditRevisionContainerComponent } from './components/curriculu
     curriculumDialog, 
     YearDropdownComponent, 
     CommentsComponent, 
-    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent, CurriculumEditContainerComponent, CurriculumEditRevisionContainerComponent
+    CurriculumCreateContainerComponent, CurriculumViewContainerComponent, CurriculumCreateRevisionContainerComponent, CurriculumViewRevisionContainerComponent, CurriculumEditContainerComponent, CurriculumEditRevisionContainerComponent, ElectiveSubjectDialogComponent
   ],
   imports: [
     CommonModule,

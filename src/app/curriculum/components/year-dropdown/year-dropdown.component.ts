@@ -11,6 +11,8 @@ import { SubjectService } from 'src/app/core/services/subject.service';
 import { PdfViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
 import {jsPDF} from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { ElectiveSubjectDialogComponent } from '../elective-subject-dialog/elective-subject-dialog.component';
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
 export interface subjects{
   firstSem :Subject[];
   secondSem: Subject[];
@@ -37,7 +39,8 @@ export class YearDropdownComponent {
   constructor(private subjectService: SubjectService,
               private authService: AuthService,
               private departmentService: DepartmentService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private curriculumService: CurriculumService
     ){}
   departments: Department[] | undefined
   departments$ = this.departmentService.departments$.subscribe({
@@ -65,12 +68,47 @@ export class YearDropdownComponent {
   @Input() canEdit: boolean = false
   @Input() department:string = ''
   @Input() dep:number|null = null
+  @Input() electiveData: any[] = []
+  @Input() electiveIncluded:boolean = false
 
   @Output() submitCur = new EventEmitter()
   @Output() approveCur = new EventEmitter()
   @Output() editCur = new EventEmitter()
   @Output() reviseCur = new EventEmitter()
   
+  electiveSubjects:any[] = []
+
+  electiveSubjects$ = this.curriculumService.electiveSubjects$.pipe(
+    tap(electiveSubjects => {
+      this.electiveSubjects = electiveSubjects
+      console.log(electiveSubjects);
+    })
+  ).subscribe()
+  
+
+  showElective(){
+    return this.department == '1' && (this.electiveIncluded)
+  }
+
+  selectElectiveToBeShow(){
+    return this.action == 'create' || this.electiveData.length < 1 ? this.electiveSubjects : this.electiveData
+  }
+
+  addElectiveSubj(){
+    const dialogRef = this.dialog.open(ElectiveSubjectDialogComponent, {
+      data: {
+        title: 'Add Elective Subject',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      } else {
+      }
+    });
+  }
+
   approve(){
     this.approveCur.emit()    
   }
@@ -87,7 +125,8 @@ export class YearDropdownComponent {
     this.submitCur.emit({
       subjects: this.subject,
       version: this.version,
-      departmentId: this.department
+      departmentId: this.department,
+      electiveSubjects: this.department != '1' ? []: this.electiveIncluded ? this.electiveSubjects : []
     })
   }
 
@@ -126,8 +165,16 @@ export class YearDropdownComponent {
 
   isShown(){
     return this.type !== 'view' &&
-    ((this.type == 'create' && this.action == 'curr') 
-    || (this.type == 'edit' && this.action == 'curr'))
+    (this.type == 'create' && this.action == 'curr') 
+  }
+
+  isShown2(){
+    return this.type == 'curr' && this.action == 'create' && this.role == 'admin'
+  }
+
+  isShown3(){
+    return this.type !== 'view' &&
+    (this.type == 'create' && this.action == 'curr') && this.role != 'admin'
   }
 
   currentUser$ = this.authService.getCurrentUser()

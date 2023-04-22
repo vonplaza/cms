@@ -75,6 +75,13 @@
     </mat-form-field>
   </div>
   <div class="mb-2">
+    <mat-slide-toggle
+      name="isDarkModeActivated"
+      [(ngModel)]="electiveIncluded"
+      *ngIf="type != 'view' && department == '1'"
+      class="me-2"
+      >show elective</mat-slide-toggle
+    >
     <button
       mat-flat-button
       color="primary"
@@ -134,7 +141,13 @@
       Revise
     </button>
 
-    <button mat-flat-button (click)="convertToPDF()" color="primary" class="me-2" *ngIf="type == 'view'" >
+    <button
+      mat-flat-button
+      (click)="convertToPDF()"
+      color="primary"
+      class="me-2"
+      *ngIf="type == 'view'"
+    >
       <mat-icon>print</mat-icon>
       Print
     </button>
@@ -974,6 +987,24 @@
   </mat-expansion-panel>
   <!-- End of first Year Year -->
 </mat-accordion>
+<table class="table" style="max-width: 600px" *ngIf="showElective()">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th *ngFor="let electiveSubject of electiveSubjects">
+        {{ electiveSubject.track }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+      <td>Elective {{ i }}</td>
+      <td *ngFor="let electiveSubject of selectElectiveToBeShow()">
+        {{ electiveSubject.description[i - 1] }}
+      </td>
+    </tr>
+  </tbody>
+</table>
 <div class="mt-3">
   <button
     mat-flat-button

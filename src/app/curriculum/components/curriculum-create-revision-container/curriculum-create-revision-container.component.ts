@@ -16,7 +16,7 @@ import { subjects } from '../year-dropdown/year-dropdown.component';
   templateUrl: './curriculum-create-revision-container.component.html',
   styleUrls: ['./curriculum-create-revision-container.component.css']
 })
-export class CurriculumCreateRevisionContainerComponent implements OnInit{
+export class CurriculumCreateRevisionContainerComponent{
 
   constructor(private curriculumService: CurriculumService,
               private authService: AuthService,
@@ -53,7 +53,10 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
       this.title = `CICT ${this.curriculum.department.department_code} Curriculum version ${this.curriculum.version}`
 
-      this.subjects = JSON.parse(this.curriculum.metadata)
+      this.subjects = JSON.parse(this.curriculum.metadata).subjects
+      this.electiveSubjects = JSON.parse(this.curriculum.metadata).electiveSubjects
+      
+      this.curriculumDepartment = this.curriculum.department_id
       this.status = this.curriculum.status   
       this.author = this.curriculum.user.profile.name
       this.isLoading = false
@@ -64,7 +67,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
       return EMPTY
     })
   )
-
+  curriculumDepartment:any = ''
   currUserId:any = 0
   userId:any = 0
   comments: Comment[] = []
@@ -72,6 +75,7 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
   error:boolean = false
   curriculum: Curriculum2 | any
   descriptiveTitle:string = 'revising'
+  electiveSubjects:any[] = []
   subjects:subjects[] = [
     {
       firstSem: [],
@@ -101,9 +105,14 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('confirm');
+        const data = {...subjects, metadata: {
+          subjects: subjects.subjects,
+          electiveSubjects: subjects.electiveSubjects,
+          }, 
+        curriculumId: this.curriculum.id
+        }
         
-        const data = { curriculumId: this.curriculum.id, metadata: subjects.subjects, version: subjects.version }
+        // const data = { curriculumId: this.curriculum.id, metadata: subjects.subjects, version: subjects.version }
         
         this.curriculumService.createRevision(data).subscribe({
           next: (data:any) => {
@@ -116,33 +125,6 @@ export class CurriculumCreateRevisionContainerComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
-    // this.route.data.subscribe((data:any) => {
-        
-    //   this.type = data.type
-    //   this.action = data.action
-    // })
 
-    // this.route.params.subscribe(({id}) => {
-    //   this.curriculumService.getCurriculum(id).subscribe({
-    //     next: curriculum => {
-    //       this.curriculum = curriculum
-          
-    //       // console.log(JSON.parse(data.metadata))
-    //       this.subjects = JSON.parse(curriculum.metadata)
-    //       this.title = `CICT ${curriculum.department.department_code} Curriculum version ${curriculum.version}`
-    //       this.author = curriculum.user?.profile?.name
-
-    //       this.commentService.getCurriculumComments(this.curriculum.id).pipe(
-    //         tap(comments => this.comments = comments)
-    //       ).subscribe()
-          
-    //     },
-    //     error: err => {
-    //       this.errorMessage$.next(err.message)
-    //     },
-    //   })
-    // })
-  }
    
 }
