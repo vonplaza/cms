@@ -1,5 +1,5 @@
 <app-sidenav>
-  <div class="container mt-4">
+  <div class="container mt-4" *ngIf="neededData$ | async">
     <header class="d-flex align-items-center justify-content-between">
       <p class="h5">Subjects</p>
       <mat-form-field style="width: 200px" class="example-form-field">
@@ -10,8 +10,14 @@
                   <mat-icon>clear</mat-icon>
               </button> -->
       </mat-form-field>
-      <button mat-flat-button color="primary" (click)="openDialog()">
-        New Subject
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="openDialog()"
+        *ngIf="role == 'admin' || role == 'reviewer' || role == 'faculty'"
+      >
+        <mat-icon>add</mat-icon>
+        Add Subject
       </button>
     </header>
 
@@ -98,9 +104,32 @@
       >
       </mat-paginator>
     </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
+            {{ electiveSubject.track }}
+            <button mat-icon-button color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+          <td>Elective {{ i }}</td>
+          <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
+            <span>{{ electiveSubject.description[i - 1] }}</span>
+            <input type="text" [value]="electiveSubject.description[i - 1]" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <app-reload-page></app-reload-page>
-  <app-reload-page></app-reload-page>
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <app-reload-page *ngIf="!isLoading && error"></app-reload-page>
 </app-sidenav>
 
 <ng-template #dialogEditContent>

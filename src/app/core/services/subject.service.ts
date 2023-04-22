@@ -24,6 +24,22 @@ export class SubjectService {
       )
   }
 
+  electiveSubjects$ = this.http.get<any[]>(`${this.baseUrl}/electiveSubjects`).pipe(
+    map(electiveSubjs => electiveSubjs.map(electiveSubj => {
+      return {
+        track: electiveSubj.track, 
+        description: [
+          electiveSubj.elective_1,
+          electiveSubj.elective_2,
+          electiveSubj.elective_3,
+          electiveSubj.elective_4,
+          electiveSubj.elective_5,
+        ]
+      }
+    })),
+    catchError(handleError)
+  )
+
   subjectsComplete$ = combineLatest([
     this.subjects$,
     this.subjectAdd$
