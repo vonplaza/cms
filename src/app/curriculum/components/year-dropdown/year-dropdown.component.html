@@ -987,7 +987,11 @@
   </mat-expansion-panel>
   <!-- End of first Year Year -->
 </mat-accordion>
-<table class="table" style="max-width: 600px" *ngIf="showElective()">
+<table
+  class="table"
+  style="max-width: 600px"
+  *ngIf="!!showElectiveTable().length"
+>
   <thead>
     <tr>
       <th>#</th>
@@ -997,7 +1001,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+    <tr *ngFor="let i of electiveSubjectNumberPresent()">
       <td>Elective {{ i }}</td>
       <td *ngFor="let electiveSubject of selectElectiveToBeShow()">
         {{ electiveSubject.description[i - 1] }}
