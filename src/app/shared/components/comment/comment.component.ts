@@ -4,11 +4,11 @@ import { NgForm } from '@angular/forms';
 import { CommentService } from 'src/app/core/services/comment.service';
 
 @Component({
-  selector: 'app-comments',
-  templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.css']
+  selector: 'app-comment',
+  templateUrl: './comment.component.html',
+  styleUrls: ['./comment.component.css']
 })
-export class CommentsComponent implements OnChanges, OnInit{
+export class CommentComponent implements OnChanges, OnInit{
   constructor(private commentService: CommentService){}
 
   // @Input() comments:any

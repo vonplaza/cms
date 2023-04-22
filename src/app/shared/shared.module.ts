@@ -14,6 +14,8 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { FormsModule } from '@angular/forms';
+import { CommentComponent } from './components/comment/comment.component';
+import { AppComponent } from '../app.component';
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     ViewProfileComponent,
     PdfViewerComponent,
     ForgotPasswordComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { FormsModule } from '@angular/forms';
     TimeDifferencePipePipe,
     NotAllowedComponent,
     ReloadPageComponent,
-    NotificationComponent
+    NotificationComponent,
+    CommentComponent
   ]
 })
 export class SharedModule { }

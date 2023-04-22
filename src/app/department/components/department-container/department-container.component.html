@@ -2,46 +2,51 @@
   <div class="container p-4 bg-white" *ngIf="neededData$ | async">
     <span class="h4">Departments</span>
     <mat-tab-group>
-      <mat-tab [label]="department.department_code | uppercase" *ngFor="let department of departments" class="p-3">
+      <mat-tab
+        [label]="department.department_code | uppercase"
+        *ngFor="let department of departments"
+        class="p-3"
+      >
         <div class="container">
           <div class="row g-2">
             <div class="col-6" *ngFor="let member of department.members">
-              <div class="shadow-md p-4 border my-1 d-flex justify-content-between" style="border: 1px solid gray; border-left: 5px solid #d05834 !important; ">
+              <div
+                class="shadow-md p-4 border my-1 d-flex justify-content-between"
+                style="
+                  border: 1px solid gray;
+                  border-left: 5px solid #d05834 !important;
+                "
+              >
                 <div class="d-flex gap-2 col-6 m-1">
-                  <div class="img-wrapper rounded-circle" style="background-image: url('{{ member?.profile?.profile_pic }}');">
-                  </div>  
+                  <div
+                    class="img-wrapper rounded-circle"
+                    style="background-image: url('{{
+                      member?.profile?.profile_pic
+                    }}');"
+                  ></div>
                   <div class="my-auto">
                     <div>
-                      <span class="fw-bold">{{ member?.profile?.name }}</span> 
+                      <span class="fw-bold">{{ member?.profile?.name }}</span>
                     </div>
                     <small>
                       {{ member?.email }}
                     </small>
                     <div>
-                      <small>{{ member?.role | titlecase}}</small>
+                      <small>{{ member?.role | titlecase }}</small>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <div>
-                    
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </mat-tab>
     </mat-tab-group>
 
-    <div class="d-flex" *ngIf="isLoading">
-      <app-spinner class="mx-auto"></app-spinner>
-    </div>
+    <app-spinner></app-spinner>
     <app-reload-page *ngIf="!isLoading && errorInit"></app-reload-page>
   </div>
 </app-sidenav>
-
-

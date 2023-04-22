@@ -15,56 +15,6 @@
       </button>
     </header>
 
-    <!-- <div *ngIf="subjects$ | async as subjects">
-      <table mat-table [dataSource]="subjects" class="mat-elevation-z8">
-        <ng-container matColumnDef="subjectCode">
-          <th mat-header-cell *matHeaderCellDef>Subject Code</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element?.subject_code }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="department">
-          <th mat-header-cell *matHeaderCellDef>Department</th>
-          <td mat-cell *matCellDef="let element">
-            {{ (element?.department?.department_code | uppercase) || "N/A" }}
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div> -->
-
-    <!-- <table>
-        <ng-container matColumnDef="subjectCode">
-          <th mat-header-cell *matHeaderCellDef>Subject Code</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element?.subject_code }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="department">
-          <th mat-header-cell *matHeaderCellDef>Department</th>
-          <td mat-cell *matCellDef="let element">
-            {{ (element?.department?.department_code | uppercase) || "N/A" }}
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table> -->
-
     <div class="mt-4">
       <table class="table">
         <thead class="thead-dark">
@@ -149,6 +99,8 @@
       </mat-paginator>
     </div>
   </div>
+  <app-reload-page></app-reload-page>
+  <app-reload-page></app-reload-page>
 </app-sidenav>
 
 <ng-template #dialogEditContent>
