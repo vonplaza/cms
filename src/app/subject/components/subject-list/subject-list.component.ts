@@ -31,7 +31,50 @@ export class SubjectListComponent {
   error:boolean = false
   electiveSubjects:any[] = []
 
-  
+  descriptionList:any[] = []
+  originalDescription: any[] = []
+
+  selectedTrack:number | any
+
+  editElected(number: number){
+    this.selectedTrack = number
+  }
+
+  cancelEdit(index: number){
+    this.descriptionList[index] = [...this.originalDescription[index]]
+    console.log(this.originalDescription[index]);
+    
+    this.selectedTrack = null
+  }
+
+  saveElected(index: number){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Edit Elective Subjects',
+        message: 'Are you sure you want to edit this Elective subject?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subjectService.editElectiveSubject(this.descriptionList[index], index + 1).subscribe({
+          next: data => {
+            this.electiveSubjects[index].description = [...this.descriptionList[index]]
+            this.originalDescription[index] = this.electiveSubjects[index].description
+            this.descriptionList[index] = this.originalDescription[index]
+            this.selectedTrack = null
+          },
+          error: err => {
+
+          }
+        })
+
+
+      } else {
+        this.descriptionList[index] = [...this.originalDescription[index]]
+      }
+    });
+  }
 
   neededData$ = combineLatest([
     this.subjectService.subjects$,
@@ -42,6 +85,11 @@ export class SubjectListComponent {
       this.role = user.role
       this.subjects = subjects
       this.electiveSubjects = electiveSubjects
+      this.electiveSubjects.forEach(list => {        
+        this.originalDescription.push([...list.description])
+        this.descriptionList.push([...list.description])
+      })
+      
       this.isLoading = false
     }),
     catchError(err => {
