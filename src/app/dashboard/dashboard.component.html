@@ -115,10 +115,12 @@
           </mat-card>
         </div>
       </div>
+
       <div class="col-sm">
         <app-comment [comments]="data.latestComments"></app-comment>
       </div>
     </div>
+
 
     <div class="row gap-2" *ngIf="false">
       <mat-card class="col-sm">
@@ -185,6 +187,7 @@
         </mat-card-content>
       </mat-card>
     </div>
+
   </div>
 
   <app-spinner *ngIf="isLoading"></app-spinner>
