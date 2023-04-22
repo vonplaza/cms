@@ -847,6 +847,50 @@ fourthYearSecondSem.forEach((element,index,array)=>{
   })
 }
 
+autoTable(pdf,{
+  styles: {
+    fontSize: 8,
+     cellWidth:"auto", 
+     halign:'center',
+     lineWidth: 0.3,
+     lineColor: 10,
+     font: 'times new roman'
+    },
+  head:[[
+    {content: 'SPECIALIZATION', colSpan: 4, styles: {halign: 'center',lineWidth: 0, fontSize:10}}
+  ],
+    ['\t\t\t\t\t\t\t', 'SERVICE MANAGEMENT SPECIALIZATION TRACK', 'BUSINESS ANALYTICS SPECIALIZATION TRACK','WEB AND MOBILE DEVELOPMENT SPECIALIZATION TRACK']],
+  body: [
+  [{content:'Elective 1',styles: {fontStyle: 'bold'}}, //elective 1 subjects
+  'etits 1', //SMT
+  'etits 2', //BA
+  'etits 3' //WMAD
+],
+  [{content:'Elective 2',styles: {fontStyle: 'bold'}}, //elective 2 subjects
+  'eguls  1' //SMT
+  ,'eguls 2' //BA
+  ,'eguls 3' //WMAD
+],
+  [{content:'Elective 3',styles: {fontStyle: 'bold'}} //elective 3 subjects
+  ,'tite 1', //SMT
+  'tite 2', //BA
+  'tite 3' //WMAD
+],
+  [{content:'Elective 4',styles: {fontStyle: 'bold'}}, //elective 4 subjects
+  'lorem ipsum 1', //SMT
+  'lorem ipsum 2', //BA
+  'lorem ipsum 3' //WMAD
+],
+  [{content:'Elective 5',styles: {fontStyle: 'bold'}}, //elective 5 subjects
+  'test 1', //SMT
+   'test 2', //BA
+   'test 3' //WMAD
+  ]],
+  theme:'plain',
+  columnStyles: {0:{halign: 'center'}},
+  //startY: tableMargin,
+})
+
     
     var sample = pdf.output('datauristring',{filename:'Curriculum'});
     var pdfWindow = window.open("Curriculum");
