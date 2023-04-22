@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import {jsPDF} from 'jspdf';
 import { first } from 'rxjs';
 import autoTable from 'jspdf-autotable';
-import { elements } from 'chart.js';
+// import { elements } from 'chart.js';
 
 export interface subjects{
   firstSem :subject[];

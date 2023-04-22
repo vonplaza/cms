@@ -105,14 +105,36 @@
       </mat-paginator>
     </div>
 
+    <span class="h3 mt-2">BSIT Elective Subjects</span>
     <table class="table">
       <thead>
         <tr>
           <td>#</td>
           <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
             {{ electiveSubject.track }}
-            <button mat-icon-button color="primary">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editElected(x)"
+              *ngIf="selectedTrack != x"
+            >
               <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              *ngIf="selectedTrack == x"
+              (click)="cancelEdit(x)"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="saveElected(x)"
+              *ngIf="selectedTrack == x"
+            >
+              <mat-icon>save</mat-icon>
             </button>
           </td>
         </tr>
@@ -121,8 +143,14 @@
         <tr *ngFor="let i of [1, 2, 3, 4, 5]">
           <td>Elective {{ i }}</td>
           <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
-            <span>{{ electiveSubject.description[i - 1] }}</span>
-            <input type="text" [value]="electiveSubject.description[i - 1]" />
+            <span *ngIf="selectedTrack != x">{{
+              electiveSubject.description[i - 1]
+            }}</span>
+            <input
+              *ngIf="selectedTrack == x"
+              type="text"
+              [(ngModel)]="descriptionList[x][i - 1]"
+            />
           </td>
         </tr>
       </tbody>

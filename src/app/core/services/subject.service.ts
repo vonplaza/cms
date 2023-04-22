@@ -24,6 +24,22 @@ export class SubjectService {
       )
   }
 
+  editElectiveSubject(data:any[], id:number){
+    const body = {
+      elective_1: data[0],
+      elective_2: data[1],
+      elective_3: data[2],
+      elective_4: data[3],
+      elective_5: data[4],
+    }
+
+    return this.http.patch(`${this.baseUrl}/electiveSubjects/${id}`, body)
+      .pipe(
+
+        catchError(handleError)
+      )
+  }
+
   electiveSubjects$ = this.http.get<any[]>(`${this.baseUrl}/electiveSubjects`).pipe(
     map(electiveSubjs => electiveSubjs.map(electiveSubj => {
       return {
