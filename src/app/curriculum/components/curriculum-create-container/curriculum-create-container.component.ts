@@ -73,7 +73,12 @@ export class CurriculumCreateContainerComponent{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.curriculumService.createCurriculum(subj).subscribe({
+        const data = {...subj, subjects: {
+          subjects: subj.subjects,
+          electiveSubjects: subj.electiveSubjects
+        }}
+        
+        this.curriculumService.createCurriculum(data).subscribe({
           next: curriculum => {
             this.router.navigate(['/curriculums', curriculum.id])
           },
@@ -81,6 +86,7 @@ export class CurriculumCreateContainerComponent{
             console.log(err);
           }
         })
+        
       } else {
       }
     });
