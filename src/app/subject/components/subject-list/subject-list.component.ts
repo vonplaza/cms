@@ -76,10 +76,14 @@ export class SubjectListComponent {
     });
   }
 
+  asd = this.subjectService.subjectAdd$.subscribe(
+    subject => subject && this.subjects.push(subject)
+  )
+
   neededData$ = combineLatest([
     this.subjectService.subjects$,
     this.subjectService.electiveSubjects$,
-    this.authService.getCurrentUser()
+    this.authService.getCurrentUser(),
   ]).pipe(
     tap(([subjects, electiveSubjects, user]) => {
       this.role = user.role
@@ -89,6 +93,8 @@ export class SubjectListComponent {
         this.originalDescription.push([...list.description])
         this.descriptionList.push([...list.description])
       })
+
+
       
       this.isLoading = false
     }),

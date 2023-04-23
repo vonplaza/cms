@@ -59,6 +59,7 @@
         [routerLink]="['/accounts']"
         routerLinkActive="active"
         class="nav-item rounded"
+        *ngIf="user.role == 'admin'"
       >
         <mat-icon fontIcon="supervisor_account" class="me-3"></mat-icon>
         Accounts
@@ -94,6 +95,7 @@
         class="nav-item rounded"
         [routerLink]="['/content']"
         routerLinkActive="active"
+        *ngIf="user.role == 'admin'"
       >
         <mat-icon fontIcon="wb_sunny" class="me-3"></mat-icon> Content
         Management

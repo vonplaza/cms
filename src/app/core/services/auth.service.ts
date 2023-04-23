@@ -12,7 +12,7 @@ export class AuthService {
   private baseUrl = `http://localhost:8000/api/`;
   private currentUserSubject = new BehaviorSubject<User | null>(null)
   currentUser$ = this.currentUserSubject.asObservable()
-  currentUser!:User
+  currentUser!:User | any
   constructor(private http: HttpClient) { }
   
   login(credentials:any){
@@ -35,6 +35,7 @@ export class AuthService {
         tap(response => {
           this.removeToken()
           this.currentUserSubject.next(null)
+          this.currentUser = null
         }),
         catchError(handleError)
       )

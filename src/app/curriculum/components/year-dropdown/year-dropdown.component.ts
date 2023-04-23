@@ -27,8 +27,9 @@ export interface Subject {
   hoursPerWeek:string;
   preReq:string;
   coReq:string;
-  syllabus: string
-}
+  syllabus: string,
+  isElective: number
+} 
 
 @Component({
   selector: 'app-year-dropdown',
@@ -81,17 +82,47 @@ export class YearDropdownComponent {
   electiveSubjects$ = this.curriculumService.electiveSubjects$.pipe(
     tap(electiveSubjects => {
       this.electiveSubjects = electiveSubjects
-      console.log(electiveSubjects);
     })
   ).subscribe()
-  
+
+  subjectCodeInput(index: number, sem: string, field: string){
+    const fieldName = field == 'courseCode' ? 'subject_code': 'description'
+    const fieldName2 = field == 'courseCode' ? 'courseCode' : 'descriptiveTitle'
+    return this.filteredSubjects.filter(sub => sub[fieldName].toLowerCase().includes(this.addForms[index][sem][fieldName2].toLowerCase()))    
+  }
+
+  subjectCodeInputEdit(index: number, sem: string, field: string){
+    const fieldName = field == 'courseCode' ? 'subject_code': 'description'
+    const fieldName2 = field == 'courseCode' ? 'courseCode' : 'descriptiveTitle'
+    return this.filteredSubjects.filter(sub => sub[fieldName].toLowerCase().includes(this.isForms[index][sem][fieldName2].toLowerCase()))    
+  }
+
+
+  subjectCodeInputs(){
+
+  }
+
+  electiveSubjectPresent: any[] = []
+  showElectiveTable(){
+    const subjects:any[] = []
+    this.subject.forEach(sub => {
+      subjects.push(...sub.firstSem)
+      subjects.push(...sub.secondSem)
+    })
+    this.electiveSubjectPresent = subjects.filter((sub:any) => !!sub.isElective)
+    return subjects.filter((sub:any) => !!sub.isElective)
+  }
+
+  electiveSubjectNumberPresent(){
+    return this.electiveSubjectPresent.map(sub => sub.isElective)
+  }
 
   showElective(){
     return this.department == '1' && (this.electiveIncluded)
   }
 
   selectElectiveToBeShow(){
-    return this.action == 'create' || this.electiveData.length < 1 ? this.electiveSubjects : this.electiveData
+    return this.type == 'create' || this.electiveData.length < 1 ? this.electiveSubjects : this.electiveData
   }
 
   addElectiveSubj(){
@@ -109,6 +140,8 @@ export class YearDropdownComponent {
     });
   }
 
+  
+
   approve(){
     this.approveCur.emit()    
   }
@@ -121,12 +154,15 @@ export class YearDropdownComponent {
   departmentDisable(){
     return this.role != 'admin'
   }
-  submitCurriculum(){ 
+  submitCurriculum(){     
     this.submitCur.emit({
       subjects: this.subject,
       version: this.version,
       departmentId: this.department,
-      electiveSubjects: this.department != '1' ? []: this.electiveIncluded ? this.electiveSubjects : []
+      // electiveSubjects: this.department != '1' ? []: this.electiveIncluded ? this.electiveSubjects : this.electiveSubjects
+    electiveSubjects: this.department != '1' || !this.electiveSubjectPresent.length ? []: 
+    this.type == 'create' ? this.electiveSubjects : 
+    !!this.electiveData.length ? this.electiveData : this.electiveSubjects
     })
   }
 
@@ -185,14 +221,17 @@ export class YearDropdownComponent {
 
   
   availableSubjects: any[] = []
+  filteredSubjects:any[] = []
   availableSubjects$ = this.subjectService.subjectsComplete$
     .pipe(
       map(subjects => {
         console.log(subjects);
         
         const subs = subjects.filter(subj => subj.department_id == this.departmentId || !subj.department_id)
-        this.availableSubjects = subjects   
-
+        console.log(subs);
+        
+        this.availableSubjects = [...subjects]   
+        this.filteredSubjects = [...subjects]
         return subjects
       })
     )
@@ -464,8 +503,9 @@ export class YearDropdownComponent {
     
     if(errors.length == 0){
       const syllabus = this.availableSubjects.find(subj => subj.subject_code == form.value.courseCode).syllabus_path
+      const isElective = this.availableSubjects.find(subj => subj.subject_code == form.value.courseCode).is_elective
       if(sem === 'firstSem'){
-        this.subject[yearLevel]['firstSem'].push({...form.value, syllabus: syllabus})
+        this.subject[yearLevel]['firstSem'].push({...form.value, syllabus: syllabus, isElective: isElective})
         this.addForms[yearLevel]['firstSem'] = this.getSubjectDs()
         console.log({...form.value, syllabus: syllabus});
         
@@ -473,7 +513,7 @@ export class YearDropdownComponent {
         // this.removeAddForm(yearLevel, sem);
       }
       else{
-        this.subject[yearLevel]['secondSem'].push({...form.value, syllabus: syllabus})
+        this.subject[yearLevel]['secondSem'].push({...form.value, syllabus: syllabus, isElective: isElective})
         this.addForms[yearLevel]['secondSem'] = this.getSubjectDs()
         // form.reset();
         // this.removeAddForm(yearLevel, sem);

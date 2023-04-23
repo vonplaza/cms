@@ -23,7 +23,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @NgModule({
   declarations: [],
   imports: [
@@ -52,7 +52,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTabsModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ]
 })
 
