@@ -6,7 +6,9 @@ import { ForgotPasswordComponent } from './shared/components/forgot-password/for
 import { LoginGuard } from './core/guard/login.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate:[LoginGuard]},
+  { path: 'login', component: LoginComponent, 
+  canActivate:[LoginGuard]
+},
   { path: 'curriculums', loadChildren: () => import('./curriculum/curriculum.module').then(m => m.CurriculumModule)},
   { path: 'accounts', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   { path: 'subjects', loadChildren: () => import('./subject/subject.module').then(m => m.SubjectModule)},

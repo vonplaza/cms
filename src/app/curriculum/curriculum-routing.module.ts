@@ -18,12 +18,11 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     children: [
       { path: '', component: CurriculumListComponent},
-      { path: 'view', component: CurriculumViewComponent },
       // { path: 'create', component: CurriculumViewComponent },
       
 
       // creating curriculum -done
-      { path: 'create', component: CurriculumCreateContainerComponent, data: {type: 'create', action: 'curr'}, canDeactivate:[canDeactivateFn] },
+      { path: 'create', component: CurriculumCreateContainerComponent, data: {type: 'create', action: 'curr'}},
       // view curriculum -done
       { path: ':id', component: CurriculumViewContainerComponent, data: {type: 'view', action: 'curr'} },
       // editing the pending curriculum

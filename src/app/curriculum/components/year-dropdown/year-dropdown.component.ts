@@ -641,7 +641,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofirstYear,['','TOTAL', '','','','','','']],
+    body: [...infofirstYear,['','TOTAL', '','',this.getTotalUnits(0, 0),this.getTotalHrs(0, 0),'','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -658,7 +658,7 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofirstYearSecondSem,['','TOTAL', '','','','','','']],
+    body: [...infofirstYearSecondSem,['','TOTAL', '','',this.getTotalUnits(0, 1),this.getTotalHrs(0, 1),'','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin, 
@@ -680,7 +680,7 @@ let infoSecondYear: string[][] = [];
 secondYearFirstSem.forEach((element,index,array)=>{
   infoSecondYear.push([element.Course,element['Descriptive Title'],element['Lec Units'],element['Lab Units'],element['Total Units'],element['Hours Per Week'],element['Pre Req'],element['Co Req']])
 });
-
+ 
 const secondYearSecondSem = secondYear.secondSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
@@ -713,7 +713,7 @@ autoTable(pdf,{
   ],
   [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: [...infoSecondYear,['','TOTAL', '','','','','','']],
+  body: [...infoSecondYear,['','TOTAL', '','',this.getTotalUnits(1, 0),this.getTotalHrs(1, 0),'','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   startY: tableMargin,
@@ -732,7 +732,7 @@ autoTable(pdf,{
   head:[
   [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: [...infoSecondYearSecondSem,['','TOTAL', '','','','','','']],
+  body: [...infoSecondYearSecondSem,['','TOTAL', '','',this.getTotalUnits(1, 1),this.getTotalHrs(1, 1),'','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   //startY: tableMargin,
@@ -788,7 +788,7 @@ autoTable(pdf,{
  ],
  [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: [...infoThirdYear,['','TOTAL', '','','','','','']],
+ body: [...infoThirdYear,['','TOTAL', '','',this.getTotalUnits(2, 0),this.getTotalHrs(2, 0),'','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
  //startY: tableMargin,
@@ -807,7 +807,7 @@ autoTable(pdf,{
  head:[
  [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: [...infoThirdYearSecondSem,['','TOTAL', '','','','','','']],
+ body: [...infoThirdYearSecondSem,['','TOTAL', '','',this.getTotalUnits(2, 1),this.getTotalHrs(2, 1),'','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
  //startY: tableMargin,
@@ -864,7 +864,7 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infoFourthYear,['','TOTAL', '','','','','','']],
+    body: [...infoFourthYear,['','TOTAL', '','',this.getTotalUnits(3, 0),this.getTotalHrs(3, 0),'','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -883,56 +883,46 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofourthYearSecondSem,['','TOTAL', '','','','','','']],
+    body: [...infofourthYearSecondSem,['','TOTAL', '','',this.getTotalUnits(3, 1),this.getTotalHrs(3, 1),'','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,
   })
 }
 
-autoTable(pdf,{
-  styles: {
-    fontSize: 8,
-     cellWidth:"auto", 
-     halign:'center',
-     lineWidth: 0.3,
-     lineColor: 10,
-     font: 'times new roman'
-    },
-  head:[[
-    {content: 'SPECIALIZATION', colSpan: 4, styles: {halign: 'center',lineWidth: 0, fontSize:10}}
-  ],
-    ['\t\t\t\t\t\t\t', 'SERVICE MANAGEMENT SPECIALIZATION TRACK', 'BUSINESS ANALYTICS SPECIALIZATION TRACK','WEB AND MOBILE DEVELOPMENT SPECIALIZATION TRACK']],
-  body: [
-  [{content:'Elective 1',styles: {fontStyle: 'bold'}}, //elective 1 subjects
-  'etits 1', //SMT
-  'etits 2', //BA
-  'etits 3' //WMAD
-],
-  [{content:'Elective 2',styles: {fontStyle: 'bold'}}, //elective 2 subjects
-  'eguls  1' //SMT
-  ,'eguls 2' //BA
-  ,'eguls 3' //WMAD
-],
-  [{content:'Elective 3',styles: {fontStyle: 'bold'}} //elective 3 subjects
-  ,'tite 1', //SMT
-  'tite 2', //BA
-  'tite 3' //WMAD
-],
-  [{content:'Elective 4',styles: {fontStyle: 'bold'}}, //elective 4 subjects
-  'lorem ipsum 1', //SMT
-  'lorem ipsum 2', //BA
-  'lorem ipsum 3' //WMAD
-],
-  [{content:'Elective 5',styles: {fontStyle: 'bold'}}, //elective 5 subjects
-  'test 1', //SMT
-   'test 2', //BA
-   'test 3' //WMAD
-  ]],
-  theme:'plain',
-  columnStyles: {0:{halign: 'center'}},
-  //startY: tableMargin,
-})
+
+if(!!this.electiveSubjectNumberPresent().length){
+  const electiveSubjects:any[] = []
+
+  this.electiveSubjectNumberPresent().forEach(x => {
+    let data = [{content:`Elective ${x}`,styles: {fontStyle: 'bold'}}]
+    this.selectElectiveToBeShow().forEach(elec => {
+      // console.log(elec.description[x - 1])    
+      data.push(elec.description[x - 1])
+    })
+    electiveSubjects.push(data)
+  })
+  autoTable(pdf,{
+    styles: {
+      fontSize: 8,
+       cellWidth:"auto", 
+       halign:'center',
+       lineWidth: 0.3,
+       lineColor: 10,
+       font: 'times new roman'
+      },
+    head:[[
+      {content: 'SPECIALIZATION', colSpan: 4, styles: {halign: 'center',lineWidth: 0, fontSize:10}}
+    ],
+      ['\t\t\t\t\t\t\t', 'SERVICE MANAGEMENT SPECIALIZATION TRACK', 'BUSINESS ANALYTICS SPECIALIZATION TRACK','WEB AND MOBILE DEVELOPMENT SPECIALIZATION TRACK']],
+    body: electiveSubjects,
+    theme:'plain',
+    columnStyles: {0:{halign: 'center'}},
+    //startY: tableMargin,
+  })
+}
+
+
 
     
     var sample = pdf.output('datauristring',{filename:'Curriculum'});
