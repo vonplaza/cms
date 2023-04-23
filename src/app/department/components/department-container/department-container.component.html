@@ -45,8 +45,7 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-
-    <app-spinner></app-spinner>
-    <app-reload-page *ngIf="!isLoading && errorInit"></app-reload-page>
   </div>
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <app-reload-page *ngIf="!isLoading && errorInit"></app-reload-page>
 </app-sidenav>

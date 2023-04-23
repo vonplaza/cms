@@ -14,7 +14,7 @@
         mat-flat-button
         color="primary"
         (click)="openDialog()"
-        *ngIf="role == 'admin' || role == 'reviewer' || role == 'faculty'"
+        *ngIf="role == 'admin' || role == 'chair' || role == 'faculty'"
       >
         <mat-icon>add</mat-icon>
         Add Subject
@@ -73,10 +73,13 @@
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
             </td>
-            <td>
+            <td *ngIf="role == 'admin' || role == 'chair' || role == 'faculty'">
               <!-- <button mat-icon-button color="pri" (click)="editSubjet(dsubject)"><mat-icon>edit</mat-icon></button> -->
               <button
-                *ngIf="subject.status == 'a'"
+                *ngIf="
+                  subject.status == 'a' &&
+                  (role == 'admin' || role == 'chair' || role == 'faculty')
+                "
                 mat-icon-button
                 color="primary"
                 (click)="removeSubject(subject.id)"
@@ -85,7 +88,10 @@
               </button>
 
               <button
-                *ngIf="subject.status == 'i'"
+                *ngIf="
+                  subject.status == 'i' &&
+                  (role == 'admin' || role == 'chair' || role == 'faculty')
+                "
                 mat-icon-button
                 color="primary"
                 (click)="restoreSubject(subject.id)"
