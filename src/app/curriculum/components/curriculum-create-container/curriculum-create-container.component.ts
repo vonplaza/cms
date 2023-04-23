@@ -97,6 +97,7 @@ export class CurriculumCreateContainerComponent{
     return confirm('Are you sure you want to discard your changes?');
   }
 }
+
 export function canDeactivateFn(component: CurriculumCreateContainerComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
   return component.canDeactivate();
 }
