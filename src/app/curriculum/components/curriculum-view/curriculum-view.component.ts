@@ -957,7 +957,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofirstYear,
+    body: [...infofirstYear,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -976,7 +976,7 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofirstYearSecondSem,
+    body: [...infofirstYearSecondSem,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,
@@ -1002,7 +1002,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoSecondYear,
+    body: [...infoSecondYear,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -1021,7 +1021,7 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoSecondYearSecondSem,
+    body: [...infoSecondYearSecondSem,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,
@@ -1047,7 +1047,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoThirdYear,
+    body: [...infoThirdYear,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -1066,7 +1066,7 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoThirdYearSecondSem,
+    body: [...infoThirdYearSecondSem,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,
@@ -1091,7 +1091,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoFourthYear,
+    body: [...infoFourthYear,['', 'TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -1109,8 +1109,8 @@ addHeader()
       },
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
-      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofourthYearSecondSem,
+      ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours','Pre Req','Co Req']],
+    body: [...infofourthYearSecondSem, ['', 'TOTAL','','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,

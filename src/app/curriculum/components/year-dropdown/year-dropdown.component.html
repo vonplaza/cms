@@ -134,13 +134,7 @@
       Revise
     </button>
 
-    <button
-      mat-flat-button
-      (click)="convertToPDF()"
-      color="primary"
-      class="me-2"
-      *ngIf="type == 'view'"
-    >
+    <button mat-flat-button (click)="convertToPDF()" color="primary" class="me-2" *ngIf="type == 'view'" >
       <mat-icon>print</mat-icon>
       Print
     </button>
@@ -581,6 +575,7 @@
               <span class="fs-6 text-dark me-2"
                 >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
               >
+              
             </div>
           </tr>
         </tbody>
@@ -1028,6 +1023,7 @@
   </mat-expansion-panel>
   <!-- End of first Year Year -->
 </mat-accordion>
+
 <table
   class="table"
   style="max-width: 600px"

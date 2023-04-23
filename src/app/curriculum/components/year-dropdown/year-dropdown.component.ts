@@ -181,6 +181,7 @@ export class YearDropdownComponent {
       + this.isForms[yearLvl][sem]['labUnits']
     }
   }
+
   getTotalUnits(yearLvl:number, sem:number){
     const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.totalUnits))
     const totalUnits = units.reduce((accumulator:number, currentValue:number) => {
@@ -592,11 +593,13 @@ let tableMargin = 65;
 
 const firstYear = this.subject[0];
 if(firstYear){
+
+
 const firstYearFirstSem = firstYear.firstSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -612,7 +615,7 @@ const firstYearsecondSem = firstYear.secondSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -638,7 +641,7 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofirstYear,
+    body: [...infofirstYear,['','TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -655,7 +658,7 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofirstYearSecondSem,
+    body: [...infofirstYearSecondSem,['','TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin, 
@@ -667,7 +670,7 @@ const secondYearFirstSem = secondYear.firstSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -682,7 +685,7 @@ const secondYearSecondSem = secondYear.secondSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -710,7 +713,7 @@ autoTable(pdf,{
   ],
   [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: infoSecondYear,
+  body: [...infoSecondYear,['','TOTAL', '','','','','','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   startY: tableMargin,
@@ -729,7 +732,7 @@ autoTable(pdf,{
   head:[
   [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: infoSecondYearSecondSem,
+  body: [...infoSecondYearSecondSem,['','TOTAL', '','','','','','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   //startY: tableMargin,
@@ -743,7 +746,7 @@ const thirdYearFirstSem = thirdYear.firstSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -758,7 +761,7 @@ const thirdYearSecondSem = thirdYear.secondSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -785,10 +788,10 @@ autoTable(pdf,{
  ],
  [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: infoThirdYear,
+ body: [...infoThirdYear,['','TOTAL', '','','','','','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
- startY: tableMargin,
+ //startY: tableMargin,
  
  
 })
@@ -804,7 +807,7 @@ autoTable(pdf,{
  head:[
  [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: infoThirdYearSecondSem,
+ body: [...infoThirdYearSecondSem,['','TOTAL', '','','','','','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
  //startY: tableMargin,
@@ -819,7 +822,7 @@ const fuorthYearFirstSem = fourthYear.firstSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -834,7 +837,7 @@ const fourthYearSecondSem = fourthYear.secondSem.map((subject) => ({
   "Course": subject.courseCode,
   "Descriptive Title": subject.descriptiveTitle,
   "Lec Units": subject.lecUnits.toString() || '0',
-  "Lab Units": subject.lecUnits.toString() || '0',
+  "Lab Units": subject.labUnits.toString() || '0',
   "Total Units": subject.totalUnits.toString() || '0',
   "Hours Per Week": subject.hoursPerWeek.toString() || '0',
   "Pre Req": subject.preReq || 'NONE',
@@ -861,7 +864,7 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infoFourthYear,
+    body: [...infoFourthYear,['','TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -880,7 +883,7 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: infofourthYearSecondSem,
+    body: [...infofourthYearSecondSem,['','TOTAL', '','','','','','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,
