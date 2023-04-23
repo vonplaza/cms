@@ -17,6 +17,15 @@ export class SubjectAddDialogComponent {
               private departmentService: DepartmentService
     ) {}
     
+  department:number = 1
+  isElective:boolean = false
+
+  departmentOnChange(){    
+    if(this.department != 1){
+      this.isElective = false
+    } 
+  }
+
   departments: Department[] | undefined
   departments$ = this.departmentService.departments$.subscribe({
     next: departments => {
@@ -46,13 +55,23 @@ export class SubjectAddDialogComponent {
   success$ = new Subject<string>()
 
   createSubject(form:any){
+    let data = {...form.value}
+    if(data.isElective){
+      data = {...data,is_elective: data.description || 0, 
+        description: !!data.description ? 'Elective ' + data.description : ''}
+    }else{
+      data.is_elective = 0
+    }
+    console.log(data);
+    
     const fd = new FormData()
     
-    fd.append('subjectCode', form.value.subjectCode)
-    fd.append('description', form.value.description)
-    fd.append('departmentId', form.value.departmentId)
+    fd.append('subjectCode', data.subjectCode)
+    fd.append('description', data.description)
+    fd.append('departmentId', data.departmentId)
+    fd.append('is_elective', data.is_elective)
     fd.append('syllabus', this.selectedFile)
-
+    
     this.subjectService.addSubject(fd)
       .subscribe({
         next: data => {

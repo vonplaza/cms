@@ -1,4 +1,4 @@
-<div class="my-0 py-0">
+<div class="my-0 py-0" *ngIf="availableSubjects$ | async">
   <div *ngIf="descriptiveTitle" class="mt-3 mb-0" style="">
     <span class="text-secondary">{{ descriptiveTitle | titlecase }}</span>
   </div>
@@ -75,13 +75,6 @@
     </mat-form-field>
   </div>
   <div class="mb-2">
-    <mat-slide-toggle
-      name="isDarkModeActivated"
-      [(ngModel)]="electiveIncluded"
-      *ngIf="type != 'view' && department == '1'"
-      class="me-2"
-      >show elective</mat-slide-toggle
-    >
     <button
       mat-flat-button
       color="primary"
@@ -205,7 +198,13 @@
                   (optionSelected)="onSubjecCodeSelected($event, x, 'firstSem')"
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInput(
+                        x,
+                        'firstSem',
+                        'courseCode'
+                      )
+                    "
                     [value]="option.subject_code"
                   >
                     {{ option.subject_code }}
@@ -231,9 +230,15 @@
                   "
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
-                    [value]="option.description"
+                    *ngFor="
+                      let option of subjectCodeInput(
+                        x,
+                        'firstSem',
+                        'description'
+                      )
+                    "
                     style="font-size: 12px"
+                    [value]="option?.description"
                   >
                     {{ option.description }}
                   </mat-option>
@@ -369,7 +374,13 @@
                   "
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInputEdit(
+                        x,
+                        'firstSem',
+                        'courseCode'
+                      )
+                    "
                     [value]="option.subject_code"
                   >
                     {{ option.subject_code }}
@@ -393,7 +404,13 @@
                   (optionSelected)="onDescEditSelected($event, x, 'firstSem')"
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInputEdit(
+                        x,
+                        'firstSem',
+                        'description'
+                      )
+                    "
                     [value]="option.description"
                   >
                     {{ option.description }}
@@ -559,8 +576,8 @@
           <tr>
             <div>
               <span class="fs-6 text-dark me-2"
-                >Total Units: {{ getTotalUnits(x, 0) }}</span
-              >
+                >Total Units: {{ getTotalUnits(x, 0) }},
+              </span>
               <span class="fs-6 text-dark me-2"
                 >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
               >
@@ -612,7 +629,13 @@
                   "
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInput(
+                        x,
+                        'secondSem',
+                        'courseCode'
+                      )
+                    "
                     [value]="option.subject_code"
                     style="font-size: 12px"
                   >
@@ -638,7 +661,13 @@
                   "
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInput(
+                        x,
+                        'secondSem',
+                        'description'
+                      )
+                    "
                     [value]="option.description"
                     style="font-size: 12px"
                   >
@@ -780,7 +809,13 @@
                   "
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInputEdit(
+                        x,
+                        'secondSem',
+                        'courseCode'
+                      )
+                    "
                     [value]="option.subject_code"
                   >
                     {{ option.subject_code }}
@@ -804,7 +839,13 @@
                   (optionSelected)="onDescEditSelected($event, x, 'secondSem')"
                 >
                   <mat-option
-                    *ngFor="let option of availableSubjects$ | async"
+                    *ngFor="
+                      let option of subjectCodeInputEdit(
+                        x,
+                        'secondSem',
+                        'description'
+                      )
+                    "
                     [value]="option.description"
                   >
                     {{ option.description }}
@@ -973,8 +1014,8 @@
           <tr class="">
             <div class="">
               <span class="fs-6 text-dark me-2"
-                >Total Units: {{ getTotalUnits(x, 1) }}</span
-              >
+                >Total Units: {{ getTotalUnits(x, 1) }},
+              </span>
               <span class="fs-6 text-dark me-2"
                 >Total Hrs/Week: {{ getTotalHrs(x, 1) }}</span
               >
