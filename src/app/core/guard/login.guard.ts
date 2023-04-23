@@ -21,14 +21,16 @@ export class LoginGuard implements CanActivate {
         .subscribe({
           next: data => {
             if(!data){
-              this.router.navigate(['/', 'login'])
+              
               // return true
               obs.next(true)
+              this.router.navigate(['/', 'login'])
               // obs.complete()
               // return true
             }
-            this.router.navigate(['/', 'dashboard'])
+           
             obs.next(false)
+             this.router.navigate(['/', 'dashboard'])
             // obs.complete()
 
           },
