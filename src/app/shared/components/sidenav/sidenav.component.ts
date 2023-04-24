@@ -45,7 +45,7 @@ export class SidenavComponent {
       tap(([x, content]) => {
         this.title = content.title_text
         this.logo = content.logo_path
-        this.isDarkMode = content.is_dark_mode_activate
+        this.isDarkMode = !!content.is_dark_mode_active
       })
     ).subscribe()
   
