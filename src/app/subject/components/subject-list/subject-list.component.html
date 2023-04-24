@@ -1,15 +1,7 @@
 <app-sidenav>
   <div class="container mt-4" *ngIf="neededData$ | async">
     <header class="d-flex align-items-center justify-content-between">
-      <p class="h5">Subjects</p>
-      <mat-form-field style="width: 200px" class="example-form-field">
-        <mat-label><mat-icon>search</mat-icon>Search</mat-label>
-        <input matInput type="text" [(ngModel)]="listFilter" />
-
-        <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-                  <mat-icon>clear</mat-icon>
-              </button> -->
-      </mat-form-field>
+      <span class="h3">Subjects</span>
       <button
         mat-flat-button
         color="primary"
@@ -21,146 +13,184 @@
       </button>
     </header>
 
-    <div class="mt-4">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">
-              Subject Code
-              <button mat-icon-button (click)="sort('subject_code')">
-                <mat-icon>unfold_more</mat-icon>
-              </button>
-            </th>
-            <th scope="col">
-              Description
-              <button mat-icon-button (click)="sort('description')">
-                <mat-icon>unfold_more</mat-icon>
-              </button>
-            </th>
-            <th scope="col">
-              Status
-              <button mat-icon-button (click)="sort('status')">
-                <mat-icon>unfold_more</mat-icon>
-              </button>
-            </th>
-            <th scope="col">
-              Department
-              <button mat-icon-button (click)="sort('description')">
-                <mat-icon>unfold_more</mat-icon>
-              </button>
-            </th>
-            <th scope="col">Syllabus</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="
-              let subject of displayedItems
-                | orderBy : currentSortColumn : currentSortDirection
-            "
+    <div class="">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Subjects">
+          <div class="d-flex justify-content-end my-1">
+            <mat-form-field style="width: 200px" class="example-form-field">
+              <mat-label><mat-icon>search</mat-icon>Search</mat-label>
+              <input matInput type="text" [(ngModel)]="listFilter" />
+            </mat-form-field>
+          </div>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">
+                  Subject Code
+                  <button mat-icon-button (click)="sort('subject_code')">
+                    <mat-icon>unfold_more</mat-icon>
+                  </button>
+                </th>
+                <th scope="col">
+                  Description
+                  <button mat-icon-button (click)="sort('description')">
+                    <mat-icon>unfold_more</mat-icon>
+                  </button>
+                </th>
+                <th scope="col">
+                  Status
+                  <button mat-icon-button (click)="sort('status')">
+                    <mat-icon>unfold_more</mat-icon>
+                  </button>
+                </th>
+                <th scope="col">
+                  Department
+                  <button mat-icon-button (click)="sort('description')">
+                    <mat-icon>unfold_more</mat-icon>
+                  </button>
+                </th>
+                <th scope="col">Syllabus</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let subject of displayedItems
+                    | orderBy : currentSortColumn : currentSortDirection
+                "
+              >
+                <th scope="row">
+                  {{ subject.subject_code
+                  }}<span
+                    class="badge text-bg-primary ms-1"
+                    *ngIf="!!subject.is_elective"
+                    >Elective</span
+                  >
+                </th>
+                <td>{{ subject.description }}</td>
+                <td>{{ subject.status == "a" ? "Active" : "Inactive" }}</td>
+                <td>{{ subject?.department?.department_code | uppercase }}</td>
+                <td>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="viewPdf(subject.syllabus_path)"
+                  >
+                    <mat-icon>remove_red_eye</mat-icon>
+                  </button>
+                </td>
+                <td
+                  *ngIf="
+                    role == 'admin' || role == 'chair' || role == 'faculty'
+                  "
+                >
+                  <button
+                    *ngIf="
+                      subject.status == 'a' &&
+                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                    "
+                    mat-icon-button
+                    color="primary"
+                    (click)="removeSubject(subject.id)"
+                  >
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+
+                  <button
+                    *ngIf="
+                      subject.status == 'i' &&
+                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                    "
+                    mat-icon-button
+                    color="primary"
+                    (click)="restoreSubject(subject.id)"
+                  >
+                    <mat-icon>restore</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator
+            [length]="totalItems"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChange($event)"
           >
-            <th scope="row">{{ subject.subject_code }}</th>
-            <td>{{ subject.description }}</td>
-            <td>{{ subject.status == "a" ? "Active" : "Inactive" }}</td>
-            <td>{{ subject?.department?.department_code | uppercase }}</td>
-            <td>
-              <button
-                mat-icon-button
-                color="primary"
-                (click)="viewPdf(subject.syllabus_path)"
-              >
-                <mat-icon>remove_red_eye</mat-icon>
-              </button>
-            </td>
-            <td *ngIf="role == 'admin' || role == 'chair' || role == 'faculty'">
-              <!-- <button mat-icon-button color="pri" (click)="editSubjet(dsubject)"><mat-icon>edit</mat-icon></button> -->
-              <button
-                *ngIf="
-                  subject.status == 'a' &&
-                  (role == 'admin' || role == 'chair' || role == 'faculty')
-                "
-                mat-icon-button
-                color="primary"
-                (click)="removeSubject(subject.id)"
-              >
-                <mat-icon>delete_forever</mat-icon>
-              </button>
-
-              <button
-                *ngIf="
-                  subject.status == 'i' &&
-                  (role == 'admin' || role == 'chair' || role == 'faculty')
-                "
-                mat-icon-button
-                color="primary"
-                (click)="restoreSubject(subject.id)"
-              >
-                <mat-icon>restore</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <mat-paginator
-        [length]="totalItems"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        (page)="onPageChange($event)"
-      >
-      </mat-paginator>
+          </mat-paginator
+        ></mat-tab>
+        <mat-tab label="Elective Subject">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>#</td>
+                <td
+                  *ngFor="
+                    let electiveSubject of electiveSubjects;
+                    let x = index
+                  "
+                >
+                  {{ electiveSubject.track }}
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="editElected(x)"
+                    *ngIf="
+                      selectedTrack != x &&
+                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                    "
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="
+                      selectedTrack == x &&
+                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                    "
+                    (click)="cancelEdit(x)"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="saveElected(x)"
+                    *ngIf="
+                      selectedTrack == x &&
+                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                    "
+                  >
+                    <mat-icon>save</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+                <td>Elective {{ i }}</td>
+                <td
+                  *ngFor="
+                    let electiveSubject of electiveSubjects;
+                    let x = index
+                  "
+                >
+                  <span *ngIf="selectedTrack != x">{{
+                    electiveSubject.description[i - 1]
+                  }}</span>
+                  <input
+                    *ngIf="selectedTrack == x"
+                    type="text"
+                    [(ngModel)]="descriptionList[x][i - 1]"
+                  />
+                </td>
+              </tr>
+            </tbody></table
+        ></mat-tab>
+      </mat-tab-group>
     </div>
-
-    <span class="h3 mt-2">BSIT Elective Subjects</span>
-    <table class="table">
-      <thead>
-        <tr>
-          <td>#</td>
-          <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
-            {{ electiveSubject.track }}
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="editElected(x)"
-              *ngIf="selectedTrack != x"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="primary"
-              *ngIf="selectedTrack == x"
-              (click)="cancelEdit(x)"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="saveElected(x)"
-              *ngIf="selectedTrack == x"
-            >
-              <mat-icon>save</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of [1, 2, 3, 4, 5]">
-          <td>Elective {{ i }}</td>
-          <td *ngFor="let electiveSubject of electiveSubjects; let x = index">
-            <span *ngIf="selectedTrack != x">{{
-              electiveSubject.description[i - 1]
-            }}</span>
-            <input
-              *ngIf="selectedTrack == x"
-              type="text"
-              [(ngModel)]="descriptionList[x][i - 1]"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
   <app-spinner *ngIf="isLoading"></app-spinner>
   <app-reload-page *ngIf="!isLoading && error"></app-reload-page>

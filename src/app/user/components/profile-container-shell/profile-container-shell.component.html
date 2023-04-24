@@ -4,15 +4,20 @@
       <div class="col-lg-4">
         <div class="profile-container bg-white rounded p-3">
           <div class="image-wrapper text-center">
-            <img
-              src="{{
+            <div
+              class="rounded-circle mx-auto"
+              style="
+            width: 150px;
+            height: 150px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url('{{
                 'http://127.0.0.1:8000/api/profiles/images/' +
-                  (user.profile?.profile_pic || 'no-image.jpg')
-              }}"
-              style="width: 150px; height: 150px"
-              class="img-fluid rounded-circle"
-              alt="..."
-            />
+                  (user?.profile?.profile_pic || 'no-image.jpg')
+              }}');
+          "
+            ></div>
           </div>
           <div class="name-wrapper text-center">
             <h2>{{ user.profile?.name || "name hasn't been set" }}</h2>

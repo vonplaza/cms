@@ -41,7 +41,7 @@ export class ContentManagementComponent {
     if(this.content.logo_path)
       return 'http://127.0.0.1:8000/api/content/logo/' + this.content.logo_path
     else
-      return ''
+      return 'http://127.0.0.1:8000/api/content/logo/logo-cict.png' 
   }
 
   originalContent:any = {}
