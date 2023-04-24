@@ -567,16 +567,16 @@
               </button>
             </td>
           </tr>
-          <tr>
-            <div>
-              <span class="fs-6 text-dark me-2"
-                >Total Units: {{ getTotalUnits(x, 0) }},
-              </span>
-              <span class="fs-6 text-dark me-2"
-                >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
-              >
-              
-            </div>
+          <tr style="font-weight: bold;">
+               <td scope="row"></td>
+            <td>TOTAL</td>
+            <td>{{ getLecUnits(x, 0) }}</td>
+            <td>{{ getLabUnits(x, 0)}}</td>
+            <td>{{ getTotalUnits(x, 0) }}</td>
+            <td>{{ getTotalHrs(x, 0) }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
