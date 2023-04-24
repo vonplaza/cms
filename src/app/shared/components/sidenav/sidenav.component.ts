@@ -37,6 +37,7 @@ export class SidenavComponent {
   
   logo: string = ''
   title:string = ''
+  isDarkMode:boolean = false
   contentData$ = combineLatest([
     this.contentService.content$,
     this.contentService.contentAction$
@@ -44,6 +45,7 @@ export class SidenavComponent {
       tap(([x, content]) => {
         this.title = content.title_text
         this.logo = content.logo_path
+        this.isDarkMode = content.is_dark_mode_activate
       })
     ).subscribe()
   
