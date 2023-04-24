@@ -23,14 +23,9 @@ export class LoginGuard implements CanActivate {
             if(!data){
               obs.next(true)
               this.router.navigate(['/', 'login'])
-              // return true
-              // obs.complete()
-              // return true
             }
             obs.next(false)
             this.router.navigate(['/', 'dashboard'])
-            // obs.complete()
-
           },
           
           error: err => {

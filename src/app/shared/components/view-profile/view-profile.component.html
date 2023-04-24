@@ -16,8 +16,18 @@
     <div mat-dialog-content style="color: #52525b">
       <div class="d-flex">
         <div
-          class="rounded-circle border border-danger me-3"
-          style="width: 75px; height: 75px"
+          class="rounded-circle me-3"
+          style="
+            width: 75px;
+            height: 75px;
+            background-image: url('{{
+            'http://127.0.0.1:8000/api/profiles/images/' +
+              (user?.profile?.profile_pic || 'no-image.jpg')
+          }}');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          "
         ></div>
         <div class="my-auto">
           <div>

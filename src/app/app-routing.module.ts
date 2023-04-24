@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'content', loadChildren: () => import('./content/content.module').then(m => m.ContentModule)},
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
   { path: 'departments', loadChildren: () => import('./department/department.module').then(m => m.DepartmentModule)},
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
