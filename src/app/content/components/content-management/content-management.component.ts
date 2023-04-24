@@ -125,18 +125,18 @@ export class ContentManagementComponent implements DoCheck, OnInit{
   }
 
   toggleTheme(){
-    if(!this.content.is_dark_mode_active){
-      this.content.is_dark_mode_active=true;
+    if(!this.main.isDarkMode){
+      this.main.isDarkMode=true;
       //this.toggleDarkMode();
     }
     else{
-      this.content.is_dark_mode_active=false;
+      this.main.isDarkMode=false;
       //this.toggleLightMode();
     }
   }
 
   ngDoCheck(): void {
-    if(!this.content.is_dark_mode_active){
+    if(!this.main.isDarkMode){
       if(this.main.body){
         this.main.body.classList.add('theme-light');
         this.main.body.classList.remove('theme-dark');
@@ -151,7 +151,7 @@ export class ContentManagementComponent implements DoCheck, OnInit{
   }
 
   ngOnInit(){
-    if(!this.content.is_dark_mode_active){
+    if(!this.main.isDarkMode){
       if(this.main.body){
       this.main.body.classList.add('theme-light');
       this.main.body.classList.remove('theme-dark');
@@ -182,7 +182,7 @@ export class ContentManagementComponent implements DoCheck, OnInit{
   toggleIsEdit(){
     this.isEdit = !this.isEdit
   }
- main = new AppComponent();
+ main = new AppComponent(this.contentService);
 //  isDark=false;
 //  toggle(){
 //   if(!this.isDark)
