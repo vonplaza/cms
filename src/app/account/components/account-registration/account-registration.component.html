@@ -1,14 +1,10 @@
-<div
-  class="bg-light border shadow rounded overflow-hidden"
-  style="min-width: 500px"
->
   <div class="text-center p-4" style="color: #d05834">
     <mat-icon>create</mat-icon>
     <div>
       <span class="h5">Register User</span>
     </div>
   </div>
-  <div class="p-4" style="background-color: #e4e4e7">
+  <mat-card style="padding:40px; filter:contrast(1.1);">
     <form class="form" #form="ngForm" (ngSubmit)="submitForm(form)" id="form">
       <div>
         <mat-form-field color="primary" style="margin-right: 20px">
@@ -44,7 +40,7 @@
           <!-- [(ngModel)]="role" -->
           <mat-select
             name="role"
-            color="primary bg-light"
+            color="primary"
             style="margin-right: 20px"
             [(ngModel)]="role"
             (selectionChange)="isShowDep()"
@@ -106,8 +102,7 @@
       >
         Submit
       </button>
-      <button mat-button class="shadow-sm" (click)="onCancel()">Cancel</button>
+      <button mat-button class="shadow-sm" style="filter:contrast(1.5);" (click)="onCancel()">Cancel</button>
       <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
     </div>
-  </div>
-</div>
+  </mat-card>

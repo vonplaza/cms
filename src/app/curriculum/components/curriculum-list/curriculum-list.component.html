@@ -1,4 +1,5 @@
-<div class="container p-4" *ngIf="neededData$ | async">
+<div style="padding: 30px; filter: contrast(150%); height:100%; height:100vh;">
+<mat-card style="padding:40px;" *ngIf="neededData$ | async">
   <header class="d-flex justify-content-between align-items-center my-2">
     <h1 class="fw-semib fs-3" style="font-weight: 500">Curriculums</h1>
     <button
@@ -13,7 +14,7 @@
   </header>
   <mat-tab-group>
     <mat-tab label="Existing">
-      <table class="table" *ngIf="curriculums">
+      <table *ngIf="curriculums">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -36,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of curriculums">
+          <tr *ngFor="let data of curriculums" style="border-bottom: 1px solid rgb(140, 140, 140);">
             <td scope="row">
               <div class="float-left d-flex p-3 flex-column">
                 <div class="d-flex align-items-center">
@@ -88,7 +89,7 @@
       </mat-paginator>
     </mat-tab>
     <mat-tab label="Revisions">
-      <table class="table" *ngIf="revisions">
+      <table *ngIf="revisions">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -111,7 +112,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of revisions">
+          <tr *ngFor="let data of revisions" style="border-bottom: 1px solid rgb(140, 140, 140);">
             <td scope="row">
               <div class="float-left d-flex p-3 flex-column">
                 <div class="d-flex align-items-center">
@@ -170,7 +171,7 @@
       </mat-paginator>
     </mat-tab>
     <mat-tab label="Pending">
-      <table class="table" *ngIf="curriculumPendings">
+      <table *ngIf="curriculumPendings">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -186,7 +187,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of curriculumPendings">
+          <tr *ngFor="let data of curriculumPendings" style="border-bottom: 1px solid rgb(140, 140, 140);">
             <td scope="row">
               <div class="float-left d-flex p-3 flex-column">
                 <div class="d-flex align-items-center">
@@ -235,8 +236,9 @@
       </mat-paginator>
     </mat-tab>
   </mat-tab-group>
-</div>
+</mat-card>
 <div class="d-flex justify-content-center" *ngIf="isLoading">
   <app-spinner class="mx-auto"></app-spinner>
 </div>
 <app-reload-page *ngIf="error"></app-reload-page>
+</div>

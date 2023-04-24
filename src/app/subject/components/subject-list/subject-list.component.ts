@@ -204,8 +204,8 @@ export class SubjectListComponent {
 
   //paginator
   totalItems = this.subjects.length; // Total number of items in your table
-  pageSize = 10; // Number of items to display per page
-  pageSizeOptions = [10, 20, 30]; // Options for the number of items per page
+  pageSize = 7; // Number of items to display per page
+  pageSizeOptions = [7, 14, 28]; // Options for the number of items per page
 
   currentPageIndex = 0; // Current page index
   displayedItems: any[] = []; // The items to display on the current page

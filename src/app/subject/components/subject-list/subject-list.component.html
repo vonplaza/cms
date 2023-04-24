@@ -1,5 +1,6 @@
 <app-sidenav>
-  <div class="container mt-4" *ngIf="neededData$ | async">
+  <div style="padding: 30px; filter: contrast(150%); height:100%; height:100vh;">
+  <mat-card style="padding:40px;" *ngIf="neededData$ | async">
     <header class="d-flex align-items-center justify-content-between">
       <span class="h3">Subjects</span>
       <button
@@ -13,7 +14,7 @@
       </button>
     </header>
 
-    <div class="">
+    <div>
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Subjects">
           <div class="d-flex justify-content-end my-1">
@@ -22,7 +23,7 @@
               <input matInput type="text" [(ngModel)]="listFilter" />
             </mat-form-field>
           </div>
-          <table class="table">
+          <table style="width:100%;">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">
@@ -59,6 +60,7 @@
                   let subject of displayedItems
                     | orderBy : currentSortColumn : currentSortDirection
                 "
+                style="border-bottom: 1px solid rgb(140, 140, 140);"
               >
                 <th scope="row">
                   {{ subject.subject_code
@@ -121,7 +123,7 @@
           </mat-paginator
         ></mat-tab>
         <mat-tab label="Elective Subject">
-          <table class="table">
+          <table style="width:100%;">
             <thead>
               <tr>
                 <td>#</td>
@@ -169,7 +171,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+              <tr *ngFor="let i of [1, 2, 3, 4, 5]" style="border-bottom: 1px solid rgb(140, 140, 140);">
                 <td>Elective {{ i }}</td>
                 <td
                   *ngFor="
@@ -191,10 +193,12 @@
         ></mat-tab>
       </mat-tab-group>
     </div>
-  </div>
+  </mat-card>
   <app-spinner *ngIf="isLoading"></app-spinner>
   <app-reload-page *ngIf="!isLoading && error"></app-reload-page>
+</div>
 </app-sidenav>
+
 
 <ng-template #dialogEditContent>
   <!-- <form #editForm="ngForm" (ngSubmit)="">
