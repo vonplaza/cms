@@ -20,12 +20,20 @@
         </div>
         <div class="logo-wrapper mt-4">
           <span>Logo</span>
+
+          <!-- <img [src]="src()" alt="" height="75px" /> -->
           <div
-            class="logo-preview border"
-            style="max-width: 75px; height: 75px"
-          >
-            <img [src]="src()" alt="" height="75px" />
-          </div>
+            class="rounded-circle me-1 border"
+            style="
+              width: 70px;
+              height: 70px;
+              background-image: url('{{ src() }}');
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+              "
+          ></div>
+
           <input
             type="file"
             name="logo"
@@ -49,23 +57,23 @@
             value="asdasd"
           />
         </div>
-  
-        <div style="max-width: 500px;">
-        <app-notification
-          *ngIf="error$ | async as errorMessage" 
-          [message]="errorMessage" 
-          type="error"
-          (close)="closeAlert()"
+
+        <div style="max-width: 500px">
+          <app-notification
+            *ngIf="error$ | async as errorMessage"
+            [message]="errorMessage"
+            type="error"
+            (close)="closeAlert()"
           >
-        </app-notification>
-          <app-notification 
-          *ngIf="success$ | async as message" 
-          [message]="message" 
-          type="success"
-          (close)="closeSuccessAlert()"
+          </app-notification>
+          <app-notification
+            *ngIf="success$ | async as message"
+            [message]="message"
+            type="success"
+            (close)="closeSuccessAlert()"
           >
-        </app-notification>
-      </div>
+          </app-notification>
+        </div>
         <div class="mt-4 d-flex gap-2">
           <button
             mat-flat-button
