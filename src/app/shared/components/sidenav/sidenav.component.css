@@ -54,3 +54,7 @@ b{
 .nav-item{
   font-weight: 500;
 }
+.active{
+  background-color: #888888;
+  /* filter: contrast(150%); */
+}

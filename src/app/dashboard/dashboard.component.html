@@ -1,5 +1,5 @@
 <app-sidenav>
-  <div style="padding: 30px; filter: contrast(150%); height:100%; height:100vh;">
+  <div style="padding: 30px; height:100%; height:100vh;">
   <mat-card
     style="padding: 30px"
     *ngIf="neededData$ | async as data"
@@ -11,29 +11,29 @@
     <div class="row gap-4">
       <div class="col-sm">
         <div class="row gap-2">
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle>Pending Curriculums</mat-card-subtitle>
             <mat-card-title>{{ data.pendingCurriculums }}</mat-card-title>
           </mat-card>
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle>Pending Revisions</mat-card-subtitle>
             <mat-card-title>{{ data.pendingRevisions }}</mat-card-title>
           </mat-card>
         </div>
 
         <div class="row gap-2">
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle>Active Curriculums</mat-card-subtitle>
             <mat-card-title>{{ data.activeCurriculums }}</mat-card-title>
           </mat-card>
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle>Approve Revisions</mat-card-subtitle>
             <mat-card-title>{{ data.approvedRevisions }}</mat-card-title>
           </mat-card>
         </div>
 
         <div class="row">
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle class="m-0 p-0"
               >Latest Submitted Revision</mat-card-subtitle
             >
@@ -74,7 +74,7 @@
           </mat-card>
         </div>
         <div class="row">
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" style="filter: contrast(150%);">
             <mat-card-subtitle class="m-0 p-0"
               >Latest Submitted Revision</mat-card-subtitle
             >
@@ -116,14 +116,14 @@
         </div>
       </div>
 
-      <div class="col-sm">
+      <div class="col-sm" style="filter: contrast(150%);">
         <app-comment [comments]="data.latestComments"></app-comment>
       </div>
     </div>
 
 
     <div class="row gap-2" *ngIf="false">
-      <mat-card class="col-sm">
+      <mat-card class="col-sm" style="filter: contrast(150%);">
         <mat-card-subtitle class="m-0 p-0"
           >Latest Submitted Revision</mat-card-subtitle
         >
@@ -175,7 +175,7 @@
       </div> -->
     </div>
     <div class="row">
-      <mat-card class="col-sm" *ngIf="false" style="box-shadow: 2px 2px 2px 2px black;">
+      <mat-card class="col-sm" *ngIf="false" style="box-shadow: 3px 3px 3px 3px black; filter: contrast(150%);">
           <app-comment [comments]="data.latestComments"></app-comment>
       </mat-card>
 
