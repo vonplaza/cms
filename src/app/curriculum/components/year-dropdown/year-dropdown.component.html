@@ -134,7 +134,13 @@
       Revise
     </button>
 
-    <button mat-flat-button (click)="convertToPDF()" color="primary" class="me-2" *ngIf="type == 'view'" >
+    <button
+      mat-flat-button
+      (click)="convertToPDF()"
+      color="primary"
+      class="me-2"
+      *ngIf="type == 'view'"
+    >
       <mat-icon>print</mat-icon>
       Print
     </button>
@@ -575,7 +581,6 @@
               <span class="fs-6 text-dark me-2"
                 >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
               >
-              
             </div>
           </tr>
         </tbody>
@@ -1033,7 +1038,7 @@
     <tr>
       <th>#</th>
       <th *ngFor="let electiveSubject of electiveSubjects">
-        {{ electiveSubject.track }}
+        {{ electiveSubject.track | uppercase }}
       </th>
     </tr>
   </thead>
@@ -1041,7 +1046,17 @@
     <tr *ngFor="let i of electiveSubjectNumberPresent()">
       <td>Elective {{ i }}</td>
       <td *ngFor="let electiveSubject of selectElectiveToBeShow()">
-        {{ electiveSubject.description[i - 1] }}
+        {{
+          getElectiveSubject(electiveSubject.metadata[i - 1]) || "not yet set"
+        }}
+        <button
+          mat-icon-button
+          *ngIf="getElectiveSubject(electiveSubject.metadata[i - 1])"
+          color="primary"
+          (click)="viewPdf(getSyllabusSubject(electiveSubject.metadata[i - 1]))"
+        >
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
       </td>
     </tr>
   </tbody>

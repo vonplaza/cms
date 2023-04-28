@@ -37,7 +37,7 @@
             <mat-card-subtitle class="m-0 p-0"
               >Latest Submitted Revision</mat-card-subtitle
             >
-            <mat-card-content>
+            <mat-card-content *ngIf="data.latestSubmittedRevisions">
               <div class="fw-bold text-dark fs-6">
                 <span>
                   CICT
@@ -70,6 +70,8 @@
                   data.latestSubmittedRevisions.created_at | date
                 }}</small>
               </div>
+            </mat-card-content>
+            <mat-card-content *ngIf="!data.latestSubmittedRevisions">
             </mat-card-content>
           </mat-card>
         </div>
@@ -120,7 +122,6 @@
         <app-comment [comments]="data.latestComments"></app-comment>
       </div>
     </div>
-
 
     <div class="row gap-2" *ngIf="false">
       <mat-card class="col-sm">
@@ -187,7 +188,6 @@
         </mat-card-content>
       </mat-card>
     </div>
-
   </div>
 
   <app-spinner *ngIf="isLoading"></app-spinner>

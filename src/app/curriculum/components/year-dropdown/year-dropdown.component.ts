@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EventManager } from '@angular/platform-browser';
-import { map, tap } from 'rxjs';
+import { combineLatest, map, tap } from 'rxjs';
 import { Curriculum2 } from 'src/app/core/models/curriculum';
 import { Department } from 'src/app/core/models/department';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -13,6 +13,7 @@ import {jsPDF} from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { ElectiveSubjectDialogComponent } from '../elective-subject-dialog/elective-subject-dialog.component';
 import { CurriculumService } from 'src/app/core/services/curriculum.service';
+import { ViewPdfClass } from 'src/app/subject/components/subject-list/subject-list.component';
 export interface subjects{
   firstSem :Subject[];
   secondSem: Subject[];
@@ -36,12 +37,14 @@ export interface Subject {
   templateUrl: './year-dropdown.component.html',
   styleUrls: ['./year-dropdown.component.css']
 })
+
 export class YearDropdownComponent {
   constructor(private subjectService: SubjectService,
               private authService: AuthService,
               private departmentService: DepartmentService,
               private dialog: MatDialog,
-              private curriculumService: CurriculumService
+              private curriculumService: CurriculumService,
+              // public viewPdfDialog: MatDialog
     ){}
   departments: Department[] | undefined
   departments$ = this.departmentService.departments$.subscribe({
@@ -79,11 +82,27 @@ export class YearDropdownComponent {
   
   electiveSubjects:any[] = []
 
-  electiveSubjects$ = this.curriculumService.electiveSubjects$.pipe(
-    tap(electiveSubjects => {
+  // electiveSubjects$ = this.curriculumService.electiveSubjects$.pipe(
+  //   tap(electiveSubjects => {
+  //     this.electiveSubjects = electiveSubjects
+  //   })
+  // ).subscribe()
+  electives:any[] = []
+  neededData$ = combineLatest([
+    this.subjectService.electiveSubjects$,
+    this.subjectService.electives$
+  ]).pipe(
+    tap(([electiveSubjects, electives]) => {
       this.electiveSubjects = electiveSubjects
-    })
+      this.electives = electives
+    }) 
   ).subscribe()
+
+  // electiveSubjects$ = this.subjectService.electiveSubjects$.pipe(
+  //   tap(electiveSubjects => {
+  //     this.electiveSubjects = electiveSubjects
+  //   })
+  // ).subscribe()
 
   subjectCodeInput(index: number, sem: string, field: string){
     const fieldName = field == 'courseCode' ? 'subject_code': 'description'
@@ -125,6 +144,14 @@ export class YearDropdownComponent {
     return this.type == 'create' || this.electiveData.length < 1 ? this.electiveSubjects : this.electiveData
   }
 
+  getElectiveSubject(id: number){
+    return this.electives.find(sub => sub.id == id)?.description
+  }
+
+  getSyllabusSubject(id: number){
+    return this.electives.find(sub => sub.id == id)?.syllabus_path
+  }
+
   addElectiveSubj(){
     const dialogRef = this.dialog.open(ElectiveSubjectDialogComponent, {
       data: {
@@ -140,7 +167,13 @@ export class YearDropdownComponent {
     });
   }
 
-  
+  viewPdf(ref: string){    
+    const dialogRef = this.dialog.open(ViewPdfClass, {
+      data: {
+        ref
+      }
+    });
+  }
 
   approve(){
     this.approveCur.emit()    
@@ -896,12 +929,15 @@ if(!!this.electiveSubjectNumberPresent().length){
 
   this.electiveSubjectNumberPresent().forEach(x => {
     let data = [{content:`Elective ${x}`,styles: {fontStyle: 'bold'}}]
+
     this.selectElectiveToBeShow().forEach(elec => {
       // console.log(elec.description[x - 1])    
-      data.push(elec.description[x - 1])
+      data.push(this.getElectiveSubject(elec.metadata[x - 1]) || 'not yet set')
+
     })
     electiveSubjects.push(data)
   })
+
   autoTable(pdf,{
     styles: {
       fontSize: 8,
