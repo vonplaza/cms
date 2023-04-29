@@ -1,3 +1,4 @@
+import { Subject } from "./subject";
 import { User } from "./user";
 
 export interface Department{
@@ -7,5 +8,6 @@ export interface Department{
   chairs: string;
   created_at: string
   updated_at: string;
-  members: User[]
+  members: User[],
+  subjects: Subject[]
 }

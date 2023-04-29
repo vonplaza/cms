@@ -40,6 +40,11 @@ export class CurriculumListComponent {
   curriculumPendings:Curriculum2[] = []
   error:boolean = false
   currentUser!: User
+
+  newCurCount:number = 0
+  newRevisionsCount:number = 0
+  newCurPendingsCount:number = 0
+
   neededData$ = combineLatest([
     this.authService.getCurrentUser(),
     this.curriculumService.curriculums$,
@@ -49,7 +54,11 @@ export class CurriculumListComponent {
       this.currentUser = user
       this.curriculums = curriculums.filter(curr => curr.status != 'p')
       this.curriculumPendings = curriculums.filter(curr => curr.status == 'p')
+
       this.revisions = revisions
+      this.newRevisionsCount = revisions.filter(rev => rev.is_new).length
+      this.newCurPendingsCount = this.curriculumPendings.filter(cur => cur.is_new && cur.status == 'p').length
+      this.newCurCount = this.curriculums.filter(cur => cur.is_new && cur.status == 'a').length
       this.role = user.role
       this.isLoading = false
     }),

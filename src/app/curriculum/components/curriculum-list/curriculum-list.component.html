@@ -13,8 +13,19 @@
     </button>
   </header>
   <mat-tab-group>
-    <mat-tab label="Existing">
-      <table *ngIf="curriculums">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Existing
+        <span class="badge rounded-pill bg-danger ms-2" *ngIf="newCurCount"
+          >{{ newCurCount }} new</span
+        >
+      </ng-template>
+      <app-empty-state
+        name="curriculums"
+        message="once a reviewer approves curriculums, you'll see it here"
+        *ngIf="!curriculums.length"
+      ></app-empty-state>
+      <table class="table" *ngIf="curriculums">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -50,8 +61,13 @@
                     <span
                       class="badge rounded-pill text-bg-primary {{
                         data.status == 'i' && 'text-bg-danger'
-                      }} fs-7"
+                      }} fs-7 me-2"
                       >{{ data.status == "a" ? "Active" : "Inactive" }}</span
+                    >
+                    <span
+                      class="badge rounded-pill text-bg-danger fs-7"
+                      *ngIf="data.is_new"
+                      >new</span
                     >
                   </div>
                 </div>
@@ -88,8 +104,23 @@
       >
       </mat-paginator>
     </mat-tab>
-    <mat-tab label="Revisions">
-      <table *ngIf="revisions">
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Revisions
+        <span
+          class="badge rounded-pill bg-danger ms-2"
+          *ngIf="newRevisionsCount"
+          >{{ newRevisionsCount }} new</span
+        >
+      </ng-template>
+      <app-empty-state
+        name="revisions"
+        message="once a faculty creates revisions, you'll see it here"
+        *ngIf="!revisions.length"
+      ></app-empty-state>
+      <table class="table" *ngIf="revisions">
+
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -132,8 +163,13 @@
                       }} fs-7 me-2"
                       >{{ data.status == "a" ? "Approve" : "Pending" }}</span
                     >
-                    <span class="badge rounded-pill text-bg-primary fs-7"
+                    <span class="badge rounded-pill text-bg-primary fs-7 me-2"
                       >revision</span
+                    >
+                    <span
+                      class="badge rounded-pill text-bg-danger fs-7"
+                      *ngIf="data.is_new"
+                      >new</span
                     >
                   </div>
                 </div>
@@ -170,8 +206,22 @@
       >
       </mat-paginator>
     </mat-tab>
-    <mat-tab label="Pending">
-      <table *ngIf="curriculumPendings">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Pending Curriculums
+        <span
+          class="badge rounded-pill bg-danger ms-2"
+          *ngIf="newCurPendingsCount"
+          >{{ newCurPendingsCount }} new</span
+        >
+      </ng-template>
+
+      <app-empty-state
+        name="Curriculum Pendings"
+        message="once a faculty creates curriculums, you'll see it here"
+        *ngIf="!curriculumPendings.length"
+      ></app-empty-state>
+      <table class="table" *ngIf="curriculumPendings">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -187,30 +237,79 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of curriculumPendings" style="border-bottom: 1px solid rgb(140, 140, 140);">
-            <td scope="row">
-              <div class="float-left d-flex p-3 flex-column">
-                <div class="d-flex align-items-center">
-                  <span class="h5 m-0 p-0 me-2"
-                    >CICT
-                    {{ data.department.department_code | uppercase }} Curriculum
-                    version {{ data.version }}</span
-                  >
-                  <div>
-                    <span class="badge rounded-pill text-bg-primary fs-7"
-                      >pending</span
+          <tr *ngFor="let data of curriculumPendings">
+            <td scope="row" class="border-0">
+              <div
+                class="d-flex align-items-center justify-content-between border"
+                style="
+                  border: 1px solid gray;
+                  border-left: 5px solid #d05834 !important;
+                  width: 100%;
+                "
+              >
+                <div class="d-flex p-3 flex-column">
+                  <div class="d-flex align-items-center">
+                    <span class="h5 m-0 p-0 me-2"
+                      >CICT
+                      {{ data.department.department_code | uppercase }}
+                      Curriculum version {{ data.version }}</span
                     >
+                    <div>
+                      <span class="badge rounded-pill text-bg-primary fs-7 me-2"
+                        >pending</span
+                      >
+
+                      <span
+                        class="badge rounded-pill text-bg-danger fs-7"
+                        *ngIf="data.is_new"
+                        >new</span
+                      >
+                    </div>
                   </div>
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="rounded-circle me-1"
+                      style="
+                  width: 35px;
+                  height: 35px;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  background-size: cover;
+                  background-image: url('{{
+                        'http://127.0.0.1:8000/api/profiles/images/' +
+                          (data?.user?.profile?.profile_pic || 'no-image.jpg')
+                      }}');
+                  "
+                    ></div>
+                    <div>
+                      <small class="author text-secondary"
+                        >{{
+                          data.user?.profile?.name || "not yet set his/her name"
+                        }}
+                        <span *ngIf="data.user?.department?.department_code">{{
+                          data.user?.department?.department_code
+                        }}</span>
+                      </small>
+                    </div>
+                  </div>
+                  <small class="date text-secondary mt-1">{{
+                    data.created_at | date
+                  }}</small>
                 </div>
-                <small class="author text-secondary">{{
-                  data.user?.profile?.name
-                }}</small>
-                <small class="date text-secondary">{{
-                  data.created_at | date
-                }}</small>
+                <div class="">
+                  <button
+                    mat-flat-button
+                    color="primary"
+                    class="me-3"
+                    [routerLink]="[data.id]"
+                  >
+                    <mat-icon>remove_red_eye</mat-icon>
+                    View
+                  </button>
+                </div>
               </div>
             </td>
-            <td>
+            <!-- <td>
               <div class="float-end">
                 <button
                   mat-flat-button
@@ -222,7 +321,7 @@
                   View
                 </button>
               </div>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
