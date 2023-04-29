@@ -12,9 +12,9 @@
     opened
   >
     <!-- <div class="position-relative p-3" style="height: 100%"> -->
-    <header class="text-dark d-flex pb-4 border-bottom">
+    <div class="d-flex pb-4 border-bottom">
       <div class="me-2">
-        <!-- <img
+        <img
           class="shadow-sm rounded"
           style="height: 50px"
           src="{{
@@ -22,30 +22,16 @@
               (user.profile?.profile_pic || 'no-image.jpg')
           }}"
           alt=""
-        /> -->
-        <div
-          class="rounded-circle"
-          style="
-          width: 50px;
-          height: 50px;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-image: url('{{
-            'http://127.0.0.1:8000/api/profiles/images/' +
-              (user?.profile?.profile_pic || 'no-image.jpg')
-          }}');
-        "
-        ></div>
+        />
       </div>
-      <div class="">
+      <div>
         <div>
-          <small class="text-dark nav-item">{{
+          <small class="nav-item">{{
             user.profile?.name || "not set name yet"
           }}</small>
         </div>
 
-        <small class="text-secondary">
+        <small class="">
           {{ user.role | titlecase }}
           {{
             user.department &&
@@ -53,7 +39,8 @@
           }}
         </small>
       </div>
-    </header>
+    </div>
+    <mat-divider></mat-divider>
     <mat-nav-list role="list">
       <mat-list-item
         role="listitem"
@@ -76,7 +63,6 @@
         [routerLink]="['/accounts']"
         routerLinkActive="active"
         class="nav-item rounded"
-        *ngIf="user.role == 'admin'"
       >
         <mat-icon fontIcon="supervisor_account" class="me-3"></mat-icon>
         Accounts
@@ -115,7 +101,6 @@
         class="nav-item rounded"
         [routerLink]="['/content']"
         routerLinkActive="active"
-        *ngIf="user.role == 'admin'"
       >
         <mat-icon fontIcon="wb_sunny" class="me-3"></mat-icon> Content
         Management

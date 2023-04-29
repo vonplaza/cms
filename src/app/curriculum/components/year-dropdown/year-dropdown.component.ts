@@ -228,7 +228,20 @@ export class YearDropdownComponent {
     }, 0) 
     return totalUnits
   }
-  
+  getLecUnits(yearLvl:number, sem:number){
+    const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.lecUnits))
+    const totaleclUnits = units.reduce((accumulator:number, currentValue:number) => {
+      return accumulator + currentValue;
+    }, 0) 
+    return totaleclUnits
+  }
+  getLabUnits(yearLvl:number, sem:number){
+    const units = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.labUnits))
+    const totalablUnits = units.reduce((accumulator:number, currentValue:number) => {
+      return accumulator + currentValue;
+    }, 0) 
+    return totalablUnits
+  }
   getTotalHrs(yearLvl:number, sem:number){
     const hrs = this.subject[yearLvl][sem ? 'secondSem' : 'firstSem'].map(subj => Number(subj.hoursPerWeek))
     const totalHrs = hrs.reduce((accumulator:number, currentValue:number) => {
@@ -680,7 +693,12 @@ addHeader()
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofirstYear,['','TOTAL', '','',this.getTotalUnits(0, 0),this.getTotalHrs(0, 0),'','']],
+    body: [...infofirstYear,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+    {content:this.getLecUnits(0, 0),styles:{fontStyle:'bold'}},
+    {content:this.getLabUnits(0, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalUnits(0, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalHrs(0, 0),styles:{fontStyle:'bold'}},
+    '','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -697,7 +715,12 @@ addHeader()
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofirstYearSecondSem,['','TOTAL', '','',this.getTotalUnits(0, 1),this.getTotalHrs(0, 1),'','']],
+    body: [...infofirstYearSecondSem,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+    {content:this.getLecUnits(0, 1),styles:{fontStyle:'bold'}},
+    {content:this.getLabUnits(0, 1),styles:{fontStyle:'bold'}},
+    {content:this.getTotalUnits(0, 1),styles:{fontStyle:'bold'}},
+    {content:this.getTotalHrs(0, 1),styles:{fontStyle:'bold'}},
+    '','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin, 
@@ -752,7 +775,12 @@ autoTable(pdf,{
   ],
   [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: [...infoSecondYear,['','TOTAL', '','',this.getTotalUnits(1, 0),this.getTotalHrs(1, 0),'','']],
+  body: [...infoSecondYear,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+  {content:this.getLecUnits(1, 0),styles:{fontStyle:'bold'}},
+  {content:this.getLabUnits(1, 0),styles:{fontStyle:'bold'}},
+  {content:this.getTotalUnits(1, 0),styles:{fontStyle:'bold'}},
+  {content:this.getTotalHrs(1, 0),styles:{fontStyle:'bold'}},
+  '','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   startY: tableMargin,
@@ -771,7 +799,12 @@ autoTable(pdf,{
   head:[
   [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
     ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-  body: [...infoSecondYearSecondSem,['','TOTAL', '','',this.getTotalUnits(1, 1),this.getTotalHrs(1, 1),'','']],
+  body: [...infoSecondYearSecondSem,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+  {content:this.getLecUnits(1, 1),styles:{fontStyle:'bold'}},
+  {content:this.getLabUnits(1, 1),styles:{fontStyle:'bold'}},
+  {content:this.getTotalUnits(1, 1),styles:{fontStyle:'bold'}},
+  {content:this.getTotalHrs(1, 1),styles:{fontStyle:'bold'}},
+  '','']],
   theme:'plain',
   columnStyles: {0:{halign: 'center'}},
   //startY: tableMargin,
@@ -827,7 +860,12 @@ autoTable(pdf,{
  ],
  [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: [...infoThirdYear,['','TOTAL', '','',this.getTotalUnits(2, 0),this.getTotalHrs(2, 0),'','']],
+ body: [...infoThirdYear,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+    {content:this.getLecUnits(2, 0),styles:{fontStyle:'bold'}},
+    {content:this.getLabUnits(2, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalUnits(2, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalHrs(2, 0),styles:{fontStyle:'bold'}},
+    '','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
  //startY: tableMargin,
@@ -846,7 +884,12 @@ autoTable(pdf,{
  head:[
  [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
    ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
- body: [...infoThirdYearSecondSem,['','TOTAL', '','',this.getTotalUnits(2, 1),this.getTotalHrs(2, 1),'','']],
+ body: [...infoThirdYearSecondSem,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+ {content:this.getLecUnits(2, 1),styles:{fontStyle:'bold'}},
+ {content:this.getLabUnits(2, 1),styles:{fontStyle:'bold'}},
+ {content:this.getTotalUnits(2, 1),styles:{fontStyle:'bold'}},
+ {content:this.getTotalHrs(2, 1),styles:{fontStyle:'bold'}},
+ '','']],
  theme:'plain',
  columnStyles: {0:{halign: 'center'}},
  //startY: tableMargin,
@@ -903,7 +946,12 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     ],
     [{content: 'FIRST SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infoFourthYear,['','TOTAL', '','',this.getTotalUnits(3, 0),this.getTotalHrs(3, 0),'','']],
+    body: [...infoFourthYear,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+    {content:this.getLecUnits(3, 0),styles:{fontStyle:'bold'}},
+    {content:this.getLabUnits(3, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalUnits(3, 0),styles:{fontStyle:'bold'}},
+    {content:this.getTotalHrs(3, 0),styles:{fontStyle:'bold'}},
+    '','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     startY: tableMargin,
@@ -922,7 +970,12 @@ fourthYearSecondSem.forEach((element,index,array)=>{
     head:[
     [{content: 'SECOND SEMESTER', colSpan: 8, styles: {halign: 'left'}}]
       ,['Course', 'Descriptive Title', 'Lec Units','Lab Units','Total Units','Hours Per Week','Pre Req','Co Req']],
-    body: [...infofourthYearSecondSem,['','TOTAL', '','',this.getTotalUnits(3, 1),this.getTotalHrs(3, 1),'','']],
+    body: [...infofourthYearSecondSem,['',{content:'TOTAL',styles:{fontStyle:'bold'}}, 
+    {content:this.getLecUnits(3, 1),styles:{fontStyle:'bold'}},
+    {content:this.getLabUnits(3, 1),styles:{fontStyle:'bold'}},
+    {content:this.getTotalUnits(3, 1),styles:{fontStyle:'bold'}},
+    {content:this.getTotalHrs(3, 1),styles:{fontStyle:'bold'}},
+    '','']],
     theme:'plain',
     columnStyles: {0:{halign: 'center'}},
     //startY: tableMargin,

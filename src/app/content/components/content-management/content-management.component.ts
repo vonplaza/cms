@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject, combineLatest, tap } from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
@@ -10,9 +10,10 @@ import { ContentService } from 'src/app/core/services/content.service';
   templateUrl: './content-management.component.html',
   styleUrls: ['./content-management.component.css']
 })
-export class ContentManagementComponent {
+export class ContentManagementComponent implements DoCheck, OnInit{
   constructor(private contentService: ContentService,
               private authService: AuthService){}
+
   
   isEdit:boolean = false
   role:string = ''
@@ -124,7 +125,44 @@ export class ContentManagementComponent {
   }
 
   toggleTheme(){
-    
+    if(!this.main.isDarkMode){
+      this.main.isDarkMode=true;
+      //this.toggleDarkMode();
+    }
+    else{
+      this.main.isDarkMode=false;
+      //this.toggleLightMode();
+    }
+  }
+
+  ngDoCheck(): void {
+    if(!this.main.isDarkMode){
+      if(this.main.body){
+        this.main.body.classList.add('theme-light');
+        this.main.body.classList.remove('theme-dark');
+        }
+    }
+    else{
+      if(this.main.body){
+        this.main.body.classList.add('theme-dark');
+        this.main.body.classList.remove('theme-light');
+        }
+    }
+  }
+
+  ngOnInit(){
+    if(!this.main.isDarkMode){
+      if(this.main.body){
+      this.main.body.classList.add('theme-light');
+      this.main.body.classList.remove('theme-dark');
+      }
+    }
+    else{
+      if(this.main.body){
+        this.main.body.classList.add('theme-dark');
+        this.main.body.classList.remove('theme-light');
+        }
+    }
   }
 
   selectedFile:any 
@@ -144,8 +182,7 @@ export class ContentManagementComponent {
   toggleIsEdit(){
     this.isEdit = !this.isEdit
   }
-
-//  toggleTheme = new AppComponent();
+ main = new AppComponent(this.contentService);
 //  isDark=false;
 //  toggle(){
 //   if(!this.isDark)
@@ -162,5 +199,7 @@ export class ContentManagementComponent {
 // }
 
 //  }
+
+
 
 }
