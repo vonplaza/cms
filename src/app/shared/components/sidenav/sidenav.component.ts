@@ -4,6 +4,7 @@ import { combineLatest, map, tap } from 'rxjs';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ContentService } from 'src/app/core/services/content.service';
+import { CurriculumService } from 'src/app/core/services/curriculum.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +16,8 @@ export class SidenavComponent {
   constructor(private route: ActivatedRoute, 
               private authService: AuthService,
               private router: Router,
-              private contentService: ContentService
+              private contentService: ContentService,
+              private curriculumService: CurriculumService
     ){}
     
   showSideNav = false
@@ -35,14 +37,21 @@ export class SidenavComponent {
     })
   )
   
+  newCurr:number = 0
   logo: string = ''
   title:string = ''
   isDarkMode: boolean = false
   contentData$ = combineLatest([
     this.contentService.content$,
-    this.contentService.contentAction$
+    this.contentService.contentAction$,
+    this.curriculumService.curriculums$,
+    this.curriculumService.revisions$,
   ]).pipe(
-      tap(([x, content]) => {
+      tap(([x, content, curriculums, revisions]) => {
+
+        this.newCurr = curriculums.filter(cur => cur.is_new).length + revisions.filter(rev => rev.is_new).length
+
+
         this.title = content.title_text
         this.logo = content.logo_path
         this.isDarkMode = !!content.is_dark_mode_active

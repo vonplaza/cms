@@ -1030,22 +1030,31 @@
 </mat-accordion>
 
 <table
-  class="table"
+  class="table-elective table table-bordered table-striped mt-2"
   style="max-width: 600px"
-  *ngIf="!!showElectiveTable().length"
+  *ngIf="!!showElectiveTable().length && department != '2'"
 >
-  <thead>
+  <thead class="thead-dark">
     <tr>
-      <th>#</th>
-      <th *ngFor="let electiveSubject of electiveSubjects">
+      <th colspan="4" class="text-center p-0 m-0 th-elective">Electives</th>
+    </tr>
+    <tr>
+      <th class="th-elective p-0 m-0">#</th>
+      <th
+        *ngFor="let electiveSubject of electiveSubjects"
+        class="th-elective py-0 my-0"
+      >
         {{ electiveSubject.track | uppercase }}
       </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let i of electiveSubjectNumberPresent()">
-      <td>Elective {{ i }}</td>
-      <td *ngFor="let electiveSubject of selectElectiveToBeShow()">
+      <th class="th-elective">Elective {{ i }}</th>
+      <td
+        *ngFor="let electiveSubject of selectElectiveToBeShow()"
+        class="td-elective"
+      >
         {{
           getElectiveSubject(electiveSubject.metadata[i - 1]) || "not yet set"
         }}

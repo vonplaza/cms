@@ -68,11 +68,13 @@ export class CurriculumViewContainerComponent implements OnInit {
       this.electiveSubjects = JSON.parse(this.curriculum.metadata).electiveSubjects
 
       this.status = this.curriculum.status   
-      this.author = this.curriculum.user.profile.name
+      this.author = this.curriculum?.user?.profile?.name || 'not set his/her name yet'
       this.isLoading = false
 
     }),
     catchError(err => {
+      console.log(err);
+      
       this.error = true
       this.isLoading = false
       return EMPTY

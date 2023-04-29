@@ -71,7 +71,7 @@ export class CurriculumEditRevisionContainerComponent implements OnInit{
       this.curriculumDepartment = this.curriculum.curriculum.department_id
 
       this.status = this.curriculum.status   
-      this.author = this.curriculum.user.profile.name
+      this.author = this.curriculum?.user?.profile?.name || 'name not set yet'
       this.isLoading = false
     }),
     catchError(err => {

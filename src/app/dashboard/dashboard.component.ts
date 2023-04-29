@@ -108,7 +108,8 @@ export class dashboard implements OnInit{
           }as any]
           
         })
-
+        // console.log(comments.splice(0, 3));
+        
         return {
           user: user,
           pendingCurriculums: curriculums.filter(cur => cur.status == 'p').length,
@@ -118,12 +119,12 @@ export class dashboard implements OnInit{
           latestSubmittedRevisions: !!revisions.length ? revisions.reduce((max, current) => {
             return new Date(current.created_at) > new Date(max.created_at) ? current : max
           }) : null,
-          latestComments: comments.splice(-4, -1),
+          latestComments: comments.splice(0, 3),
           // latestSubmittedRevisions: revisions.reduce((max, current) => {
           //   return new Date(current.created_at) > new Date(max.created_at) ? current : max
           // }),
           curriculums: curriculums,
-          comments: comments.splice(-4, -1)
+          comments: comments.splice(0, 3)
         }
       }),
       catchError(err => {

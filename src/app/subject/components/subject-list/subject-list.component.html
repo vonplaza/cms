@@ -177,6 +177,9 @@
                   <button
                     mat-icon-button
                     (click)="clickEditSubject(subject, 'elective')"
+                    *ngIf="
+                      role == 'admin' || role == 'faculty' || role == 'chair'
+                    "
                   >
                     <mat-icon color="primary">settings</mat-icon>
                   </button>
@@ -184,6 +187,9 @@
                     mat-icon-button
                     (click)="assignElective(subject.id)"
                     color="primary"
+                    *ngIf="
+                      role == 'admin' || role == 'faculty' || role == 'chair'
+                    "
                   >
                     <mat-icon>edit</mat-icon>
                   </button>

@@ -87,6 +87,7 @@ export class YearDropdownComponent {
   //     this.electiveSubjects = electiveSubjects
   //   })
   // ).subscribe()
+
   electives:any[] = []
   neededData$ = combineLatest([
     this.subjectService.electiveSubjects$,
@@ -141,6 +142,10 @@ export class YearDropdownComponent {
   }
 
   selectElectiveToBeShow(){
+    if(this.department != `1`){
+      return []
+    }
+
     return this.type == 'create' || this.electiveData.length < 1 ? this.electiveSubjects : this.electiveData
   }
 
@@ -193,10 +198,11 @@ export class YearDropdownComponent {
       version: this.version,
       departmentId: this.department,
       // electiveSubjects: this.department != '1' ? []: this.electiveIncluded ? this.electiveSubjects : this.electiveSubjects
-    electiveSubjects: this.department != '1' || !this.electiveSubjectPresent.length ? []: 
-    this.type == 'create' ? this.electiveSubjects : 
-    !!this.electiveData.length ? this.electiveData : this.electiveSubjects
-    })
+
+      electiveSubjects: this.department != '1' || !this.electiveSubjectPresent.length ? []: 
+      this.type == 'create' ? this.electiveSubjects : 
+      !!this.electiveData.length ? this.electiveData : this.electiveSubjects
+      })  
   }
 
   
@@ -924,7 +930,7 @@ fourthYearSecondSem.forEach((element,index,array)=>{
 }
 
 
-if(!!this.electiveSubjectNumberPresent().length){
+if(!!this.electiveSubjectNumberPresent().length && this.department != '2'){
   const electiveSubjects:any[] = []
 
   this.electiveSubjectNumberPresent().forEach(x => {

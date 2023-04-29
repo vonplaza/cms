@@ -62,7 +62,7 @@ export class CurriculumViewRevisionContainerComponent implements OnInit{
       this.curriculumDepartment = this.curriculum.curriculum.department_id
 
       this.status = this.curriculum.status   
-      this.author = this.curriculum.user.profile.name
+      this.author = this.curriculum?.user?.profile?.name || 'has not set his/her name yet'
       this.isLoading = false
 
     }),

@@ -124,7 +124,14 @@
       </div>
 
       <div class="col-sm">
-        <app-comment [comments]="data.latestComments"></app-comment>
+        <app-comment
+          *ngIf="data.latestComments.length"
+          [comments]="data.latestComments"
+        ></app-comment>
+        <app-empty-state
+          name="comments"
+          *ngIf="!data.latestComments.length"
+        ></app-empty-state>
       </div>
     </div>
 
