@@ -47,12 +47,12 @@ export class CurriculumEditContainerComponent implements OnInit{
       this.userId = this.currentUser.id
       this.role = this.currentUser.role
       this.comments = comments.filter(comment => comment.curriculum_id == id)
-
+      
       this.subjects = JSON.parse(this.curriculum.metadata).subjects
       this.electiveSubjects = JSON.parse(this.curriculum.metadata).electiveSubjects
       this.title = `CICT ${this.curriculum.department.department_code} Curriculum version ${this.curriculum.version}`
       this.status = this.curriculum.status   
-      this.author = this.curriculum.user.profile.name
+      this.author = this.curriculum?.user?.profile?.name || 'name not set yet'
       this.isLoading = false
 
     }),

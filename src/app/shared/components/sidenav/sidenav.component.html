@@ -33,7 +33,10 @@
 
         <small class="">
           {{ user.role | titlecase }}
-          {{ user.department && "(" + user.department.department_code + ")" }}
+          {{
+            user.department &&
+              "(" + (user.department.department_code | uppercase) + ")"
+          }}
         </small>
       </div>
     </div>
@@ -68,10 +71,13 @@
         role="listitem"
         [routerLink]="['/curriculums']"
         routerLinkActive="active"
-        class="nav-item rounded"
+        class="nav-item rounded position-relative"
       >
         <mat-icon fontIcon="format_align_center" class="me-3"></mat-icon>
-        Curriculum
+        Curriculums
+        <span class="badge rounded-pill bg-danger ms-2" *ngIf="newCurr"
+          >{{ newCurr }} new</span
+        >
       </mat-list-item>
       <mat-list-item
         role="listitem"

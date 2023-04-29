@@ -8,7 +8,12 @@
         *ngFor="let department of departments"
         class="p-3"
       >
-        <mat-card class="container">
+        <div class="container">
+          <app-empty-state
+            name="Faculty Members"
+            message="once an admin assign a faculty in this department, you'll see it here"
+            *ngIf="!department.members.length"
+          ></app-empty-state>
           <div class="row g-2">
             <div class="col-lg-6" *ngFor="let member of department.members">
               <mat-card style="filter:contrast(110%);">

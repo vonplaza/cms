@@ -17,6 +17,11 @@
     <div>
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Subjects">
+          <app-empty-state
+            name="Subject"
+            message="once faculty have added Subject, you'll see it here"
+            *ngIf="!subjects.length"
+          ></app-empty-state>
           <div class="d-flex justify-content-end my-1">
             <mat-form-field style="width: 200px" class="example-form-field">
               <mat-label><mat-icon>search</mat-icon>Search</mat-label>
@@ -78,6 +83,7 @@
                     mat-icon-button
                     color="primary"
                     (click)="viewPdf(subject.syllabus_path)"
+                    *ngIf="!subject.is_elective"
                   >
                     <mat-icon>remove_red_eye</mat-icon>
                   </button>
@@ -87,6 +93,14 @@
                     role == 'admin' || role == 'chair' || role == 'faculty'
                   "
                 >
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="!subject.is_elective"
+                    (click)="clickEditSubject(subject, 'subject')"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
                   <button
                     *ngIf="
                       subject.status == 'a' &&
@@ -123,74 +137,117 @@
           </mat-paginator
         ></mat-tab>
         <mat-tab label="Elective Subject">
-          <table style="width:100%;">
+          <div class="my-2">
+            <button
+              mat-flat-button
+              color="primary"
+              class="float-end"
+              (click)="newElective()"
+            >
+              <mat-icon>add</mat-icon>
+              add elective subject
+            </button>
+          </div>
+          <app-empty-state
+            name="Elective Subject"
+            message="once faculty have added Elective Subject, you'll see it here"
+            *ngIf="!electives.length"
+          ></app-empty-state>
+          <!-- *ngIf="!department.members.length" -->
+          <table class="table">
             <thead>
               <tr>
-                <td>#</td>
-                <td
-                  *ngFor="
-                    let electiveSubject of electiveSubjects;
-                    let x = index
-                  "
-                >
-                  {{ electiveSubject.track }}
+                <th>Description</th>
+                <!-- <th>Status</th> -->
+                <th>Assigned in</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let subject of electives">
+                <td>{{ subject.description }}</td>
+                <!-- <td>{{ subject.status == "a" ? "Active" : "Inactive" }}</td> -->
+                <!-- <td>{{ subject.status }}</td> -->
+                <td>{{ getAssignedIn(subject.id) }}</td>
+                <td>
                   <button
                     mat-icon-button
-                    color="primary"
-                    (click)="editElected(x)"
+                    (click)="viewPdf(subject.syllabus_path)"
+                  >
+                    <mat-icon color="primary">remove_red_eye</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    (click)="clickEditSubject(subject, 'elective')"
                     *ngIf="
-                      selectedTrack != x &&
-                      (role == 'admin' || role == 'chair' || role == 'faculty')
+                      role == 'admin' || role == 'faculty' || role == 'chair'
+                    "
+                  >
+                    <mat-icon color="primary">settings</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    (click)="assignElective(subject.id)"
+                    color="primary"
+                    *ngIf="
+                      role == 'admin' || role == 'faculty' || role == 'chair'
                     "
                   >
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    *ngIf="
-                      selectedTrack == x &&
-                      (role == 'admin' || role == 'chair' || role == 'faculty')
-                    "
-                    (click)="cancelEdit(x)"
-                  >
-                    <mat-icon>close</mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
-                    color="primary"
-                    (click)="saveElected(x)"
-                    *ngIf="
-                      selectedTrack == x &&
-                      (role == 'admin' || role == 'chair' || role == 'faculty')
-                    "
-                  >
-                    <mat-icon>save</mat-icon>
-                  </button>
                 </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th
+                  *ngFor="
+                    let electiveSubject of electiveSubjects;
+                    let x = index
+                  "
+                >
+                  {{ electiveSubject.track | uppercase }}
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let i of [1, 2, 3, 4, 5]" style="border-bottom: 1px solid rgb(140, 140, 140);">
-                <td>Elective {{ i }}</td>
+              <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+                <th>Elective {{ i }}</th>
                 <td
                   *ngFor="
                     let electiveSubject of electiveSubjects;
                     let x = index
                   "
                 >
-                  <span *ngIf="selectedTrack != x">{{
-                    electiveSubject.description[i - 1]
-                  }}</span>
-                  <input
-                    *ngIf="selectedTrack == x"
-                    type="text"
-                    [(ngModel)]="descriptionList[x][i - 1]"
-                  />
+                  <span *ngIf="selectedTrack != x"
+                    >{{
+                      getElectiveSubject(electiveSubject.metadata[i - 1]) ||
+                        "not yet assigned"
+                    }}
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      *ngIf="
+                        getElectiveSubject(electiveSubject.metadata[i - 1])
+                      "
+                      (click)="
+                        viewPdf(
+                          getSyllabusSubject(electiveSubject.metadata[i - 1])
+                        )
+                      "
+                    >
+                      <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                  </span>
                 </td>
               </tr>
-            </tbody></table
-        ></mat-tab>
+            </tbody>
+          </table>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </mat-card>

@@ -16,6 +16,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from './components/comment/comment.component';
 import { AppComponent } from '../app.component';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AppComponent } from '../app.component';
     PdfViewerComponent,
     ForgotPasswordComponent,
     CommentComponent,
+    EmptyStateComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { AppComponent } from '../app.component';
     NotAllowedComponent,
     ReloadPageComponent,
     NotificationComponent,
-    CommentComponent
+    CommentComponent,
+    EmptyStateComponent
   ]
 })
 export class SharedModule { }

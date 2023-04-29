@@ -137,7 +137,13 @@
       Revise
     </button>
 
-    <button mat-flat-button (click)="convertToPDF()" color="primary" class="me-2" *ngIf="type == 'view'" >
+    <button
+      mat-flat-button
+      (click)="convertToPDF()"
+      color="primary"
+      class="me-2"
+      *ngIf="type == 'view'"
+    >
       <mat-icon>print</mat-icon>
       Print
     </button>
@@ -570,16 +576,15 @@
               </button>
             </td>
           </tr>
-          <tr style="font-weight: bold;">
-               <td scope="row"></td>
-            <td>TOTAL</td>
-            <td>{{ getLecUnits(x, 0) }}</td>
-            <td>{{ getLabUnits(x, 0)}}</td>
-            <td>{{ getTotalUnits(x, 0) }}</td>
-            <td>{{ getTotalHrs(x, 0) }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr>
+            <div>
+              <span class="fs-6 text-dark me-2"
+                >Total Units: {{ getTotalUnits(x, 0) }},
+              </span>
+              <span class="fs-6 text-dark me-2"
+                >Total Hrs/Week: {{ getTotalHrs(x, 0) }}</span
+              >
+            </div>
           </tr>
         </tbody>
       </table>
@@ -1029,23 +1034,42 @@
 </mat-accordion>
 
 <table
-  class="table"
+  class="table-elective table table-bordered table-striped mt-2"
   style="max-width: 600px"
-  *ngIf="!!showElectiveTable().length"
+  *ngIf="!!showElectiveTable().length && department != '2'"
 >
-  <thead>
+  <thead class="thead-dark">
     <tr>
-      <th>#</th>
-      <th *ngFor="let electiveSubject of electiveSubjects">
-        {{ electiveSubject.track }}
+      <th colspan="4" class="text-center p-0 m-0 th-elective">Electives</th>
+    </tr>
+    <tr>
+      <th class="th-elective p-0 m-0">#</th>
+      <th
+        *ngFor="let electiveSubject of electiveSubjects"
+        class="th-elective py-0 my-0"
+      >
+        {{ electiveSubject.track | uppercase }}
       </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let i of electiveSubjectNumberPresent()">
-      <td>Elective {{ i }}</td>
-      <td *ngFor="let electiveSubject of selectElectiveToBeShow()">
-        {{ electiveSubject.description[i - 1] }}
+      <th class="th-elective">Elective {{ i }}</th>
+      <td
+        *ngFor="let electiveSubject of selectElectiveToBeShow()"
+        class="td-elective"
+      >
+        {{
+          getElectiveSubject(electiveSubject.metadata[i - 1]) || "not yet set"
+        }}
+        <button
+          mat-icon-button
+          *ngIf="getElectiveSubject(electiveSubject.metadata[i - 1])"
+          color="primary"
+          (click)="viewPdf(getSyllabusSubject(electiveSubject.metadata[i - 1]))"
+        >
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
       </td>
     </tr>
   </tbody>
