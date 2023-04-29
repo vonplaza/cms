@@ -6,6 +6,8 @@ import { EMPTY, catchError, combineLatest, map } from "rxjs";
 import { CurriculumService } from "../core/services/curriculum.service";
 import { CommentService } from "../core/services/comment.service";
 import { AccountService } from "../core/services/account.service";
+import { SubjectService } from "../core/services/subject.service";
+import { DepartmentService } from "../core/services/department.service";
 
 @Component({
     selector:'dash-board',
@@ -18,7 +20,9 @@ export class dashboard implements OnInit{
     constructor(private authService: AuthService,
                 private curriculumService: CurriculumService,
                 private commentService: CommentService,
-                private accountService: AccountService
+                private accountService: AccountService,
+                private subjectService: SubjectService,
+                private departmentService: DepartmentService
                 ){}
   
 
@@ -32,6 +36,7 @@ export class dashboard implements OnInit{
       {name:'Stakeholders', y:0}
     ]
     pieChart!: Chart
+    pieChartSubject!: Chart
 
     isLoading:boolean = true
     error:boolean = false
@@ -41,9 +46,12 @@ export class dashboard implements OnInit{
       this.curriculumService.curriculums$,
       this.curriculumService.revisions$,
       this.commentService.comments$,
-      this.accountService.users$
+      this.accountService.users$,
+      this.subjectService.subjects$,
+      this.departmentService.departments$
     ]).pipe(
-      map(([user, curriculums, revisions, comments, users]) => {
+      map(([user, curriculums, revisions, comments, users, subjects, departments]) => {
+        
         this.data = [
           {name: 'Admin', y: users.filter(u => u.role == 'admin').length},
           {name: 'Commitee Chair', y: users.filter(u => u.role == 'chair').length},
@@ -71,7 +79,35 @@ export class dashboard implements OnInit{
           
         })
 
+        this.departmentService
+
+        let data:any[] = departments.map(dep => {
+          return {name: dep.department_code, y: dep.subjects.length}
+        })
+        data = [...data, {name: 'none', y: subjects.filter(sub => !sub).length }]
+  
+        
         this.isLoading = false
+        this.pieChartSubject = new Chart({
+          chart:{
+            // backgroundColor: '#FCFFC5',
+            type: 'pie',
+              height:250,
+          },
+          title:{
+            text:'Subjects',
+            align:'left',
+            
+          },
+          credits:{
+            enabled: false
+          },
+          series:[{
+            name: 'Subjects',
+            data: data
+          }as any]
+          
+        })
 
         return {
           user: user,

@@ -1,4 +1,9 @@
 <div class="container p-4" *ngIf="(neededData$ | async) && canView()">
+  <app-empty-state
+    name="Users"
+    message="once Admin have added User, you'll see it here"
+    *ngIf="!users.length"
+  ></app-empty-state>
   <table class="table">
     <thead>
       <tr>
@@ -55,7 +60,7 @@
                 style="font-size: small"
               >
                 <span class="name"
-                  >{{ user?.profile?.name }} ({{
+                  >{{ user?.profile?.name || "not yet set his/her name" }} ({{
                     user?.role | titlecase
                   }})</span
                 >

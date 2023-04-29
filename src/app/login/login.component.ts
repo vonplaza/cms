@@ -14,6 +14,8 @@ import { ForgotPasswordComponent } from "../shared/components/forgot-password/fo
 })
 
 export class LoginComponent{
+    error$ = new Subject<string>();
+    success$ = new Subject<string>()
     credentials = {
         email: '',
         password: ''
@@ -26,13 +28,27 @@ export class LoginComponent{
         this.authService.login(form.value)
             .subscribe({
                 next: response => {
+                    this.error$.next('')
                     this.router.navigate(['/user'])
                 },
-                error: err => this.error.next(err.message)
+                error: err => {
+                    this.error.next(err.message)
+                    this.error$.next(err.message)
+                    this.success$.next('')
+                }
             })
     }
 
     openForgotPass(){
         this.dialog.open(ForgotPasswordComponent);
     }
+
+    closeAlert(){
+        this.error$.next('')
+      }
+    
+      closeSuccessAlert(){
+        this.success$.next('')
+      }
+
 }

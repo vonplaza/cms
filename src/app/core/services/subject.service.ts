@@ -13,7 +13,9 @@ export class SubjectService {
   constructor(private http: HttpClient) { }
   subjectAdd$ = new BehaviorSubject<Subject | null>(null);
 
-  subjects$ = this.http.get<Subject[]>(`${this.baseUrl}/subjects`)
+  subjects$ = this.http.get<Subject[]>(`${this.baseUrl}/subjects`).pipe(
+    catchError(handleError)
+  )
 
   addSubject(subject:any){
     return this.http.post<Subject[]>(`${this.baseUrl}/subjects`, subject)
@@ -23,6 +25,26 @@ export class SubjectService {
         }),
         catchError(handleError)
       )
+  }
+
+  updateSubject$ = new BehaviorSubject<any>(null)
+  updateElective$ = new BehaviorSubject<any>(null)
+  updateSubject(data:any, type:string, id:number){
+    if(type == 'subject'){
+      return this.http.post(`${this.baseUrl}/subjects/update/${id}`, data).pipe(
+        tap(data => {
+          this.updateSubject$.next(data)
+        }),
+        catchError(handleError)
+      )
+    }
+
+    return this.http.post(`${this.baseUrl}/electives/update/${id}`, data).pipe(
+      tap(data => {
+        this.updateElective$.next(data)
+      }),
+      catchError(handleError)
+    )
   }
 
   electives$ = this.http.get<any[]>(`${this.baseUrl}/electives`)

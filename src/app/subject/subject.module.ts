@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SubjectRoutingModule } from './subject-routing.module';
-import { AddNewElectiveSubject, AssignElectiveSubject, SubjectListComponent } from './components/subject-list/subject-list.component';
+import { AddNewElectiveSubject, AssignElectiveSubject, EditSubject, SubjectListComponent } from './components/subject-list/subject-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../shared/material';
 import { SubjectAddDialogComponent } from './components/subject-add-dialog/subject-add-dialog.component';
@@ -14,7 +14,8 @@ import {OrderByPipe} from 'src/app/subject/components/subject-list/subject-list-
     SubjectListComponent,
     SubjectAddDialogComponent,OrderByPipe,
     AssignElectiveSubject,
-    AddNewElectiveSubject
+    AddNewElectiveSubject,
+    EditSubject
   ],
   imports: [
     CommonModule,

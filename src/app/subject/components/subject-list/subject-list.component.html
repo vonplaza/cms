@@ -16,6 +16,11 @@
     <div class="">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Subjects">
+          <app-empty-state
+            name="Subject"
+            message="once faculty have added Subject, you'll see it here"
+            *ngIf="!subjects.length"
+          ></app-empty-state>
           <div class="d-flex justify-content-end my-1">
             <mat-form-field style="width: 200px" class="example-form-field">
               <mat-label><mat-icon>search</mat-icon>Search</mat-label>
@@ -76,6 +81,7 @@
                     mat-icon-button
                     color="primary"
                     (click)="viewPdf(subject.syllabus_path)"
+                    *ngIf="!subject.is_elective"
                   >
                     <mat-icon>remove_red_eye</mat-icon>
                   </button>
@@ -85,6 +91,14 @@
                     role == 'admin' || role == 'chair' || role == 'faculty'
                   "
                 >
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="!subject.is_elective"
+                    (click)="clickEditSubject(subject, 'subject')"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
                   <button
                     *ngIf="
                       subject.status == 'a' &&
@@ -132,6 +146,12 @@
               add elective subject
             </button>
           </div>
+          <app-empty-state
+            name="Elective Subject"
+            message="once faculty have added Elective Subject, you'll see it here"
+            *ngIf="!electives.length"
+          ></app-empty-state>
+          <!-- *ngIf="!department.members.length" -->
           <table class="table">
             <thead>
               <tr>
@@ -154,7 +174,10 @@
                   >
                     <mat-icon color="primary">remove_red_eye</mat-icon>
                   </button>
-                  <button mat-icon-button>
+                  <button
+                    mat-icon-button
+                    (click)="clickEditSubject(subject, 'elective')"
+                  >
                     <mat-icon color="primary">settings</mat-icon>
                   </button>
                   <button

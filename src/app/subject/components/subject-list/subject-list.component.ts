@@ -32,38 +32,14 @@ export class SubjectListComponent {
     this.dialog.open(SubjectAddDialogComponent);
   }
 
-  listData = [
-    { track: 'WMAD', subjects: [ 
-      { description: 'WMAD 1', syllabus_path:'asd.pdf' },
-      { description: 'WMAD 1', syllabus_path:'asd.pdf' },
-      { description: '', syllabus_path:'' },
-      { description: 'WMAD 1', syllabus_path:'asd.pdf' },
-      { description: 'WMAD 1', syllabus_path:'asd.pdf' },
-     ] 
-    },
-    { track: 'BA', subjects: [  
-        { description: '', syllabus_path:'' },
-        { description: '', syllabus_path:'' },
-        { description: '', syllabus_path:'' },
-        { description: '', syllabus_path:'' },
-        { description: '', syllabus_path:'' },
-      ] 
-    },
-    { track: 'SMT', subjects: [ 
-      { description: '', syllabus_path:'' },
-      { description: '', syllabus_path:'' },
-      { description: '', syllabus_path:'' },
-      { description: '', syllabus_path:'' },
-      { description: '', syllabus_path:'' },
-     ] 
-    },
-  ]
-
-  list = [
-    {  track: 'WMAD', subjects: [1, 2, 3, null, null]},
-    {  track: 'BA', subjects: [1, 2, 3, null, null]},
-    {  track: 'SMT', subjects: [1, 2, 3, null, null]},
-  ]
+  clickEditSubject(data:any, type:string){
+    this.dialog.open(EditSubject, {
+      data: {
+        subject: data,
+        type: type
+      }
+    });
+  }
 
   getElectiveSubject(id: number){
     return this.electives.find(sub => sub.id == id)?.description
@@ -84,14 +60,6 @@ export class SubjectListComponent {
     return loc || 'not assigned'
  
   }
-
-  electiveSubjectss = [
-    { id: 1, description: 'WMAD 1', syllabus_path:'asd.pdf', status: 'a' },
-    { id: 2, description: 'BA 1', syllabus_path:'asd.pdf', status: 'a' },
-    { id: 3, description: 'SM 2', syllabus_path:'asd.pdf', status: 'a' },
-  ]
-
-
 
   subjects: Subject[]=[]
   role:string = ''
@@ -158,8 +126,10 @@ export class SubjectListComponent {
     this.subjectService.electives$,
     this.subjectService.addedElectiveSubject$,
     this.authService.getCurrentUser(),
+    this.subjectService.updateSubject$,
+    this.subjectService.updateElective$,
   ]).pipe(
-    tap(([subjects, electiveSubjects, electives, addedElectiveSubject, user]) => {
+    tap(([subjects, electiveSubjects, electives, addedElectiveSubject, user, updatedSubject, updatedElective]) => {
       this.electiveSubjects = electiveSubjects
       this.electives = electives
       
@@ -169,6 +139,14 @@ export class SubjectListComponent {
       if(addedElectiveSubject){
         this.electives = [...this.electives, addedElectiveSubject]
       }
+
+      if(updatedSubject){
+        this.subjects = this.subjects.map(sub => sub.id == updatedSubject.id ? updatedSubject : sub)
+      }
+      if(updatedElective){
+        this.electives = this.electives.map(sub => sub.id == updatedElective.id ? updatedElective : sub)
+      }
+      
       // this.electiveSubjects.forEach(list => {        
       //   this.originalDescription.push([...list.description])
       //   this.descriptionList.push([...list.description])
@@ -458,20 +436,21 @@ export class AssignElectiveSubject {
       });
     }
   }
-
-  
-
   onCancel(){
     this.dialogRef.close(false)
   }
 }
 
+
 @Component({
   selector: 'add-elective-subject',
   templateUrl: './add-elective-subject.html',
 })
+
+
 export class AddNewElectiveSubject{
-  constructor(private subjectService: SubjectService){}
+  constructor(private subjectService: SubjectService, 
+    public dialogRef: MatDialogRef<AddNewElectiveSubject>){}
   error$ = new subject<string>();
   success$ = new subject<string>()
   submit(form: NgForm){
@@ -493,11 +472,68 @@ export class AddNewElectiveSubject{
       })
   }
 
+  onCancel(){    
+    this.dialogRef.close(false)
+  }
+
+  selectedFile:any 
+  onFileSelected(event:any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  closeAlert(){
+    this.error$.next('')
+  }
+
+  closeSuccessAlert(){
+    this.success$.next('')
+  }
+}
 
 
 
-  onCancel(){
+@Component({
+  selector: 'edit-subject',
+  templateUrl: './edit-subject.html',
+})
+export class EditSubject{
+  constructor(private subjectService: SubjectService, 
+    public dialogRef: MatDialogRef<EditSubject>, 
+    @Inject(MAT_DIALOG_DATA) public data: any){}
+  error$ = new subject<string>();
+  success$ = new subject<string>()
 
+  submit(form: NgForm){
+    const fd = new FormData()
+    
+    if(form.value.description != this.subject.description) fd.append('description', form.value.description)
+    if(this.selectedFile) fd.append('syllabus', this.selectedFile)
+     
+    this.subjectService.updateSubject(fd, this.type, this.subject.id) 
+      .subscribe({
+        next: data => {
+          this.error$.next('')
+          this.success$.next('Subject Updated Successfully')
+          console.log(data);
+          
+        },
+        error: (err:AppError) => {
+          this.error$.next(err.message)
+          this.success$.next('')
+        }
+      })
+  }
+
+  get type(){
+    return this.data.type
+  }
+
+  get subject(){
+    return this.data.subject
+  }
+
+  onCancel(){    
+    this.dialogRef.close(false)
   }
 
   selectedFile:any 

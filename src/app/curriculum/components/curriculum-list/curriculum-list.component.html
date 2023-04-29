@@ -13,6 +13,11 @@
   </header>
   <mat-tab-group>
     <mat-tab label="Existing">
+      <app-empty-state
+        name="curriculums"
+        message="once a reviewer approves curriculums, you'll see it here"
+        *ngIf="!curriculums.length"
+      ></app-empty-state>
       <table class="table" *ngIf="curriculums">
         <thead>
           <tr *ngIf="false">
@@ -88,6 +93,11 @@
       </mat-paginator>
     </mat-tab>
     <mat-tab label="Revisions">
+      <app-empty-state
+        name="revisions"
+        message="once a faculty creates revisions, you'll see it here"
+        *ngIf="!revisions.length"
+      ></app-empty-state>
       <table class="table" *ngIf="revisions">
         <thead>
           <tr *ngIf="false">
@@ -170,6 +180,11 @@
       </mat-paginator>
     </mat-tab>
     <mat-tab label="Pending">
+      <app-empty-state
+        name="Curriculum Pendings"
+        message="once a faculty creates curriculums, you'll see it here"
+        *ngIf="!curriculumPendings.length"
+      ></app-empty-state>
       <table class="table" *ngIf="curriculumPendings">
         <thead>
           <tr *ngIf="false">

@@ -6,7 +6,6 @@
   >
     <header class="d-flex align-items-center justify-content-between">
       <span class="h3">Dashboard</span>
-      <span>Welcome {{ data.user?.profile?.name }}</span>
     </header>
     <div class="row gap-4">
       <div class="col-sm">
@@ -72,11 +71,17 @@
               </div>
             </mat-card-content>
             <mat-card-content *ngIf="!data.latestSubmittedRevisions">
+              <div class="text-center">
+                <mat-icon>hourglass_empty</mat-icon>
+                <div>
+                  <span class="h5">No revisions, yet.</span>
+                </div>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>
         <div class="row">
-          <mat-card class="col-sm">
+          <mat-card class="col-sm" *ngIf="false">
             <mat-card-subtitle class="m-0 p-0"
               >Latest Submitted Revision</mat-card-subtitle
             >
@@ -175,16 +180,16 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <mat-card class="col-sm" *ngIf="false">
-        <mat-card-content>
-          <app-comment [comments]="data.latestComments"></app-comment>
-        </mat-card-content>
-      </mat-card>
-
+    <div class="row gap-4">
       <mat-card class="col-md-6">
         <mat-card-content>
           <div class="pieChart" [chart]="pieChart"></div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="col-md-5">
+        <mat-card-content>
+          <div class="pieChart" [chart]="pieChartSubject"></div>
         </mat-card-content>
       </mat-card>
     </div>
