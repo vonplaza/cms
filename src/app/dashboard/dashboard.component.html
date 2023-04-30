@@ -337,6 +337,7 @@
       </div>
 
       <div class="col-sm">
+        <mat-card>
         <app-comment
           *ngIf="data.latestComments.length"
           [comments]="data.latestComments"
@@ -345,6 +346,7 @@
           name="comments"
           *ngIf="!data.latestComments.length"
         ></app-empty-state>
+      </mat-card>
       </div>
     </div>
 

@@ -25,7 +25,7 @@
         message="once a reviewer approves curriculums, you'll see it here"
         *ngIf="!curriculums.length"
       ></app-empty-state>
-      <table class="table" *ngIf="curriculums">
+      <table style="margin-bottom: 1rem;" *ngIf="curriculums">
         <thead>
           <tr *ngIf="false">
             <th style="">
@@ -119,7 +119,7 @@
         message="once a faculty creates revisions, you'll see it here"
         *ngIf="!revisions.length"
       ></app-empty-state>
-      <table class="table" *ngIf="revisions">
+      <table *ngIf="revisions">
 
         <thead>
           <tr *ngIf="false">
@@ -221,7 +221,7 @@
         message="once a faculty creates curriculums, you'll see it here"
         *ngIf="!curriculumPendings.length"
       ></app-empty-state>
-      <table class="table" *ngIf="curriculumPendings">
+      <table *ngIf="curriculumPendings">
         <thead>
           <tr *ngIf="false">
             <th style="">

@@ -60,7 +60,7 @@ export class dashboard implements OnInit{
         ]
         this.pieChart = new Chart({
           chart:{
-            // backgroundColor: '#FCFFC5',
+            backgroundColor: 'rgba(255, 255, 255, 0.0)',
             type: 'pie',
               height:250,
           },
